@@ -11,15 +11,17 @@ NOTE: for the time being, the PhaseList has to be passed monolithically in the P
 '''
 
 from flask import Flask, jsonify, abort, request, make_response, url_for
-from flask.ext.restful import Api, Resource, reqparse, fields, marshal, marshal_with
-import uuid
-import math
-import string
-import numpy as np
-import numpy.random as rand
-from numpy.core.numeric import dtype
-import sys
+from flask.ext.restful import Api, Resource, reqparse, fields, marshal, \
+    marshal_with
 import json
+import math
+import numpy as np
+from numpy.core.numeric import dtype
+import numpy.random as rand
+import string
+import sys
+import uuid
+
 
 app = Flask(__name__)
 api = Api(app)

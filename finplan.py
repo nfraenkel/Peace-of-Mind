@@ -18,13 +18,15 @@ The MC simulations use the Historical mean,stddev for each asset class - and gen
 The simulations are run "NbRun" and the contribution amount is returned based on the confidence factor 
 '''
 
-from flask import Flask, jsonify, abort, request, make_response, url_for
-from flask.ext.restful import Api, Resource, reqparse, fields, marshal, marshal_with
 import finplan_lib as FP
-import uuid
+from flask import Flask, jsonify, abort, request, make_response, url_for
+from flask.ext.restful import Api, Resource, reqparse, fields, marshal, \
+    marshal_with
+from getopt import GetoptError, gnu_getopt as getopt
+import json
 import string
 import sys
-import json
+import uuid
 
 app = Flask(__name__)
 api = Api(app)
@@ -33,9 +35,14 @@ api = Api(app)
 # ToDo: Replace the following default values by arguments - or config variables
 # Default Values
 DefaultNbRun = 10000
-DefaultConfidenceFactor = 90 # % between 0-100
-Debug = False
-
+DefaultConfidencePct = 90 # % between 0-100
+ConfigParam = dict()  # so that we can set the command line arguments & pass them globally
+DefaultAgeToday = 30
+DefaultEndAge = 90
+DefaultInflationRate = 2.0
+DefaultEndFunds = 1.0 # Default value for target end funds at end of retirement
+DefaultDebug = False
+USAGE = '-c confidence_percentage -r run_count_for_monte_carlo -D'
 
 '''
 From: http://fc.standardandpoors.com/sites/client/generic/axa/axa4/Article.vm?topic=5991&siteContent=8088 
@@ -50,13 +57,7 @@ HistoricalReturn = {"Stocks": [9.90, 19.1], "Bonds": [5.80, 7.50], "T-Bills": [3
 
 
 # Populate the Array of Financial Plans with Initial Values
-# ** Make sure that the required and DEFAULT attributes are all there (not necessarily w/ default values  
-# 
-# Default Values
-DefaultAgeToday = 30
-DefaultEndAge = 90
-DefaultInflationRate = 2.0
-DefaultEndFunds = 1.0 # Default value for target end funds at end of retirement
+# ** Make sure that the required and DEFAULT attributes are all there (not necessarily w/ default values)
 # Declare it in a single dict - this way, we only have to maintain it here - the rest of the code should just iterate the dict
 DefaultFinPlanValue = {
     'AgeToday': DefaultAgeToday, 
@@ -65,6 +66,7 @@ DefaultFinPlanValue = {
     'TargetEndFunds': DefaultEndFunds
 }
 
+# Pre-loading w/ a couple of scenarios - whose IDs will be the same after server restart
 FinPlanScenario = [
     {
         'FinPlan_ID': '445585fb-5c9d-4254-9b91-0197a584e6ba',
@@ -156,6 +158,52 @@ finplan_fields = {
     'PhaseList': fields.List(fields.Nested(phase_fields)),
     'InflationRate': fields.Float    
 }
+
+# ------------------
+def handleArgs(argv):
+    '''
+    handle command line arguments:
+    '''
+
+    Usage = ('Usage error - Syntax is: %s: %s' % (sys.argv[0], USAGE))
+    try:
+        opts, args = getopt(argv, 'c:r:D', ['confidence=', 'runcount=', 'Debug'])
+    except GetoptError as e:
+        print(e)
+        print(Usage)
+        sys.exit(2)
+
+    # set default values for arguments
+    Args = dict()
+    Args['ConfidencePct'] = DefaultConfidencePct
+    Args['NbRun'] = DefaultNbRun
+    Args['Debug'] = False
+
+     # Read arguments from command line
+    for opt, arg in opts:
+        if opt in ('-c', '--confidence'):
+            Args['ConfidencePct'] = int(arg)
+            if Args['ConfidencePct'] < 0 or Args['ConfidencePct'] >100:
+                print(Usage)
+                print('Confidence is a % value between 0 and 100')
+                exit (-3)
+        elif opt in ('-r', '--runcount'):
+            Args['NbRun'] = int(arg)
+            if Args['NbRun'] <=0:
+                print(Usage)
+                print('The number of runs must be positive')
+                exit (-3)
+        elif opt in ('-', '--Debug'):
+            Args['Debug'] = True
+    # Done parsing command line
+
+    # Verify we have the required arguments  -> N/A here
+
+    if (Args['Debug']):  # Debug is true - print all the arguments we read
+        for key in Args.keys():
+            print('Arg %s= %s' % (key, Args[key]))
+
+    return (Args)
 
 # ------------------
 def FinPlanIsOK(finplan):
@@ -345,7 +393,8 @@ class ComputePlanAPI(Resource):
         self.reqparse = reqparse.RequestParser()
         # No arguments
         super(ComputePlanAPI, self).__init__()
-         
+      
+    # This is where the action is - and the withdrawal amount for the given FinPlan is computed 
     def get(self, plan_id):
         # FinPlanList = filter(lambda t: t['FinPlan_ID'] == id_string, FinPlanScenario)
         FinPlanList = [plan for plan in FinPlanScenario if plan['FinPlan_ID'] == plan_id]
@@ -354,13 +403,15 @@ class ComputePlanAPI(Resource):
         else:
             finplan = FinPlanList[0]
         # Compute the FinPlan passed as argument
-        print ("Computing Plan w/ ID: %s" % finplan['FinPlan_ID'])
+        ConfidencePct = ConfigParam['ConfidencePct']
+        NbRun = ConfigParam['NbRun']
+        print ("Computing Plan w/ ID: %s - with %d Runs & Confidence %%: %d" % (finplan['FinPlan_ID'],NbRun, ConfidencePct))
         # Do the real computations
         okFlag, errorString = FinPlanIsOK(finplan)
         if not okFlag:
             print(errorString)
             exit (-2)  # return an error response
-        resultPlan = FP.MonteCarlo(finplan, DefaultNbRun, DefaultConfidenceFactor)  # only 1 run to test
+        resultPlan = FP.MonteCarlo(finplan, NbRun, ConfidencePct, HistoricalReturn)  # only 1 run to test
         print json.dumps(resultPlan, sort_keys=True, indent=4)          
         
         return { 'Financial Plan': marshal(finplan, finplan_fields) }                
@@ -383,6 +434,21 @@ def missing_param(error):
 
 
 # ------------------
-if __name__ == '__main__':
+def main(argv):
+    
+    # Load arguments:
+    Args = handleArgs(argv)
+    Debug = Args['Debug']
+    ConfigParam['ConfidencePct'] = Args['ConfidencePct']
+    ConfigParam['NbRun'] = Args['NbRun']
+    print ('NbRun %d Confidence Pct: %d' % (ConfigParam['NbRun'], ConfigParam['ConfidencePct']))
+    
+    # Run the REST API server
     app.run(debug = True)
+    
+    exit
+    
+# ------------------
+if __name__ == '__main__':
+    main(sys.argv[1:])    
     

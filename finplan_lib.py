@@ -15,16 +15,14 @@ The MC simulations use the Historical mean,stddev for each asset class - and gen
 The simulations are run "NbRun" and the contribution amount is returned based on the confidence factor 
 '''
 
-import string
 import numpy as np
-import numpy.random as rand
 from numpy.core.numeric import dtype
+import numpy.random as rand
+import string
 
 
 # ToDo: Replace the following default values by arguments - or config variables
 # Default Values
-HistoricalReturn = {"Stocks": [9.90, 19.1], "Bonds": [5.80, 7.50], "T-Bills": [3.60, 0.90], "Cash": [0.0, 0.0]}
-
 Debug = False
 
 # ------------------
@@ -141,7 +139,7 @@ def computeRate(phaseList, HistoricalReturn):
     return(rateArray)          
 
 # ------------------
-def MonteCarlo(finPlan, NbRun,ConfidenceFactor):
+def MonteCarlo(finPlan, NbRun,ConfidenceFactor, HistoricalReturn):
     '''
     For each of NbRun
     compute an array of Return Rates for each portfolio type for each year, and add this to the compound rate - proportional to the portfolio allocation
@@ -189,47 +187,5 @@ def MonteCarlo(finPlan, NbRun,ConfidenceFactor):
     return(finPlan)  
 
 # ------------------
-def checkFinPlan(finplan):
-    phaseList = finplan['PhaseList']
-    phaseList.sort(key=lambda phase: phase['startAge'])
-    for phase in phaseList:
-        print('Phase: %s - StartAge: %d' % (phase['Name'], phase['startAge']))
-    # Make sure the phases are continuous
-    endAge = phaseList[0]['endAge']
-    for phase in phaseList[1:]:
-        if phase['startAge'] != endAge:
-            errStr = ('Phases need to be continuous - endAge (%d) is not equal to startAge(%d) of next' % (endAge, phase['startAge']))
-            return(True, errStr)
-        else:
-            endAge = phase['endAge']
-    if finplan['AgeToday'] != phaseList[0]['startAge']:
-        errStr = 'Age today (%d) is different from the starting age of the first Phase (%d)' % (finplan['AgeToday'], phaseList[0]['startAge'])
-        return(True, errStr)
-    if finplan['AgeEnd'] != phaseList[-1]['endAge']:
-        errStr = ' End Age  (%d) is different from the end age of the last Phase (%d)' % (finplan['AgeEnd'] , phaseList[-1]['endAge'])        
-        return(True, errStr)
-    # Make sure that in each phase, the portfolio allocation adds up to 100% - If not, then adjust the cash - if cannot adjust the cash -> error
-    assetList = HistoricalReturn.keys()  # List of asset types that we know about
-    for phase in phaseList:
-        totalPct = 0.0
-        portfolio = phase['Portfolio']
-        # print(portfolio)
-        for asset, pct in portfolio.iteritems():  # compute sum of % of asset allocations for this phase
-            totalPct += float(pct)
-            if (asset not in assetList):  # Check that asset type is valid
-                errStr = 'Unknown asset type %s in phase: %s' % (asset, phase['Name'])       
-                return(True, errStr)                 
-        if totalPct == 100.0:
-            continue # we're good
-        else:
-            delta = 100.0 - totalPct
-            # Attempt to adjust the Cash allocation
-            newCashPct = portfolio.get('Cash', 0) + delta  # adjust the Cash allocation
-            if (newCashPct >= 0.0 and newCashPct <= 100.0):  # new Cash allocation is within bounds
-                portfolio['Cash'] = newCashPct # adjust Cash allocation
-                print('Fixed Portfolio', phase['Portfolio'])
-            else:  # Can't fix things -> error
-                errStr = 'Portfolio allocations do not add up to 100% in one of the phases'       
-                return(True, errStr)   
-    
-    return (False,"it's all good")  # no errors
+
+
