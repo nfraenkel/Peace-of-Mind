@@ -19,3 +19,9 @@ Useful Links
 * [Documentation/Quickstart on Flask](http://flask.pocoo.org/docs/quickstart/)
 * [Documentation on Flask RESTful](http://flask-restful.readthedocs.org/en/latest/)
 * [Historical rates of return for asset classes](http://fc.standardandpoors.com/sites/client/generic/axa/axa4/Article.vm?topic=5991&siteContent=8088)
+* Life Expectancy Calculators
+- [Worldwide life expectancy by age & gender](http://www.worldlifeexpectancy.com/your-life-expectancy-by-age)
+- [How long will I live (long form)?](http://gosset.wharton.upenn.edu/mortality/perl/CalcForm.html)
+- [How long will I live (short form)?](http://gosset.wharton.upenn.edu/mortality/form.html)
+
+

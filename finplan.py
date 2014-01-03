@@ -37,8 +37,7 @@ api = Api(app)
 DefaultNbRun = 10000
 DefaultConfidencePct = 90 # % between 0-100
 ConfigParam = dict()  # so that we can set the command line arguments & pass them globally
-DefaultAgeToday = 30
-DefaultEndAge = 90
+DefaultAgeFinal = 90
 DefaultInflationRate = 2.0
 DefaultEndFunds = 1.0 # Default value for target end funds at end of retirement
 DefaultDebug = False
@@ -60,8 +59,7 @@ HistoricalReturn = {"Stocks": [9.90, 19.1], "Bonds": [5.80, 7.50], "T-Bills": [3
 # ** Make sure that the required and DEFAULT attributes are all there (not necessarily w/ default values)
 # Declare it in a single dict - this way, we only have to maintain it here - the rest of the code should just iterate the dict
 DefaultFinPlanValue = {
-    'AgeToday': DefaultAgeToday, 
-    'AgeEnd': DefaultEndAge,
+    'AgeFinal': DefaultAgeFinal,
     'InflationRate': DefaultInflationRate,
     'TargetEndFunds': DefaultEndFunds
 }
@@ -76,7 +74,7 @@ FinPlanScenario = [
         'Email': 'SantaClaus@xmas.com',
         'HasResult': False,
         'AgeToday': 30, 
-        'AgeEnd': 90,
+        'AgeFinal': 90,
         'StartingAmount': 200000,
         'TargetEndFunds': 1.0,
         'PhaseList' : [
@@ -101,7 +99,7 @@ FinPlanScenario = [
         'Email': 'SantaClaus@xmas.com',
         'HasResult': False,
         'AgeToday': 30, 
-        'AgeEnd': 90,
+        'AgeFinal': 90,
         'StartingAmount': 200000,
         'TargetEndFunds': 1000,
         'PhaseList' : [
@@ -152,7 +150,7 @@ finplan_fields = {
     'Email': fields.String,
     'HasResult': fields.Boolean,
     'AgeToday': fields.Float,
-    'AgeEnd': fields.Float,
+    'AgeFinal': fields.Float,
     'StartingAmount': fields.Float,
     'TargetEndFunds': fields.Float,
     'PhaseList': fields.List(fields.Nested(phase_fields)),
@@ -215,9 +213,13 @@ def FinPlanIsOK(finplan):
     '''
     
     # ToDo: Perform validation of the fields other than those in PhaseList:  e.g. All required fields present, Age >=0 Inflation rate >= 0.0
+    if finplan.get('AgeFinal', None) == None:
+        finplan['AgeFinal'] = DefaultAgeFinal
+    if finplan['AgeToday'] >= finplan['AgeFinal']
+        return (False,"End Age needs to be greater than age Today")
     
     if (finplan.get('PhaseList') == None):
-        return (True,"it's all good - but needs the ")  # no errors
+        return (True,"it's all good - but needs the Phases")  # no errors
 
     # Check validity of the phases in PhaseList
     phaseList = finplan['PhaseList']
@@ -234,8 +236,8 @@ def FinPlanIsOK(finplan):
     if finplan['AgeToday'] != phaseList[0]['startAge']:
         errStr = 'Age today (%d) is different from the starting age of the first Phase (%d)' % (finplan['AgeToday'], phaseList[0]['startAge'])
         return(False, errStr)
-    if finplan['AgeEnd'] != phaseList[-1]['endAge']:
-        errStr = ' End Age  (%d) is different from the end age of the last Phase (%d)' % (finplan['AgeEnd'] , phaseList[-1]['endAge'])        
+    if finplan['AgeFinal'] != phaseList[-1]['endAge']:
+        errStr = ' End Age  (%d) is different from the end age of the last Phase (%d)' % (finplan['AgeFinal'] , phaseList[-1]['endAge'])        
         return(False, errStr)
     # Make sure that in each phase, the portfolio allocation adds up to 100% - If not, then adjust the cash - if cannot adjust the cash -> error
     assetList = HistoricalReturn.keys()  # List of asset types that we know about
@@ -279,9 +281,9 @@ class FinPlanListAPI(Resource):
            help = 'No Email  provided', location = 'json')
         self.reqparse.add_argument('HasResult', type = bool, required = False,
            help = 'No Result Flag  provided', location = 'json')
-        self.reqparse.add_argument('AgeToday', type = float, required = False,
+        self.reqparse.add_argument('AgeToday', type = float, required = True,
            help = 'No age provided', location = 'json')
-        self.reqparse.add_argument('AgeEnd', type = float, required = False,
+        self.reqparse.add_argument('AgeFinal', type = float, required = False,
            help = 'No End age provided', location = 'json')
         self.reqparse.add_argument('StartingAmount', type = float, required = True,
            help = 'No Starting Investment amount provided', location = 'json')
@@ -345,7 +347,7 @@ class SinglePlanAPI(Resource):
            help = 'No Result Flag  provided', location = 'json')
         self.reqparse.add_argument('AgeToday', type = float, required = False,
            help = 'No age provided', location = 'json')
-        self.reqparse.add_argument('AgeEnd', type = float, required = False,
+        self.reqparse.add_argument('AgeFinal', type = float, required = False,
            help = 'No End age provided', location = 'json')
         self.reqparse.add_argument('StartingAmount', type = float, required = False,
            help = 'No Starting Investment amount provided', location = 'json')

@@ -29,7 +29,7 @@ echo "--------- Get a known FinPlan --------- "
 curl -i http://localhost:5000/finplan/api/v2.0/finplan/$planID
 echo
 echo "--------- Create a new FinPlan --------- "
-curl -i  -H "Content-Type: application/json" -X POST -d '{"Title": "Moderate", "Description": "Very Moderate",  "AgeEnd": 95,  "StartingAmount":250000, "UserName": "Suerte", "Email":"SantaClaus@xmas.com"}' http://localhost:5000/finplan/api/v2.0/finplan
+curl -i  -H "Content-Type: application/json" -X POST -d '{"Title": "Moderate", "Description": "Very Moderate",  "AgeToday": 35,  "StartingAmount":250000, "UserName": "Suerte", "Email":"SantaClaus@xmas.com"}' http://localhost:5000/finplan/api/v2.0/finplan
 echo
 echo "--------- Show the list of all FinPlans - Make sure the new one is there --------- "
 curl -i http://localhost:5000/finplan/api/v2.0/finplan
