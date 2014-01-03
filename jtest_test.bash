@@ -8,44 +8,45 @@
 # -d '{"PhaseList":[ 
 #             {"Name": "1-phase", 
 #             "startAge": 30}]}' \
-# http://localhost:5000/finplan/api/v1.0/finplan/$planID
+# http://localhost:5000/finplan/api/v2.0/finplan/$planID
 #
 # Use true/false in json (rather than True/False from Python)
 # ------------ -----  -----------
 
 function get_plan_id {
-	planID=`curl -i http://localhost:5000/finplan/api/v1.0/finplan | grep -m 1 FinPlan_ID | sed -e 's/            \"FinPlan_ID\": \"//' -e 's/\",//' -e 's/ //g'`
+	planID=`curl -i http://localhost:5000/finplan/api/v2.0/finplan | grep -m 1 FinPlan_ID | sed -e 's/            \"FinPlan_ID\": \"//' -e 's/\",//' -e 's/ //g'`
 	}
 
 echo "--------- Show the list of all FinPlans - Make sure the new one is there --------- "
-curl -i http://localhost:5000/finplan/api/v1.0/finplan
+curl -i http://localhost:5000/finplan/api/v2.0/finplan
 echo
+
 
 echo "--------- Get the ID of the first Plan - so that we can use it later --------- "
 get_plan_id
 
 echo "--------- Get a known FinPlan --------- "
-curl -i http://localhost:5000/finplan/api/v1.0/finplan/$planID
+curl -i http://localhost:5000/finplan/api/v2.0/finplan/$planID
 echo
 echo "--------- Create a new FinPlan --------- "
-curl -i  -H "Content-Type: application/json" -X POST -d '{"Title": "Moderate", "Description": "Very Moderate",  "AgeEnd": 95,  "StartingAmount":250000, "UserName": "Suerte", "Email":"SantaClaus@xmas.com"}' http://localhost:5000/finplan/api/v1.0/finplan
+curl -i  -H "Content-Type: application/json" -X POST -d '{"Title": "Moderate", "Description": "Very Moderate",  "AgeEnd": 95,  "StartingAmount":250000, "UserName": "Suerte", "Email":"SantaClaus@xmas.com"}' http://localhost:5000/finplan/api/v2.0/finplan
 echo
 echo "--------- Show the list of all FinPlans - Make sure the new one is there --------- "
-curl -i http://localhost:5000/finplan/api/v1.0/finplan
+curl -i http://localhost:5000/finplan/api/v2.0/finplan
 echo
 
 echo
 echo "--------- UPDATE the First FinPlan --------- "
-curl -i -H "Content-Type: application/json" -X PUT -d '{"Title":"Somewhat Moderate", "InflationRate": 2.5}' http://localhost:5000/finplan/api/v1.0/finplan/$planID
+curl -i -H "Content-Type: application/json" -X PUT -d '{"Title":"Somewhat Moderate", "InflationRate": 2.5}' http://localhost:5000/finplan/api/v2.0/finplan/$planID
 
 echo "--------- Make sure the value in the Stored list was updated --------- "
-curl -i http://localhost:5000/finplan/api/v1.0/finplan/$planID
+curl -i http://localhost:5000/finplan/api/v2.0/finplan/$planID
 echo
 echo "--------- DELETE the First FinPlan --------- "
-curl -i  -X DELETE http://localhost:5000/finplan/api/v1.0/finplan/$planID
+curl -i  -X DELETE http://localhost:5000/finplan/api/v2.0/finplan/$planID
 echo
 echo "--------- Make the plan was deleted - should get an Error--------- "
-curl -i http://localhost:5000/finplan/api/v1.0/finplan/$planID
+curl -i http://localhost:5000/finplan/api/v2.0/finplan/$planID
 echo
 
 echo "--------- Get a new valid PlanID - so that we can use it later --------- "
@@ -68,14 +69,14 @@ curl -i -H "Content-Type: application/json" -X PUT \
             "NetContribution": 0, 
             "ToCompute": true, 
             "Portfolio": {"Stocks": 80.0, "Bonds": 20.0, "T-Bills": 0.0, "Cash": 0.0}}]}' \
-http://localhost:5000/finplan/api/v1.0/finplan/$planID
+http://localhost:5000/finplan/api/v2.0/finplan/$planID
 echo "--------- Make sure the new PhaseList replaces the old one --------- "
-curl -i http://localhost:5000/finplan/api/v1.0/finplan/$planID
+curl -i http://localhost:5000/finplan/api/v2.0/finplan/$planID
 echo
 
 echo "--------- Run the computation on the FinPlan --------- "
-curl -i http://localhost:5000/finplan/api/v1.0/finplan/$planID/compute
+curl -i http://localhost:5000/finplan/api/v2.0/finplan/$planID/compute
 
 echo "--------- Show the results after execution: CHECK  Withdrawal & HasResult --------- "
-curl -i http://localhost:5000/finplan/api/v1.0/finplan/$planID
+curl -i http://localhost:5000/finplan/api/v2.0/finplan/$planID
 echo

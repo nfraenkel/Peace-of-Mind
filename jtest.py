@@ -353,9 +353,9 @@ class ComputePlanAPI(Resource):
         # ToDo: Do the real computations
         return { 'Financial Plan': marshal(FinPlanList[0], finplan_fields) }                
             
-api.add_resource(FinPlanListAPI, '/finplan/api/v1.0/finplan', endpoint = 'FinPlan')
-api.add_resource(SinglePlanAPI, '/finplan/api/v1.0/finplan/<plan_id>', endpoint = 'SinglePlan')
-api.add_resource(ComputePlanAPI, '/finplan/api/v1.0/finplan/<plan_id>/compute', endpoint = 'ComputePlan')
+api.add_resource(FinPlanListAPI, '/finplan/api/v2.0/finplan', endpoint = 'FinPlan')
+api.add_resource(SinglePlanAPI, '/finplan/api/v2.0/finplan/<plan_id>', endpoint = 'SinglePlan')
+api.add_resource(ComputePlanAPI, '/finplan/api/v2.0/finplan/<plan_id>/compute', endpoint = 'ComputePlan')
 
 # ------------------------------------------------------
 
