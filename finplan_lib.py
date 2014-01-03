@@ -23,7 +23,6 @@ from numpy.core.numeric import dtype
 
 # ToDo: Replace the following default values by arguments - or config variables
 # Default Values
-DefaultEndFunds = 1.0 # Default value for target end funds at end of retirement
 HistoricalReturn = {"Stocks": [9.90, 19.1], "Bonds": [5.80, 7.50], "T-Bills": [3.60, 0.90], "Cash": [0.0, 0.0]}
 
 Debug = False
@@ -71,9 +70,9 @@ def run_all_years(ContributionAmount, finPlan, rateArray):
     return(EndFunds)
 
 # ------------------
-def compute_withdrawal(targetEndValue, finPlan, rateArray):    
+def compute_withdrawal(finPlan, rateArray):    
     '''
-    For a given interest rate, find the withdrawal amount so that the EndFunds are equal to the targetEndValue
+    For a given interest rate, find the withdrawal amount so that the EndFunds are equal to the TargetEndFunds in the plan
     In other words, what withdrawals can we afford based on interest rate?
     Version 2: the relationship between EndFunds and withdrawal is linear => compute Endfunds for 2 values and interpolate to get the results
     '''
@@ -84,7 +83,7 @@ def compute_withdrawal(targetEndValue, finPlan, rateArray):
     EndFunds_2 = run_all_years(withdrawal_2, finPlan, rateArray)
     A_Cst = (EndFunds_2 - EndFunds_1) / (withdrawal_2 - withdrawal_1)
     B_Cst = EndFunds_1 - A_Cst * withdrawal_1
-    withdrawal = (targetEndValue - B_Cst) / A_Cst
+    withdrawal = (finPlan['TargetEndFunds'] - B_Cst) / A_Cst
     lastEndFunds = run_all_years(withdrawal, finPlan, rateArray)
     
     return (withdrawal, lastEndFunds)
@@ -157,11 +156,11 @@ def MonteCarlo(finPlan, NbRun,ConfidenceFactor):
     withdrawalList =[]
     rateList =[]
     run = 0
-    targetEndFunds = finPlan.get('TargetEndFunds', DefaultEndFunds)
+    targetEndFunds = finPlan['TargetEndFunds']
     while (run < NbRun):
         # generate a list of Return Rates based on the mean & stddev
         rateArray = computeRate(phaseList, HistoricalReturn)        
-        withdrawal, EndFunds = compute_withdrawal(DefaultEndFunds, finPlan,rateArray)  
+        withdrawal, EndFunds = compute_withdrawal(finPlan,rateArray)  
         withdrawalList.append(withdrawal)  # add the results to the list
         # print ('run {:,}: withdrawal ${:,}'.format(run, int(withdrawal)))
         run += 1
@@ -186,7 +185,6 @@ def MonteCarlo(finPlan, NbRun,ConfidenceFactor):
     mean = np.mean(retArray, dtype=np.float64)
     stddev = np.std(retArray, dtype=np.float64) 
     print ('Rate: mean = %f  stddev = %f ' % (mean, stddev))
-    
 
     return(finPlan)  
 

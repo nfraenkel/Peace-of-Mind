@@ -53,11 +53,16 @@ HistoricalReturn = {"Stocks": [9.90, 19.1], "Bonds": [5.80, 7.50], "T-Bills": [3
 # ** Make sure that the required and DEFAULT attributes are all there (not necessarily w/ default values  
 # 
 # Default Values
+DefaultAgeToday = 30
+DefaultEndAge = 90
+DefaultInflationRate = 2.0
+DefaultEndFunds = 1.0 # Default value for target end funds at end of retirement
 # Declare it in a single dict - this way, we only have to maintain it here - the rest of the code should just iterate the dict
 DefaultFinPlanValue = {
-    'AgeToday': 30, 
-    'AgeEnd': 90,
-    'InflationRate': 2.0
+    'AgeToday': DefaultAgeToday, 
+    'AgeEnd': DefaultEndAge,
+    'InflationRate': DefaultInflationRate,
+    'TargetEndFunds': DefaultEndFunds
 }
 
 FinPlanScenario = [
@@ -71,6 +76,7 @@ FinPlanScenario = [
         'AgeToday': 30, 
         'AgeEnd': 90,
         'StartingAmount': 200000,
+        'TargetEndFunds': 1.0,
         'PhaseList' : [
             {'Name': 'Working',
             'startAge': 30,
@@ -95,6 +101,7 @@ FinPlanScenario = [
         'AgeToday': 30, 
         'AgeEnd': 90,
         'StartingAmount': 200000,
+        'TargetEndFunds': 1000,
         'PhaseList' : [
             {'Name': 'Retired',
             'startAge': 65,
@@ -145,6 +152,7 @@ finplan_fields = {
     'AgeToday': fields.Float,
     'AgeEnd': fields.Float,
     'StartingAmount': fields.Float,
+    'TargetEndFunds': fields.Float,
     'PhaseList': fields.List(fields.Nested(phase_fields)),
     'InflationRate': fields.Float    
 }
@@ -154,12 +162,14 @@ def FinPlanIsOK(finplan):
     '''
     Validates that the finplan passed as argument is OK syntactically
     Returns 2 arguments: Flag + ErrorString. Flag is True if the plan is OK (in which case Error String can be ignored)
+    
+    ToDo: Make 2 versions: one "soft" - that does not assume everything is complete - one "hard" - that makes sure the plan is ready to be computed
     '''
     
     # ToDo: Perform validation of the fields other than those in PhaseList:  e.g. All required fields present, Age >=0 Inflation rate >= 0.0
     
     if (finplan.get('PhaseList') == None):
-        return (True,"it's all good")  # no errors
+        return (True,"it's all good - but needs the ")  # no errors
 
     # Check validity of the phases in PhaseList
     phaseList = finplan['PhaseList']
@@ -227,6 +237,8 @@ class FinPlanListAPI(Resource):
            help = 'No End age provided', location = 'json')
         self.reqparse.add_argument('StartingAmount', type = float, required = True,
            help = 'No Starting Investment amount provided', location = 'json')
+        self.reqparse.add_argument('TargetEndFunds', type = float, required = False,
+           help = 'No Target End Funds amount provided', location = 'json')
         self.reqparse.add_argument('PhaseList', type = list, required = False,
             help = 'No Phases provided', location = 'json')
         self.reqparse.add_argument('InflationRate', type = float, required = False,
@@ -249,7 +261,6 @@ class FinPlanListAPI(Resource):
             'HasResult': False  # force it False, even it is passed as argument
         }
         # Check if other values have been specified. If not, add the default values
-        
         # ToDo: make sure to handle PhaseList argument
         
         for key, value in DefaultFinPlanValue.iteritems():
@@ -289,7 +300,9 @@ class SinglePlanAPI(Resource):
         self.reqparse.add_argument('AgeEnd', type = float, required = False,
            help = 'No End age provided', location = 'json')
         self.reqparse.add_argument('StartingAmount', type = float, required = False,
-           help = 'No Starting Inverstment amount provided', location = 'json')
+           help = 'No Starting Investment amount provided', location = 'json')
+        self.reqparse.add_argument('TargetEndFunds', type = float, required = False,
+           help = 'No Target End Funds amount provided', location = 'json')
         self.reqparse.add_argument('PhaseList', type = list, required = False,
             help = 'No Phases provided', location = 'json')
         self.reqparse.add_argument('InflationRate', type = float, required = False,
