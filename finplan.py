@@ -32,7 +32,7 @@ api = Api(app)
 
 # ToDo: Replace the following default values by arguments - or config variables
 # Default Values
-DefaultNbRun = 1000
+DefaultNbRun = 10000
 DefaultConfidenceFactor = 90 # % between 0-100
 Debug = False
 

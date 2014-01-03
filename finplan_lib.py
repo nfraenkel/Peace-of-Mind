@@ -180,7 +180,7 @@ def MonteCarlo(finPlan, NbRun,ConfidenceFactor):
     minWithdrawal = min(withdrawalList)
     maxWithdrawal = max(withdrawalList)    
     # Note max & min are "inverted" since withdrawal is a negative number
-    print('Result = ${:,} - Max = ${:,} - Min = ${:,}'.format(int(-withdrawalResult), int(-minWithdrawal),int(-maxWithdrawal)))
+    print('Result = ${:,} - Max = ${:,} - Min = ${:,}  Nb Runs = {:,}'.format(int(-withdrawalResult), int(-minWithdrawal),int(-maxWithdrawal), NbRun))
     # compute mean and stddev from the rateList
     retArray = np.array(rateList, dtype=np.float64)
     mean = np.mean(retArray, dtype=np.float64)
