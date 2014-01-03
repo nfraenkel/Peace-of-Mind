@@ -333,10 +333,29 @@ class SinglePlanAPI(Resource):
         if len(FinPlanList) == 0:
             abort(404)
         FinPlanScenario.remove(FinPlanList[0])
-        return { 'result': True }            
+        return { 'result': True }
+    
+    
+# ------------------
+class ComputePlanAPI(Resource):
+    def __init__(self):
+        self.reqparse = reqparse.RequestParser()
+        # No arguments
+        super(ComputePlanAPI, self).__init__()
+         
+    def get(self, plan_id):
+        # FinPlanList = filter(lambda t: t['FinPlan_ID'] == id_string, FinPlanScenario)
+        FinPlanList = [plan for plan in FinPlanScenario if plan['FinPlan_ID'] == plan_id]
+        if len(FinPlanList) == 0:
+            abort(404)
+        # Compute the FinPlan passed as argument
+        print ("Computing Plan w/ ID: %s" % FinPlanList[0]['FinPlan_ID'])
+        # ToDo: Do the real computations
+        return { 'Financial Plan': marshal(FinPlanList[0], finplan_fields) }                
             
 api.add_resource(FinPlanListAPI, '/finplan/api/v1.0/finplan', endpoint = 'FinPlan')
 api.add_resource(SinglePlanAPI, '/finplan/api/v1.0/finplan/<plan_id>', endpoint = 'SinglePlan')
+api.add_resource(ComputePlanAPI, '/finplan/api/v1.0/finplan/<plan_id>/compute', endpoint = 'ComputePlan')
 
 # ------------------------------------------------------
 
