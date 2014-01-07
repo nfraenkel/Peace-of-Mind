@@ -16,6 +16,8 @@ If the "ToCompute" flag is set in a phase, then the contribution (in this case w
 More that one phase can set ToCompute, but all these phases will share the same computed contribution
 The MC simulations use the Historical mean,stddev for each asset class - and generate random rate of returns using a normal distribution based on the mean/stddev of the given asset class
 The simulations are run "NbRun" and the contribution amount is returned based on the confidence factor 
+
+01/06/2014 - added ability to read from and store data to file
 '''
 
 import finplan_lib as FP
@@ -37,7 +39,7 @@ api = Api(app)
 DefaultNbRun = 10000
 DefaultConfidencePct = 90 # % between 0-100
 ConfigParam = dict()  # so that we can set the command line arguments & pass them globally
-DefaultAgeFinal = 90
+DefaultLifeExpect = 90
 DefaultInflationRate = 2.0
 DefaultEndFunds = 1.0 # Default value for target end funds at end of retirement
 DefaultDebug = False
@@ -59,13 +61,13 @@ HistoricalReturn = {"Stocks": [9.90, 19.1], "Bonds": [5.80, 7.50], "T-Bills": [3
 # ** Make sure that the required and DEFAULT attributes are all there (not necessarily w/ default values)
 # Declare it in a single dict - this way, we only have to maintain it here - the rest of the code should just iterate the dict
 DefaultFinPlanValue = {
-    'AgeFinal': DefaultAgeFinal,
+    'LifeExpect': DefaultLifeExpect,
     'InflationRate': DefaultInflationRate,
     'TargetEndFunds': DefaultEndFunds
 }
 
 # Pre-loading w/ a couple of scenarios - whose IDs will be the same after server restart
-FinPlanScenario = [
+DefaultFinPlanScenario = [
     {
         'FinPlan_ID': '445585fb-5c9d-4254-9b91-0197a584e6ba',
         'UserName': 'Lucky',
@@ -74,7 +76,7 @@ FinPlanScenario = [
         'Email': 'SantaClaus@xmas.com',
         'HasResult': False,
         'AgeToday': 30, 
-        'AgeFinal': 90,
+        'LifeExpect': 90,
         'StartingAmount': 200000,
         'TargetEndFunds': 1.0,
         'PhaseList' : [
@@ -99,7 +101,7 @@ FinPlanScenario = [
         'Email': 'SantaClaus@xmas.com',
         'HasResult': False,
         'AgeToday': 30, 
-        'AgeFinal': 90,
+        'LifeExpect': 90,
         'StartingAmount': 200000,
         'TargetEndFunds': 1000,
         'PhaseList' : [
@@ -150,7 +152,7 @@ finplan_fields = {
     'Email': fields.String,
     'HasResult': fields.Boolean,
     'AgeToday': fields.Float,
-    'AgeFinal': fields.Float,
+    'LifeExpect': fields.Float,
     'StartingAmount': fields.Float,
     'TargetEndFunds': fields.Float,
     'PhaseList': fields.List(fields.Nested(phase_fields)),
@@ -213,9 +215,9 @@ def FinPlanIsOK(finplan):
     '''
     
     # ToDo: Perform validation of the fields other than those in PhaseList:  e.g. All required fields present, Age >=0 Inflation rate >= 0.0
-    if finplan.get('AgeFinal', None) == None:
-        finplan['AgeFinal'] = DefaultAgeFinal
-    if finplan['AgeToday'] >= finplan['AgeFinal']
+    if finplan.get('LifeExpect', None) == None:
+        finplan['LifeExpect'] = DefaultLifeExpect
+    if finplan['AgeToday'] >= finplan['LifeExpect']:
         return (False,"End Age needs to be greater than age Today")
     
     if (finplan.get('PhaseList') == None):
@@ -236,8 +238,8 @@ def FinPlanIsOK(finplan):
     if finplan['AgeToday'] != phaseList[0]['startAge']:
         errStr = 'Age today (%d) is different from the starting age of the first Phase (%d)' % (finplan['AgeToday'], phaseList[0]['startAge'])
         return(False, errStr)
-    if finplan['AgeFinal'] != phaseList[-1]['endAge']:
-        errStr = ' End Age  (%d) is different from the end age of the last Phase (%d)' % (finplan['AgeFinal'] , phaseList[-1]['endAge'])        
+    if finplan['LifeExpect'] != phaseList[-1]['endAge']:
+        errStr = ' End Age  (%d) is different from the end age of the last Phase (%d)' % (finplan['LifeExpect'] , phaseList[-1]['endAge'])        
         return(False, errStr)
     # Make sure that in each phase, the portfolio allocation adds up to 100% - If not, then adjust the cash - if cannot adjust the cash -> error
     assetList = HistoricalReturn.keys()  # List of asset types that we know about
@@ -283,7 +285,7 @@ class FinPlanListAPI(Resource):
            help = 'No Result Flag  provided', location = 'json')
         self.reqparse.add_argument('AgeToday', type = float, required = True,
            help = 'No age provided', location = 'json')
-        self.reqparse.add_argument('AgeFinal', type = float, required = False,
+        self.reqparse.add_argument('LifeExpect', type = float, required = False,
            help = 'No End age provided', location = 'json')
         self.reqparse.add_argument('StartingAmount', type = float, required = True,
            help = 'No Starting Investment amount provided', location = 'json')
@@ -347,7 +349,7 @@ class SinglePlanAPI(Resource):
            help = 'No Result Flag  provided', location = 'json')
         self.reqparse.add_argument('AgeToday', type = float, required = False,
            help = 'No age provided', location = 'json')
-        self.reqparse.add_argument('AgeFinal', type = float, required = False,
+        self.reqparse.add_argument('LifeExpect', type = float, required = False,
            help = 'No End age provided', location = 'json')
         self.reqparse.add_argument('StartingAmount', type = float, required = False,
            help = 'No Starting Investment amount provided', location = 'json')
