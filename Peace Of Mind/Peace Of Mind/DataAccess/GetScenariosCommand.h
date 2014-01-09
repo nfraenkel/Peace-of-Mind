@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Scenario.h"
 
 @protocol GetScenariosDelegate <NSObject>
 -(void)reactToGetScenariosResponse:(NSArray*)scenarios;

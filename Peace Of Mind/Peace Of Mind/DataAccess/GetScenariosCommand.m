@@ -22,7 +22,7 @@
 }
 
 -(void)fetchScenarios {
-    NSLog(@"[GetScenariosCommand] fetching relevant collections.....");
+    NSLog(@"[GetScenariosCommand] fetching scenarios for user.....");
     
     // spinnaz
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -72,17 +72,16 @@
     
     NSDictionary *dictResponse = [NSJSONSerialization JSONObjectWithData:_data options:0 error:nil];
     
-    NSLog(@"YEAH!!!: %@", dictResponse);
+    NSDictionary *financialPlans = [dictResponse objectForKey:kResponseDictionaryKey];
     
-    NSMutableArray *colls = [[NSMutableArray alloc] init];
-//    for (NSDictionary *dict in dictResponse){
-//        collectivlyCollection *cc = [[collectivlyCollection alloc] initWithDictionary:dict];
-//        
-//        // add collection to list of collections
-//        [colls addObject:cc];
-//    }
+    NSMutableArray *scenarios = [[NSMutableArray alloc] init];
+    for (NSDictionary *dict in financialPlans){
+        NSLog(@"dict? %@", dict);
+        Scenario *s = [[Scenario alloc] initWithDictionary:dict];
+        [scenarios addObject:s];
+    }
 
-    [self.delegate reactToGetScenariosResponse:[NSArray arrayWithArray:colls]];
+    [self.delegate reactToGetScenariosResponse:[NSArray arrayWithArray:scenarios]];
     
 }
 

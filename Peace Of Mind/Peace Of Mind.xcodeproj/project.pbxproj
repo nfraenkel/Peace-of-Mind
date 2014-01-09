@@ -23,6 +23,8 @@
 		4C12BAA2187E342100927765 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C12BAA0187E342100927765 /* InfoPlist.strings */; };
 		4C12BAA4187E342100927765 /* Peace_Of_MindTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C12BAA3187E342100927765 /* Peace_Of_MindTests.m */; };
 		4C12BAB6187E383100927765 /* GetScenariosCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C12BAB5187E383100927765 /* GetScenariosCommand.m */; };
+		4CFE7116187E5C79007D911D /* Scenario.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE7115187E5C79007D911D /* Scenario.m */; };
+		4CFE7119187E857C007D911D /* Phase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE7118187E857C007D911D /* Phase.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,10 @@
 		4C12BAB4187E383100927765 /* GetScenariosCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetScenariosCommand.h; sourceTree = "<group>"; };
 		4C12BAB5187E383100927765 /* GetScenariosCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetScenariosCommand.m; sourceTree = "<group>"; };
 		4C12BAB7187E3CB200927765 /* DataConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConstants.h; sourceTree = "<group>"; };
+		4CFE7114187E5C79007D911D /* Scenario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scenario.h; sourceTree = "<group>"; };
+		4CFE7115187E5C79007D911D /* Scenario.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scenario.m; sourceTree = "<group>"; };
+		4CFE7117187E857C007D911D /* Phase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Phase.h; sourceTree = "<group>"; };
+		4CFE7118187E857C007D911D /* Phase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Phase.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +182,10 @@
 		4CFE7113187E5BCA007D911D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4CFE7114187E5C79007D911D /* Scenario.h */,
+				4CFE7115187E5C79007D911D /* Scenario.m */,
+				4CFE7117187E857C007D911D /* Phase.h */,
+				4CFE7118187E857C007D911D /* Phase.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -280,7 +290,9 @@
 			files = (
 				4C12BA8C187E342100927765 /* POMMasterViewController.m in Sources */,
 				4C12BA82187E342100927765 /* main.m in Sources */,
+				4CFE7119187E857C007D911D /* Phase.m in Sources */,
 				4C12BAB6187E383100927765 /* GetScenariosCommand.m in Sources */,
+				4CFE7116187E5C79007D911D /* Scenario.m in Sources */,
 				4C12BA8F187E342100927765 /* POMDetailViewController.m in Sources */,
 				4C12BA86187E342100927765 /* POMAppDelegate.m in Sources */,
 			);
