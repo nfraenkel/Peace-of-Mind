@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1C463EF1-D205-48C3-9596-7B636723C21B</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Peace Of Mind</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0A852027-1C57-4FC4-8DF8-21A468CBB4D0</key>
+		<string>ssh://github.com/nfraenkel/Peace-of-Mind.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Peace Of Mind/Peace Of Mind.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0A852027-1C57-4FC4-8DF8-21A468CBB4D0</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/nfraenkel/Peace-of-Mind.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>0A852027-1C57-4FC4-8DF8-21A468CBB4D0</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0A852027-1C57-4FC4-8DF8-21A468CBB4D0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Peace-of-Mind</string>
+		</dict>
+	</array>
+</dict>
+</plist>
