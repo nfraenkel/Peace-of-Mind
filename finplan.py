@@ -67,7 +67,7 @@ DefaultFinPlanValue = {
 }
 
 # Pre-loading w/ a couple of scenarios - whose IDs will be the same after server restart
-DefaultFinPlanScenario = [
+FinPlanScenario = [
     {
         'FinPlan_ID': '445585fb-5c9d-4254-9b91-0197a584e6ba',
         'UserName': 'Lucky',
