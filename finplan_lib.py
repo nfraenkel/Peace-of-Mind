@@ -10,7 +10,7 @@ All inputs are within the program
 A scenario includes a number of phases (e.g. working, semi-retirement, retirement)
 Each phase has a portfolio allocation of asset types (stocks, bonds, etc), and a contribution (negative for withdrawal). 
 If the "ToCompute" flag is set in a phase, then the contribution (in this case withdrawal) will be computed by the MC simulations.
-More that one phase can set ToCompute, but all these phases will share the same computed contribution
+More that one phase can set ToCompute, but all these phases will share the same value in NetContribution
 The MC simulations use the Historical mean,stddev for each asset class - and generate random rate of returns using a normal distribution based on the mean/stddev of the given asset class
 The simulations are run "NbRun" and the contribution amount is returned based on the confidence factor 
 '''
@@ -171,7 +171,6 @@ def MonteCarlo(finPlan, NbRun,ConfidenceFactor, HistoricalReturn):
     for phase in phaseList:
         if phase['ToCompute']: # update the result and lower the flag
             phase['netContribution'] = withdrawalResult # enter the result
-            phase['ToCompute'] = False
     finPlan['HasResult'] = True
     
     minWithdrawal = min(withdrawalList)
