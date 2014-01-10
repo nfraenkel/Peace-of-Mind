@@ -14,7 +14,7 @@
 
 @implementation POMUpdateScenarioViewController
 
-@synthesize scrolley;
+@synthesize scrolley, backgroundView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,7 +32,14 @@
     
     self.scrolley.delegate = self;
     
-    [self.scrolley setContentSize:CGSizeMake(0, 1000)];
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    float scrollDefaultHeight = scrolley.frame.size.height;
+    [self.scrolley setContentSize:CGSizeMake(0, 568)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,5 +58,11 @@
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
+}
+
+- (IBAction)addPhaseButtonTouched:(id)sender {
+}
+
+- (IBAction)computeButtonTouched:(id)sender {
 }
 @end

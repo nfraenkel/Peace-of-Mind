@@ -10,9 +10,12 @@
 
 @interface POMUpdateScenarioViewController : UIViewController <UIScrollViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrolley;
 
 - (IBAction)closeButtonTouched:(id)sender;
 - (IBAction)saveButtonTouched:(id)sender;
+- (IBAction)addPhaseButtonTouched:(id)sender;
+- (IBAction)computeButtonTouched:(id)sender;
 
 @end
