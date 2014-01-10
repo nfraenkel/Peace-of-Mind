@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "POMSingleton.h"
+
 #import "GetScenariosCommand.h"
 
+#import "Scenario.h"
+
 @interface POMMasterViewController : UITableViewController <GetScenariosDelegate>
+
+@property (strong) POMSingleton *singleton;
 
 @end
