@@ -1,0 +1,78 @@
+[
+    {
+        "AgeToday": 30.0, 
+        "Email": "SantaClaus@xmas.com", 
+        "FinPlan_ID": "47b79347-306d-47c9-9336-8834be06fc1f", 
+        "HasResult": false, 
+        "InflationRate": 2.0, 
+        "LifeExpect": 90, 
+        "PhaseList": [
+            {
+                "Name": "Phase 1", 
+                "NetContribution": 15000, 
+                "Portfolio": {
+                    "Bonds": 1.0, 
+                    "Cash": 0.0, 
+                    "Stocks": 99.0, 
+                    "T-Bills": 0.0
+                }, 
+                "ToCompute": false, 
+                "endAge": 65, 
+                "startAge": 30
+            }, 
+            {
+                "Name": "Phase 2", 
+                "NetContribution": 0, 
+                "Portfolio": {
+                    "Bonds": 20.0, 
+                    "Cash": 0.0, 
+                    "Stocks": 80.0, 
+                    "T-Bills": 0.0
+                }, 
+                "ToCompute": true, 
+                "endAge": 90, 
+                "startAge": 65
+            }
+        ], 
+        "StartingAmount": 250000.0, 
+        "TargetEndFunds": 1.0, 
+        "Title": "Moderate", 
+        "UserName": "Suerte"
+    }, 
+    {
+        "AgeToday": 30.0, 
+        "Email": "SantaClaus@xmas.com", 
+        "FinPlan_ID": "617d5df3-4d85-41f5-8307-032a484b0e44", 
+        "HasResult": false, 
+        "InflationRate": 2.0, 
+        "LifeExpect": 90, 
+        "StartingAmount": 250000.0, 
+        "TargetEndFunds": 1.0, 
+        "Title": "Moderate", 
+        "UserName": "Suerte"
+    }, 
+    {
+        "AgeToday": 30.0, 
+        "Email": "SantaClaus@xmas.com", 
+        "FinPlan_ID": "03c89383-8e80-4fa8-8764-d265ea917efd", 
+        "HasResult": false, 
+        "InflationRate": 2.0, 
+        "LifeExpect": 90, 
+        "StartingAmount": 250000.0, 
+        "TargetEndFunds": 1.0, 
+        "Title": "Moderate", 
+        "UserName": "Suerte"
+    }, 
+    {
+        "AgeToday": 30.0, 
+        "Email": "SantaClaus@xmas.com", 
+        "FinPlan_ID": "2808a8e2-d1cb-4cbc-9be0-73000321f9cf", 
+        "HasResult": false, 
+        "InflationRate": 2.0, 
+        "LifeExpect": 90, 
+        "StartingAmount": 250000.0, 
+        "TargetEndFunds": 1.0, 
+        "Title": "Moderate", 
+        "UserName": "Suerte"
+    }
+]

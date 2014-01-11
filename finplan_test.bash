@@ -29,7 +29,7 @@ echo "--------- Get a known FinPlan --------- "
 curl -i http://localhost:5000/finplan/api/v2.0/finplan/$planID
 echo
 echo "--------- Create a new FinPlan --------- "
-curl -i  -H "Content-Type: application/json" -X POST -d '{"Title": "Moderate", "Description": "Very Moderate",  "AgeEnd": 95,  "StartingAmount":250000, "UserName": "Suerte", "Email":"SantaClaus@xmas.com"}' http://localhost:5000/finplan/api/v2.0/finplan
+curl -i  -H "Content-Type: application/json" -X POST -d '{"Title": "Moderate", "Description": "Very Moderate",  "AgeToday": 30,  "StartingAmount":250000, "UserName": "Suerte", "Email":"SantaClaus@xmas.com"}' http://localhost:5000/finplan/api/v2.0/finplan
 echo
 echo "--------- Show the list of all FinPlans - Make sure the new one is there --------- "
 curl -i http://localhost:5000/finplan/api/v2.0/finplan
@@ -38,6 +38,7 @@ echo
 echo
 echo "--------- UPDATE the First FinPlan --------- "
 curl -i -H "Content-Type: application/json" -X PUT -d '{"Title":"Somewhat Moderate", "InflationRate": 2.5}' http://localhost:5000/finplan/api/v2.0/finplan/$planID
+
 
 echo "--------- Make sure the value in the Stored list was updated --------- "
 curl -i http://localhost:5000/finplan/api/v2.0/finplan/$planID
@@ -73,6 +74,13 @@ http://localhost:5000/finplan/api/v2.0/finplan/$planID
 echo "--------- Make sure the new PhaseList replaces the old one --------- "
 curl -i http://localhost:5000/finplan/api/v2.0/finplan/$planID
 echo
+
+
+# ------------
+echo EXIT
+exit
+# ------------
+
 
 echo "--------- Run the computation on the FinPlan --------- "
 curl -i http://localhost:5000/finplan/api/v2.0/finplan/$planID/compute

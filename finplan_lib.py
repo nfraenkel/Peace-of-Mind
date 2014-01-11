@@ -183,7 +183,7 @@ def MonteCarlo(finPlan, NbRun,ConfidenceFactor, HistoricalReturn):
     stddev = np.std(retArray, dtype=np.float64) 
     print ('Rate: mean = %f  stddev = %f ' % (mean, stddev))
 
-    return(finPlan)  
+    return  
 
 # ------------------
 
