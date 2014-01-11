@@ -10,12 +10,9 @@
 
 #import "POMDetailViewController.h"
 
-@interface POMMasterViewController () {
-    NSMutableArray *_objects;
-}
-@end
-
 @implementation POMMasterViewController
+
+@synthesize singleton;
 
 - (void)awakeFromNib
 {
@@ -25,6 +22,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // singleton
+    self.singleton = [POMSingleton sharedDataModel];
 
 	// pull to refresh
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -34,14 +34,21 @@
     
     // left and right buttons: edit, add
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(createNewScenario:)];
     self.navigationItem.rightBarButtonItem = addButton;
+    
+    // get scenarios!!
+    [self getScenarios];
 }
 
--(void)refresh {
+-(void)getScenarios {
     GetScenariosCommand *cmd = [[GetScenariosCommand alloc] initWithUserWithId:nil];
     cmd.delegate = self;
     [cmd fetchScenarios];
+}
+
+-(void)refresh {
+    [self getScenarios];
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,14 +57,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender
+- (void)createNewScenario:(id)sender
 {
-    if (!_objects) {
-        _objects = [[NSMutableArray alloc] init];
+    if (!singleton.scenarios) {
+        singleton.scenarios = [[NSMutableArray alloc] init];
     }
-    [_objects insertObject:[NSDate date] atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self performSegueWithIdentifier:@"newScenario" sender:self];
 }
 
 #pragma mark - Table View
@@ -69,15 +74,23 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _objects.count;
+    return singleton.scenarios.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ScenarioCell" forIndexPath:indexPath];
 
-    NSDate *object = _objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    UILabel *name = (UILabel*)[cell viewWithTag:1];
+    UILabel *desc = (UILabel*)[cell viewWithTag:2];
+    UILabel *comp = (UILabel*)[cell viewWithTag:3];
+    
+    Scenario *s = singleton.scenarios[indexPath.row];
+    name.text = s.title;
+    comp.text = (s.hasBeenComputed) ? [NSString stringWithFormat:@"$1,000.00"] : @"To Be Computed"; // TODO: fix once computed vs. not computed is done
+    comp.textColor = (s.hasBeenComputed) ? [UIColor greenColor] : [UIColor redColor];
+    desc.text = s.description;
+    
     return cell;
 }
 
@@ -90,10 +103,11 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_objects removeObjectAtIndex:indexPath.row];
+        [singleton.scenarios removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+        NSLog(@"!!!!!!!!!!!!!! UITableViewCellEditingStyleInsert !!!!!!!!!!!!!!!!!");
     }
 }
 
@@ -114,10 +128,13 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
+    if ([[segue identifier] isEqualToString:@"showScenarioDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = _objects[indexPath.row];
-        [[segue destinationViewController] setDetailItem:object];
+        Scenario *s = singleton.scenarios[indexPath.row];
+        [[segue destinationViewController] setScenario:s];
+    }
+    else if ([[segue identifier] isEqualToString:@"newScenario"]) {
+        //
     }
 }
 
@@ -131,6 +148,8 @@
 
 -(void)reactToGetScenariosResponse:(NSArray *)scenarios {
     NSLog(@"[POMMasterViewController] GetScenarios SUCCESS!!!");
+    
+    [self.singleton setScenarios:[NSMutableArray arrayWithArray:scenarios]];
     
     [self.refreshControl endRefreshing];
     [self.tableView reloadData];
