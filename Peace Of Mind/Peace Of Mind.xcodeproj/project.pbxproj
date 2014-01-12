@@ -25,6 +25,8 @@
 		4C12BAB6187E383100927765 /* GetScenariosCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C12BAB5187E383100927765 /* GetScenariosCommand.m */; };
 		4C9BA5C4187FB77B00258CDD /* POMSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BA5C3187FB77B00258CDD /* POMSingleton.m */; };
 		4C9BA5C7187FC0EF00258CDD /* POMUpdateScenarioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BA5C6187FC0EF00258CDD /* POMUpdateScenarioViewController.m */; };
+		4CC657E718823699005E2E3F /* LifePhaseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC657E618823699005E2E3F /* LifePhaseView.xib */; };
+		4CC657EA188236AC005E2E3F /* LifePhaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC657E9188236AC005E2E3F /* LifePhaseView.m */; };
 		4CFE7116187E5C79007D911D /* Scenario.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE7115187E5C79007D911D /* Scenario.m */; };
 		4CFE7119187E857C007D911D /* Phase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFE7118187E857C007D911D /* Phase.m */; };
 /* End PBXBuildFile section */
@@ -68,6 +70,9 @@
 		4C9BA5C3187FB77B00258CDD /* POMSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POMSingleton.m; sourceTree = "<group>"; };
 		4C9BA5C5187FC0EF00258CDD /* POMUpdateScenarioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POMUpdateScenarioViewController.h; sourceTree = "<group>"; };
 		4C9BA5C6187FC0EF00258CDD /* POMUpdateScenarioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POMUpdateScenarioViewController.m; sourceTree = "<group>"; };
+		4CC657E618823699005E2E3F /* LifePhaseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LifePhaseView.xib; sourceTree = "<group>"; };
+		4CC657E8188236AC005E2E3F /* LifePhaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LifePhaseView.h; sourceTree = "<group>"; };
+		4CC657E9188236AC005E2E3F /* LifePhaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LifePhaseView.m; sourceTree = "<group>"; };
 		4CFE7114187E5C79007D911D /* Scenario.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scenario.h; sourceTree = "<group>"; };
 		4CFE7115187E5C79007D911D /* Scenario.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scenario.m; sourceTree = "<group>"; };
 		4CFE7117187E857C007D911D /* Phase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Phase.h; sourceTree = "<group>"; };
@@ -140,6 +145,9 @@
 				4C12BA8E187E342100927765 /* POMDetailViewController.m */,
 				4C9BA5C5187FC0EF00258CDD /* POMUpdateScenarioViewController.h */,
 				4C9BA5C6187FC0EF00258CDD /* POMUpdateScenarioViewController.m */,
+				4CC657E8188236AC005E2E3F /* LifePhaseView.h */,
+				4CC657E9188236AC005E2E3F /* LifePhaseView.m */,
+				4CC657E618823699005E2E3F /* LifePhaseView.xib */,
 				4CFE7113187E5BCA007D911D /* Models */,
 				4C12BAB3187E382400927765 /* DataAccess */,
 				4C12BAB7187E3CB200927765 /* DataConstants.h */,
@@ -279,6 +287,7 @@
 			files = (
 				4C12BA91187E342100927765 /* Images.xcassets in Resources */,
 				4C12BA80187E342100927765 /* InfoPlist.strings in Resources */,
+				4CC657E718823699005E2E3F /* LifePhaseView.xib in Resources */,
 				4C12BA89187E342100927765 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,6 +315,7 @@
 				4CFE7116187E5C79007D911D /* Scenario.m in Sources */,
 				4C9BA5C7187FC0EF00258CDD /* POMUpdateScenarioViewController.m in Sources */,
 				4C12BA8F187E342100927765 /* POMDetailViewController.m in Sources */,
+				4CC657EA188236AC005E2E3F /* LifePhaseView.m in Sources */,
 				4C12BA86187E342100927765 /* POMAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
