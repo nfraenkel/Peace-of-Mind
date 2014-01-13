@@ -17,7 +17,7 @@ More that one phase can set ToCompute, but all these phases will share the same 
 The MC simulations use the Historical mean,stddev for each asset class - and generate random rate of returns using a normal distribution based on the mean/stddev of the given asset class
 The simulations are run "NbRun" and the contribution amount is returned based on the confidence factor 
 
-01/06/2014 - added ability to read from and store data to file
+01/12/2014 - added ability to read from and store data to file. The filename is name_of_program.data
 '''
 
 import finplan_lib as FP
@@ -26,6 +26,7 @@ from flask.ext.restful import Api, Resource, reqparse, fields, marshal, \
     marshal_with
 from getopt import GetoptError, gnu_getopt as getopt
 import json
+import os
 import string
 import sys
 import uuid
@@ -37,13 +38,16 @@ api = Api(app)
 # ToDo: Replace the following default values by arguments - or config variables
 # Default Values
 DefaultNbRun = 10000
-DefaultConfidencePct = 90 # % between 0-100
+DefaultConfidencePct = 85 # % between 0-100
 ConfigParam = dict()  # so that we can set the command line arguments & pass them globally
 DefaultLifeExpect = 90
 DefaultInflationRate = 2.0
 DefaultEndFunds = 1.0 # Default value for target end funds at end of retirement
 DefaultDebug = False
-USAGE = '-c confidence_percentage -r run_count_for_monte_carlo -D'
+USAGE = '-c confidence_percentage -r run_count_for_monte_carlo -N -D'
+
+# Global variable
+FinPlanScenario = dict()
 
 '''
 From: http://fc.standardandpoors.com/sites/client/generic/axa/axa4/Article.vm?topic=5991&siteContent=8088 
@@ -67,7 +71,7 @@ DefaultFinPlanValue = {
 }
 
 # Pre-loading w/ a couple of scenarios - whose IDs will be the same after server restart
-FinPlanScenario = [
+DefaultFinPlanScenario = [
     {
         'FinPlan_ID': '445585fb-5c9d-4254-9b91-0197a584e6ba',
         'UserName': 'Lucky',
@@ -126,8 +130,10 @@ FinPlanScenario = [
         'InflationRate': 2.0        
     }
 ]
-# Info on nested fields: http://flask-restful.readthedocs.org/en/latest/fields.html#nested-field
 
+
+
+# Info on nested fields: http://flask-restful.readthedocs.org/en/latest/fields.html#nested-field
 portfolio_fields = {
     "Stocks": fields.Float,
     "Bonds": fields.Float,
@@ -167,7 +173,7 @@ def handleArgs(argv):
 
     Usage = ('Usage error - Syntax is: %s: %s' % (sys.argv[0], USAGE))
     try:
-        opts, args = getopt(argv, 'c:r:D', ['confidence=', 'runcount=', 'Debug'])
+        opts, args = getopt(argv, 'c:r:ND', ['confidence=', 'runcount=', 'NewFile' 'Debug'])
     except GetoptError as e:
         print(e)
         print(Usage)
@@ -177,6 +183,7 @@ def handleArgs(argv):
     Args = dict()
     Args['ConfidencePct'] = DefaultConfidencePct
     Args['NbRun'] = DefaultNbRun
+    Args['NewFile'] = False
     Args['Debug'] = False
 
      # Read arguments from command line
@@ -193,7 +200,9 @@ def handleArgs(argv):
                 print(Usage)
                 print('The number of runs must be positive')
                 exit (-3)
-        elif opt in ('-', '--Debug'):
+        elif opt in ('-N', '--NewFile'):
+            Args['NewFile'] = True
+        elif opt in ('-D', '--Debug'):
             Args['Debug'] = True
     # Done parsing command line
 
@@ -205,6 +214,36 @@ def handleArgs(argv):
 
     return (Args)
 
+# ------------------
+def persist(fileName, jsonObject):
+    with open(fileName, 'w') as outFile:
+        json.dump(jsonObject, outFile, sort_keys = True, indent = 4, ensure_ascii=False)
+        
+    return    
+    
+# ------------------
+def makeBaseName(argv, ExtensionString):
+    
+    '''
+    Create a file name based on the program name and the extension provided as argument
+    program name = /usr/me/mylib/Example.py   ExtensionString: ".data"
+    filename: ./Example.data
+    Note that the file points to the current local directory (and not where the program is stored)
+    '''
+
+    # Create the name for files
+    # returns string ProgName-Date
+    # ProgName is the base name of the calling program - without the '.py'
+    # Date is today's date: YYYY-MM-DD
+    fileBaseName = os.path.basename(sys.argv[0])
+    strLen = len(fileBaseName)
+    extension = fileBaseName[strLen - 3:strLen]
+    if (extension == '.py'):
+        fileBaseName = fileBaseName[0:strLen - 3]
+    outDir = '.'
+    fileBaseName = ('%s/%s%s' % (outDir, fileBaseName, ExtensionString))  # Store them in the current local directory
+
+    return(fileBaseName)
 # ------------------
 def FinPlanIsOK(finplan):
     '''
@@ -300,15 +339,21 @@ class FinPlanListAPI(Resource):
     
     
     def get(self):
+        print('GET')
+        print(json.dumps(FinPlanScenario, sort_keys = True, indent = 4))
+        print('DefaultFinPlanScenario')
+        print(json.dumps(DefaultFinPlanScenario, sort_keys = True, indent = 4))        
         return { 'Financial Plans': map(lambda plan: marshal(plan, finplan_fields), FinPlanScenario) }
 
     def post(self):
+        # ToDo: Capture the Optional arguments (e.g. Description) that are passed as arguments
         args = self.reqparse.parse_args()
         finplan = {
             'FinPlan_ID': str(uuid.uuid4()),  # Generate a UUID - Don't understand why it needs to be cast to String - but does not work otherwise
             'Title': args['Title'],
             'UserName': args['UserName'],
             'Email': args['Email'],
+            'AgeToday': float(args['AgeToday']),
             'StartingAmount': float(args['StartingAmount']),
             'HasResult': False  # force it False, even it is passed as argument
         }
@@ -328,6 +373,8 @@ class FinPlanListAPI(Resource):
             exit(-1)
         else: # plan is OK - add to the List
             FinPlanScenario.append(finplan)
+            persist(jsonFileName, FinPlanScenario)
+
         return { 'Financial Plan': marshal(finplan, finplan_fields) }, 201
     
 # ------------------
@@ -382,6 +429,7 @@ class SinglePlanAPI(Resource):
         if (not planOK):
             print(errString)
             exit(-1)
+        persist(jsonFileName, FinPlanScenario)        
         return { 'Financial Plan': marshal(finplan, finplan_fields) }, 201
     
     def delete(self, plan_id):
@@ -389,6 +437,7 @@ class SinglePlanAPI(Resource):
         if len(FinPlanList) == 0:
             abort(404)
         FinPlanScenario.remove(FinPlanList[0])
+        persist(jsonFileName, FinPlanScenario)
         return { 'result': True }
       
 # ------------------
@@ -415,8 +464,9 @@ class ComputePlanAPI(Resource):
         if not okFlag:
             print(errorString)
             exit (-2)  # return an error response
-        resultPlan = FP.MonteCarlo(finplan, NbRun, ConfidencePct, HistoricalReturn)  # only 1 run to test
-        print json.dumps(resultPlan, sort_keys=True, indent=4)          
+        FP.MonteCarlo(finplan, NbRun, ConfidencePct, HistoricalReturn)  # only 1 run to test
+        print json.dumps(finplan, sort_keys=True, indent=4)          
+        persist(jsonFileName, FinPlanScenario)
         
         return { 'Financial Plan': marshal(finplan, finplan_fields) }                
             
@@ -440,12 +490,37 @@ def missing_param(error):
 # ------------------
 def main(argv):
     
+    global FinPlanScenario
+    global jsonFileName
+    
     # Load arguments:
     Args = handleArgs(argv)
     Debug = Args['Debug']
     ConfigParam['ConfidencePct'] = Args['ConfidencePct']
     ConfigParam['NbRun'] = Args['NbRun']
+    NewFileFlag = Args['NewFile']
     print ('NbRun %d Confidence Pct: %d' % (ConfigParam['NbRun'], ConfigParam['ConfidencePct']))
+    jsonFileName = makeBaseName(argv, '.data') 
+    print ('Storage file is: %s' % jsonFileName)
+    
+    # Run the REST API server'
+    if (not NewFileFlag): # Load FinPlanScenario w/ the data from file
+        try:
+            inFile = open (jsonFileName, 'r')
+            FinPlanScenario = json.load(inFile)
+            inFile.close()
+        except IOError, e:
+            print("IOError %d: %s" % (e.args[0], e.args[1]))
+            print ('error reading the data file: %s' % jsonFileName)
+            FinPlanScenario = DefaultFinPlanScenario
+            print('Starting w/ the default FinPlanScenario')
+    else:
+        FinPlanScenario = DefaultFinPlanScenario
+        print('Starting w/ the default FinPlanScenario')
+    print(json.dumps(FinPlanScenario, sort_keys = True, indent = 4))
+    
+    # Write the scenarios to file
+    persist(jsonFileName, FinPlanScenario)
     
     # Run the REST API server
     app.run(debug = True)

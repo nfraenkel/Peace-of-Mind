@@ -21,7 +21,6 @@ echo "--------- Show the list of all FinPlans - Make sure the new one is there -
 curl -i http://localhost:5000/finplan/api/v2.0/finplan
 echo
 
-
 echo "--------- Get the ID of the first Plan - so that we can use it later --------- "
 get_plan_id
 
@@ -74,13 +73,6 @@ http://localhost:5000/finplan/api/v2.0/finplan/$planID
 echo "--------- Make sure the new PhaseList replaces the old one --------- "
 curl -i http://localhost:5000/finplan/api/v2.0/finplan/$planID
 echo
-
-
-# ------------
-echo EXIT
-exit
-# ------------
-
 
 echo "--------- Run the computation on the FinPlan --------- "
 curl -i http://localhost:5000/finplan/api/v2.0/finplan/$planID/compute

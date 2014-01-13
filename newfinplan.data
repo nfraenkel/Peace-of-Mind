@@ -2,8 +2,8 @@
     {
         "AgeToday": 30.0, 
         "Email": "SantaClaus@xmas.com", 
-        "FinPlan_ID": "47b79347-306d-47c9-9336-8834be06fc1f", 
-        "HasResult": false, 
+        "FinPlan_ID": "2808a8e2-d1cb-4cbc-9be0-73000321f9cf", 
+        "HasResult": true, 
         "InflationRate": 2.0, 
         "LifeExpect": 90, 
         "PhaseList": [
@@ -31,6 +31,7 @@
                 }, 
                 "ToCompute": true, 
                 "endAge": 90, 
+                "netContribution": -137092.73749969769, 
                 "startAge": 65
             }
         ], 
@@ -42,7 +43,7 @@
     {
         "AgeToday": 30.0, 
         "Email": "SantaClaus@xmas.com", 
-        "FinPlan_ID": "617d5df3-4d85-41f5-8307-032a484b0e44", 
+        "FinPlan_ID": "cd64f38f-0ecb-48ad-b43d-3bc8cbcbee90", 
         "HasResult": false, 
         "InflationRate": 2.0, 
         "LifeExpect": 90, 
@@ -54,19 +55,19 @@
     {
         "AgeToday": 30.0, 
         "Email": "SantaClaus@xmas.com", 
-        "FinPlan_ID": "03c89383-8e80-4fa8-8764-d265ea917efd", 
+        "FinPlan_ID": "baa34790-b165-48d8-afcd-543bae250262", 
         "HasResult": false, 
         "InflationRate": 2.0, 
         "LifeExpect": 90, 
         "StartingAmount": 250000.0, 
         "TargetEndFunds": 1.0, 
-        "Title": "Moderate", 
-        "UserName": "Suerte"
+        "Title": "Moderate-Modified", 
+        "UserName": "Suerte-Modified"
     }, 
     {
         "AgeToday": 30.0, 
         "Email": "SantaClaus@xmas.com", 
-        "FinPlan_ID": "2808a8e2-d1cb-4cbc-9be0-73000321f9cf", 
+        "FinPlan_ID": "79c95f6b-a307-4919-98be-d28c36c82c59", 
         "HasResult": false, 
         "InflationRate": 2.0, 
         "LifeExpect": 90, 
