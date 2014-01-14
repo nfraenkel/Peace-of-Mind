@@ -9,6 +9,7 @@
 #import "POMUpdateScenarioViewController.h"
 
 #define SPACE_BETWEEN_PHASE_VIEWS   15
+#define DEFAULT_CONTENT_HEIGHT      580
 
 @interface POMUpdateScenarioViewController ()
 
@@ -16,7 +17,7 @@
 
 @implementation POMUpdateScenarioViewController
 
-@synthesize scrolley, backgroundView, firstLifePhaseView, computeButton, computationProgessView;
+@synthesize scrolley, backgroundView, firstLifePhaseView, computeButton, computationProgressView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,20 +35,42 @@
     
     self.scrolley.delegate = self;
     
+    // set up current phase view and array
+    self.firstLifePhaseView.delegate = self;
+    [self.firstLifePhaseView setPhaseNumber:1];
+    phaseViewArray = [[NSMutableArray alloc] init];
+    [phaseViewArray addObject:firstLifePhaseView];
+    
+    // set up variables for next phase view
     nextPhaseListViewCoordinate = firstLifePhaseView.frame.origin.y + firstLifePhaseView.frame.size.height + SPACE_BETWEEN_PHASE_VIEWS;
     nextPhaseNumber = 2;
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self.scrolley setContentSize:CGSizeMake(0, 568)];
+    [self.scrolley setContentSize:CGSizeMake(0, DEFAULT_CONTENT_HEIGHT)];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - LifePhaseViewDelegate methods
+-(void)phaseWithNumberShouldBeDeleted:(int)number {
+    int currentLastPhase = [phaseViewArray count];
+    
+//    LifePhaseView *pv = [phaseViewArray objectAtIndex:number];
+//
+//    if (number == currentLastPhase) {
+//        [UIView animateWithDuration:0.5f animations:^{
+//            [pv setAlpha:0.0f];
+//        } completion:^(BOOL finished) {
+//            [pv removeFromSuperview];
+//        }];
+//    }
+//    else {
+//        
+//    }
+//    [phaseViewArray removeObjectAtIndex:number];
+
 }
 
 #pragma mark - button handlers
@@ -60,7 +83,6 @@
 }
 
 - (IBAction)addPhaseButtonTouched:(id)sender {
-    NSLog(@"make new phase!!! currently: %@", self.firstLifePhaseView.phaseNumberLabel.text);
     
     // define frame for new phase view
     int x = self.firstLifePhaseView.frame.origin.x;
@@ -73,36 +95,55 @@
     // make new phase view
     LifePhaseView *newPhaseView = [[LifePhaseView alloc] initWithFrame:newRectFrame];
     [newPhaseView awakeFromNib];
+    
+    newPhaseView.delegate = self;
+    [newPhaseView setUserInteractionEnabled:YES];
+    [newPhaseView setAlpha:0.0f];
+    [newPhaseView.deleteButton setHidden:NO];
+    
     // add correct phase number
     newPhaseView.phaseNumber    = nextPhaseNumber++;
     
     // move compute button, computation progress bar
     CGRect oldComputeButtonFrame            = self.computeButton.frame;
-    NSLog(@"%@", NSStringFromCGRect(oldComputeButtonFrame));
     CGRect newComputeButtonFrame            = CGRectMake(oldComputeButtonFrame.origin.x, oldComputeButtonFrame.origin.y + updateSizeForViews, oldComputeButtonFrame.size.width, oldComputeButtonFrame.size.height);
-    CGRect oldComputationProgessViewFrame   = self.computationProgessView.frame;
+    CGRect oldComputationProgessViewFrame   = self.computationProgressView.frame;
     CGRect newComputationProgressViewFrame  = CGRectMake(oldComputationProgessViewFrame.origin.x, oldComputationProgessViewFrame.origin.y + updateSizeForViews, oldComputationProgessViewFrame.size.width, oldComputationProgessViewFrame.size.height);
-    NSLog(@"%@", NSStringFromCGRect(newComputeButtonFrame));
 
-//    self.computeButton.frame             = newComputeButtonFrame;
-    [self.computeButton setFrame:CGRectMake(100, 100, 100, 100)];
-    
-        NSLog(@"%@", NSStringFromCGRect(self.computeButton.frame));
-    self.computationProgessView.frame    = newComputationProgressViewFrame;
+//    self.computeButton.frame            = newComputeButtonFrame;
+//    self.computationProgressView.frame  = newComputationProgressViewFrame;
     
     // add to scrollview!
-    [self.backgroundView addSubview:newPhaseView];
+    [scrolley addSubview:newPhaseView];
+    
+    // add to phases array
+    [phaseViewArray addObject:newPhaseView];
+    
+    // add animation
+    [UIView animateWithDuration:0.5f animations:^{
+        [newPhaseView setAlpha:1.0f];
+        self.computeButton.frame            = newComputeButtonFrame;
+        self.computationProgressView.frame  = newComputationProgressViewFrame;
+
+    }];
     
     // update content size
     CGSize oldContentSize = scrolley.contentSize;
     self.scrolley.contentSize = CGSizeMake(oldContentSize.width, oldContentSize.height + updateSizeForViews);
 }
 
-- (IBAction)computeButtonTouched:(id)sender {
+- (void)computeButtonTouched:(id)sender {
 
     NSLog(@"computing!!!...");
     
     [self dismissViewControllerAnimated:YES completion:^{}];
+}
+
+#pragma mark - memory
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 

@@ -8,11 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol LifePhaseViewDelegate <NSObject>
+
+-(void)phaseWithNumberShouldBeDeleted:(int)number;
+
+@end
+
 @interface LifePhaseView : UIView
 
 @property (nonatomic, readwrite) int phaseNumber;
 
+@property (strong, nonatomic) id<LifePhaseViewDelegate> delegate;
+
 @property (strong, nonatomic) IBOutlet UIView *contentView;
+
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *phaseNumberLabel;
@@ -23,6 +33,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *stocksPercentageTextField;
 @property (weak, nonatomic) IBOutlet UITextField *tBillsPercentageTextField;
 
+//-(id)initWithFrame:(CGRect)frame;
 -(void)awakeFromNib;
+-(IBAction)deleteButtonTouched:(id)sender;
 
 @end

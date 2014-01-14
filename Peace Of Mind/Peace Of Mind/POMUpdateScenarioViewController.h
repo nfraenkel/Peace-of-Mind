@@ -10,9 +10,10 @@
 
 #import "LifePhaseView.h"
 
-@interface POMUpdateScenarioViewController : UIViewController <UIScrollViewDelegate> {
+@interface POMUpdateScenarioViewController : UIViewController <UIScrollViewDelegate, LifePhaseViewDelegate> {
     int nextPhaseListViewCoordinate;
     int nextPhaseNumber;
+    NSMutableArray *phaseViewArray;
 }
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrolley;
@@ -20,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet LifePhaseView *firstLifePhaseView;
 
 @property (weak, nonatomic) IBOutlet UIButton *computeButton;
-@property (weak, nonatomic) IBOutlet UIProgressView *computationProgessView;
+@property (weak, nonatomic) IBOutlet UIProgressView *computationProgressView;
 
 - (IBAction)closeButtonTouched:(id)sender;
 - (IBAction)saveButtonTouched:(id)sender;
