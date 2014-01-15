@@ -17,7 +17,8 @@
 
 @implementation POMUpdateScenarioViewController
 
-@synthesize scrolley, backgroundView, firstLifePhaseView, computeButton, computationProgressView;
+@synthesize scrolley, backgroundView, firstLifePhaseView, computeButton, computationProgressView, scenario;
+@synthesize ageTodayTextField, descriptionTextField, inflationRateTextField, targetEndFundsTextField, startingAmountTextField, titleTextField, lifeExpectancyTextField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,9 +32,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
-    self.scrolley.delegate = self;
+    // set up scrolley
+    scrolley.delegate = self;
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
+    [scrolley addGestureRecognizer:singleTap];
     
     // set up current phase view and array
     self.firstLifePhaseView.delegate = self;
@@ -45,12 +48,16 @@
     nextPhaseListViewCoordinate = firstLifePhaseView.frame.origin.y + firstLifePhaseView.frame.size.height + SPACE_BETWEEN_PHASE_VIEWS;
     nextPhaseNumber = 2;
     
+    // if we have an existing scenario, we CLONED!
+    if (scenario) {
+        titleTextField.text = scenario.title;
+    }
 }
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self.scrolley setContentSize:CGSizeMake(0, DEFAULT_CONTENT_HEIGHT)];
+    [scrolley setContentSize:CGSizeMake(0, DEFAULT_CONTENT_HEIGHT)];
 }
 
 #pragma mark - LifePhaseViewDelegate methods
@@ -79,7 +86,10 @@
 }
 
 - (IBAction)saveButtonTouched:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^{}];
+    BOOL valid = [self isUserInputValid];
+    if (valid) {
+        [self dismissViewControllerAnimated:YES completion:^{}];
+    }
 }
 
 - (IBAction)addPhaseButtonTouched:(id)sender {
@@ -109,12 +119,9 @@
     CGRect newComputeButtonFrame            = CGRectMake(oldComputeButtonFrame.origin.x, oldComputeButtonFrame.origin.y + updateSizeForViews, oldComputeButtonFrame.size.width, oldComputeButtonFrame.size.height);
     CGRect oldComputationProgessViewFrame   = self.computationProgressView.frame;
     CGRect newComputationProgressViewFrame  = CGRectMake(oldComputationProgessViewFrame.origin.x, oldComputationProgessViewFrame.origin.y + updateSizeForViews, oldComputationProgessViewFrame.size.width, oldComputationProgessViewFrame.size.height);
-
-//    self.computeButton.frame            = newComputeButtonFrame;
-//    self.computationProgressView.frame  = newComputationProgressViewFrame;
     
     // add to scrollview!
-    [scrolley addSubview:newPhaseView];
+    [self.scrolley addSubview:newPhaseView];
     
     // add to phases array
     [phaseViewArray addObject:newPhaseView];
@@ -136,7 +143,47 @@
 
     NSLog(@"computing!!!...");
     
-    [self dismissViewControllerAnimated:YES completion:^{}];
+    BOOL valid = [self isUserInputValid];
+    if (valid) {
+        [self dismissViewControllerAnimated:YES completion:^{}];
+    }
+}
+
+#pragma mark - helper methods
+- (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture {
+    [self.view endEditing:YES];
+}
+
+-(void)createAlertViewWithTitle:(NSString*)title andMessage:(NSString*)message {
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:title
+                          message:message
+                          delegate:Nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+-(BOOL)isUserInputValid {
+    BOOL userLeftSomethingBlank = [titleTextField.text isEqualToString:@""] || [descriptionTextField.text isEqualToString:@""] || [ageTodayTextField.text isEqualToString:@""] || [lifeExpectancyTextField.text isEqualToString:@""] || [startingAmountTextField.text isEqualToString:@""] || [targetEndFundsTextField.text isEqualToString:@""] || [inflationRateTextField.text isEqualToString:@""];
+    if (userLeftSomethingBlank) {
+        [self createAlertViewWithTitle:@"Fill Everything In" andMessage:@"You left something blank!"];
+        return NO;
+    }
+    int ageToday        = [ageTodayTextField.text intValue];
+    int lifeExpectancy  = [lifeExpectancyTextField.text intValue];
+    BOOL agesAreInvalid = ageToday <= 0 || lifeExpectancy <= 0;
+    if (agesAreInvalid) {
+        [self createAlertViewWithTitle:@"Invalid Ages" andMessage:@"The ages you have entered are invalid."];
+        return NO;
+    }
+    BOOL lifeExpectancyIsSmallerThanTodaysAge = ageToday >= lifeExpectancy;
+    if (lifeExpectancyIsSmallerThanTodaysAge) {
+        [self createAlertViewWithTitle:@"Invalid Ages" andMessage:@"Your life expectancy has to be greater than your age today!"];
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - memory

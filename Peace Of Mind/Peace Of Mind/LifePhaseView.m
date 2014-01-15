@@ -12,24 +12,10 @@
 
 @synthesize contentView, nameTextField, phaseNumberLabel, startAgeTextField, endAgeTextField, bondPercentageTextField, cashPercentageTextField, stocksPercentageTextField, tBillsPercentageTextField, delegate, deleteButton;
 
-//-(id)initWithFrame:(CGRect)frame {
-//    self = [super initWithFrame:frame];
-//    if (self) {
-//        NSLog(@"[LifePhaseView] init with frame");
-//        // Initialization code
-//        
-//        NSArray *a = [[NSBundle mainBundle]
-//                      loadNibNamed:@"LifePhaseView"
-//                      owner:self
-//                      options:nil];
-//        self = [a objectAtIndex:0];
-//    }
-//    return self;
-//}
-
 -(void)awakeFromNib {
-
+    [super awakeFromNib];
     [[NSBundle mainBundle] loadNibNamed:@"LifePhaseView" owner:self options:nil];
+    
     [self addSubview: self.contentView];
 }
 
@@ -43,6 +29,10 @@
 -(IBAction)deleteButtonTouched:(id)sender {
     NSLog(@"DELETE for phase: %d", self.phaseNumber);
     [self.delegate phaseWithNumberShouldBeDeleted:self.phaseNumber];
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    NSLog(@"*&*&*&*&*&: %@", textField.placeholder);
 }
 
 /*

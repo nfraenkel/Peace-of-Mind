@@ -134,7 +134,9 @@
         [[segue destinationViewController] setScenario:s];
     }
     else if ([[segue identifier] isEqualToString:@"newScenario"]) {
-        //
+        UINavigationController *nav = (UINavigationController*)[segue destinationViewController];
+        POMUpdateScenarioViewController *up = (POMUpdateScenarioViewController*)[nav topViewController];
+        up.scenario = nil;
     }
 }
 

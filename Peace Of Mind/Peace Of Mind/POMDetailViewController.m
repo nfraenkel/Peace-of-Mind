@@ -14,10 +14,9 @@
 
 @implementation POMDetailViewController
 
-@synthesize singleton;
+@synthesize singleton, descriptionLabel, titleLabel;
 
 #pragma mark - Managing the detail item
-
 - (void)setScenario:(Scenario*)newDetailItem
 {
     if (self.scenario != newDetailItem) {
@@ -28,12 +27,7 @@
     }
 }
 
-- (void)configureView
-{
-    // Update the user interface for the detail item.
-
-}
-
+#pragma mark - view stuff
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -44,6 +38,28 @@
     [self configureView];
 }
 
+- (void)configureView
+{
+    // Update the user interface for the detail item.
+    titleLabel.text         = _scenario.title;
+    descriptionLabel.text   = _scenario.description;
+    
+}
+
+#pragma mark - button handlers
+-(IBAction)cloneButtonTouched:(id)sender {
+    [self performSegueWithIdentifier:@"cloneScenario" sender:self];
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"cloneScenario"]) {
+        UINavigationController *nav = (UINavigationController*)segue.destinationViewController;
+        POMUpdateScenarioViewController *up = (POMUpdateScenarioViewController*)[nav topViewController];
+        up.scenario = _scenario;
+    }
+}
+
+#pragma mark - memory
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

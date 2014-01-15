@@ -148,8 +148,8 @@
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(as a decimal)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mdE-LC-UR4">
-                                                <rect key="frame" x="168" y="251" width="132" height="30"/>
+                                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(ex: 0.03 is 3% inflation)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mdE-LC-UR4">
+                                                <rect key="frame" x="168" y="251" width="143" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -237,11 +237,18 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="ageTodayTextField" destination="BRb-qC-emU" id="XsX-y3-XwQ"/>
                         <outlet property="backgroundView" destination="hk5-Il-sHb" id="uuF-Wb-fuT"/>
                         <outlet property="computationProgressView" destination="4iC-WO-PLy" id="I8s-pb-vOY"/>
                         <outlet property="computeButton" destination="JhA-1k-wkY" id="E0p-l9-OHL"/>
+                        <outlet property="descriptionTextField" destination="wvg-0I-kNd" id="QpW-NY-W4R"/>
                         <outlet property="firstLifePhaseView" destination="L85-Cr-lZZ" id="52b-ii-SRx"/>
+                        <outlet property="inflationRateTextField" destination="0Bk-k2-mry" id="2vC-fU-A2H"/>
+                        <outlet property="lifeExpectancyTextField" destination="fsu-mr-Q8Y" id="tFR-aa-82y"/>
                         <outlet property="scrolley" destination="UuX-xq-Tz4" id="W8y-Fn-Boo"/>
+                        <outlet property="startingAmountTextField" destination="LFn-36-VOF" id="YJI-Us-EZQ"/>
+                        <outlet property="targetEndFundsTextField" destination="4JQ-0x-3zo" id="OHZ-ZL-DAj"/>
+                        <outlet property="titleTextField" destination="oTc-uJ-9mr" id="rZW-TA-sE8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5V1-pn-gye" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -494,13 +501,26 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="description" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rfq-eU-CDX">
+                                <rect key="frame" x="20" y="118" width="280" height="49"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Detail" id="cra-N8-TIN">
-                        <barButtonItem key="rightBarButtonItem" title="Clone" id="Uhp-FP-86j"/>
+                    <navigationItem key="navigationItem" title="Scenario" id="cra-N8-TIN">
+                        <barButtonItem key="rightBarButtonItem" title="Clone" id="Uhp-FP-86j">
+                            <connections>
+                                <action selector="cloneButtonTouched:" destination="Ah7-4n-0Wa" id="Ko8-en-ARg"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="descriptionLabel" destination="rfq-eU-CDX" id="ByX-Fo-h2A"/>
+                        <outlet property="titleLabel" destination="lO4-qm-1uw" id="Ia4-ug-cGh"/>
                         <segue destination="1G9-FB-Qfa" kind="modal" identifier="cloneScenario" id="MGu-0b-Y4r"/>
                     </connections>
                 </viewController>

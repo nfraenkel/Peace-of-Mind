@@ -14,7 +14,7 @@
 
 @end
 
-@interface LifePhaseView : UIView
+@interface LifePhaseView : UIView <UITextFieldDelegate>
 
 @property (nonatomic, readwrite) int phaseNumber;
 
