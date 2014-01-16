@@ -1,0 +1,97 @@
+[
+    {
+        "AgeToday": 30, 
+        "Description": "Conservative Scenario", 
+        "Email": "SantaClaus@xmas.com", 
+        "FinPlan_ID": "445585fb-5c9d-4254-9b91-0197a584e6ba", 
+        "HasResult": false, 
+        "InflationRate": 3.0, 
+        "LifeExpect": 90, 
+        "PhaseList": [
+            {
+                "Name": "Working", 
+                "NetContribution": 17500, 
+                "Portfolio": {
+                    "Bonds": 20.0, 
+                    "Cash": 0.0, 
+                    "Stocks": 80.0, 
+                    "T-Bills": 0.0
+                }, 
+                "ToCompute": false, 
+                "endAge": 65, 
+                "startAge": 30
+            }, 
+            {
+                "Name": "Retired", 
+                "NetContribution": 0, 
+                "Portfolio": {
+                    "Bonds": 30.0, 
+                    "Cash": 10.0, 
+                    "Stocks": 50.0, 
+                    "T-Bills": 10.0
+                }, 
+                "ToCompute": true, 
+                "endAge": 90, 
+                "startAge": 65
+            }
+        ], 
+        "StartingAmount": 200000, 
+        "TargetEndFunds": 1.0, 
+        "Title": "Conservative", 
+        "UserName": "Lucky"
+    }, 
+    {
+        "AgeToday": 30, 
+        "Description": "Aggressive Scenario", 
+        "Email": "SantaClaus@xmas.com", 
+        "FinPlan_ID": "388774d0-fd92-468c-b2cf-49039ce5c6ce", 
+        "HasResult": false, 
+        "InflationRate": 2.0, 
+        "LifeExpect": 90, 
+        "PhaseList": [
+            {
+                "Name": "Retired", 
+                "NetContribution": 0, 
+                "Portfolio": {
+                    "Bonds": 30.0, 
+                    "Cash": 10.0, 
+                    "Stocks": 50.0, 
+                    "T-Bills": 10.0
+                }, 
+                "ToCompute": true, 
+                "endAge": 90, 
+                "startAge": 65
+            }, 
+            {
+                "Name": "Semi-Retired", 
+                "NetContribution": 0, 
+                "Portfolio": {
+                    "Bonds": 40.0, 
+                    "Cash": 10.0, 
+                    "Stocks": 60.0, 
+                    "T-Bills": 0.0
+                }, 
+                "ToCompute": true, 
+                "endAge": 65, 
+                "startAge": 55
+            }, 
+            {
+                "Name": "Working", 
+                "NetContribution": 17500, 
+                "Portfolio": {
+                    "Bonds": 20.0, 
+                    "Cash": 0.0, 
+                    "Stocks": 80.0, 
+                    "T-Bills": 0.0
+                }, 
+                "ToCompute": false, 
+                "endAge": 55, 
+                "startAge": 30
+            }
+        ], 
+        "StartingAmount": 200000, 
+        "TargetEndFunds": 1000, 
+        "Title": "Aggressive", 
+        "UserName": "Chance"
+    }
+]
