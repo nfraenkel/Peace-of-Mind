@@ -12,11 +12,16 @@
 
 #import "Scenario.h"
 
+#import "POMUpdateScenarioViewController.h"
+
 @interface POMDetailViewController : UIViewController
 
 @property (strong) POMSingleton *singleton;
 
 @property (strong, nonatomic) Scenario *scenario;
 
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel, *titleLabel;
+
+-(IBAction)cloneButtonTouched:(id)sender;
+
 @end

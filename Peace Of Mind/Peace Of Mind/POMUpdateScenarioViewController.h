@@ -10,21 +10,28 @@
 
 #import "LifePhaseView.h"
 
-@interface POMUpdateScenarioViewController : UIViewController <UIScrollViewDelegate> {
+#import "Scenario.h"
+
+@interface POMUpdateScenarioViewController : UIViewController <UIScrollViewDelegate, LifePhaseViewDelegate, UITextFieldDelegate> {
     int nextPhaseListViewCoordinate;
     int nextPhaseNumber;
+    NSMutableArray *phaseViewArray;
 }
+
+@property (nonatomic, strong) Scenario *scenario;
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrolley;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet LifePhaseView *firstLifePhaseView;
 
 @property (weak, nonatomic) IBOutlet UIButton *computeButton;
-@property (weak, nonatomic) IBOutlet UIProgressView *computationProgessView;
+@property (weak, nonatomic) IBOutlet UIProgressView *computationProgressView;
 
 - (IBAction)closeButtonTouched:(id)sender;
 - (IBAction)saveButtonTouched:(id)sender;
 - (IBAction)addPhaseButtonTouched:(id)sender;
 - (IBAction)computeButtonTouched:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UITextField *ageTodayTextField, *descriptionTextField, *inflationRateTextField, *targetEndFundsTextField, *startingAmountTextField, *titleTextField, *lifeExpectancyTextField;
 
 @end
