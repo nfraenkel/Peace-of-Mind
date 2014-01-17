@@ -12,7 +12,7 @@
 
 #import "Scenario.h"
 
-@interface POMUpdateScenarioViewController : UIViewController <UIScrollViewDelegate, LifePhaseViewDelegate, UITextFieldDelegate> {
+@interface POMUpdateScenarioViewController : UIViewController <UIScrollViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate> {
     int nextPhaseListViewCoordinate;
     int nextPhaseNumber;
     NSMutableArray *phaseViewArray;
@@ -22,7 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *scrolley;
 @property (weak, nonatomic) IBOutlet UIView *backgroundView;
-@property (weak, nonatomic) IBOutlet LifePhaseView *firstLifePhaseView;
+@property (weak, nonatomic) IBOutlet UITableView *lifePhasesTableView;
 
 @property (weak, nonatomic) IBOutlet UIButton *computeButton;
 @property (weak, nonatomic) IBOutlet UIProgressView *computationProgressView;

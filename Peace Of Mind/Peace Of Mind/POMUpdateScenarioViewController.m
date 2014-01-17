@@ -17,7 +17,7 @@
 
 @implementation POMUpdateScenarioViewController
 
-@synthesize scrolley, backgroundView, firstLifePhaseView, computeButton, computationProgressView, scenario;
+@synthesize scrolley, backgroundView, lifePhasesTableView, computeButton, computationProgressView, scenario;
 @synthesize ageTodayTextField, descriptionTextField, inflationRateTextField, targetEndFundsTextField, startingAmountTextField, titleTextField, lifeExpectancyTextField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,14 +38,6 @@
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
     [scrolley addGestureRecognizer:singleTap];
     
-    // set up current phase view and array
-    self.firstLifePhaseView.delegate = self;
-    [self.firstLifePhaseView setPhaseNumber:1];
-    phaseViewArray = [[NSMutableArray alloc] init];
-    [phaseViewArray addObject:firstLifePhaseView];
-    
-    // set up variables for next phase view
-    nextPhaseListViewCoordinate = firstLifePhaseView.frame.origin.y + firstLifePhaseView.frame.size.height + SPACE_BETWEEN_PHASE_VIEWS;
     nextPhaseNumber = 2;
     
     // if we have an existing scenario, we CLONED!
@@ -60,25 +52,24 @@
     [scrolley setContentSize:CGSizeMake(0, DEFAULT_CONTENT_HEIGHT)];
 }
 
-#pragma mark - LifePhaseViewDelegate methods
--(void)phaseWithNumberShouldBeDeleted:(int)number {
-    int currentLastPhase = [phaseViewArray count];
-    
-//    LifePhaseView *pv = [phaseViewArray objectAtIndex:number];
-//
-//    if (number == currentLastPhase) {
-//        [UIView animateWithDuration:0.5f animations:^{
-//            [pv setAlpha:0.0f];
-//        } completion:^(BOOL finished) {
-//            [pv removeFromSuperview];
-//        }];
-//    }
-//    else {
-//        
-//    }
-//    [phaseViewArray removeObjectAtIndex:number];
-
+#pragma mark - UITableViewDataSource methods
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
 }
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 2;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *phaseCellIdentifier = @"phaseCell";
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:phaseCellIdentifier forIndexPath:indexPath];
+    
+    return cell;
+}
+
+#pragma mark - UITableViewDelegate methods
 
 #pragma mark - button handlers
 - (IBAction)closeButtonTouched:(id)sender {
@@ -94,7 +85,10 @@
 
 - (IBAction)addPhaseButtonTouched:(id)sender {
     
+    NSLog(@"ADDADDADDADDADD");
+    
     // define frame for new phase view
+    /*
     int x = self.firstLifePhaseView.frame.origin.x;
     int y = nextPhaseListViewCoordinate;
     CGRect newRectFrame = CGRectMake(x, y, 0, 0);
@@ -137,6 +131,7 @@
     // update content size
     CGSize oldContentSize = scrolley.contentSize;
     self.scrolley.contentSize = CGSizeMake(oldContentSize.width, oldContentSize.height + updateSizeForViews);
+     */
 }
 
 - (void)computeButtonTouched:(id)sender {
