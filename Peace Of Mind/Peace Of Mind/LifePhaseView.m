@@ -12,11 +12,24 @@
 
 @synthesize contentView, nameTextField, phaseNumberLabel, startAgeTextField, endAgeTextField, bondPercentageTextField, cashPercentageTextField, stocksPercentageTextField, tBillsPercentageTextField, delegate, deleteButton;
 
--(void)awakeFromNib {
-    [super awakeFromNib];
-    [[NSBundle mainBundle] loadNibNamed:@"LifePhaseView" owner:self options:nil];
-    
-    [self addSubview: self.contentView];
+
+-(id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [[NSBundle mainBundle] loadNibNamed:@"LifePhaseView" owner:self options:nil];
+        [self addSubview: self.contentView];
+        NSLog(@"INITWITHCODER");
+    }
+    return self;
+}
+
+-(id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [[NSBundle mainBundle] loadNibNamed:@"LifePhaseView" owner:self options:nil];
+        [self addSubview: self.contentView];
+    }
+    return self;
 }
 
 -(void)setPhaseNumber:(int)phaseNumber {
@@ -41,7 +54,6 @@
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
-}
-*/
+}*/
 
 @end

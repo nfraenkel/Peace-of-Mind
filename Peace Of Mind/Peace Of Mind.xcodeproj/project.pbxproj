@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C0DA0FE188DE9D700E42759 /* pomicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0DA0FD188DE9D700E42759 /* pomicon.png */; };
+		4C0DA100188DEAFB00E42759 /* pomlaunch.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C0DA0FF188DEAFB00E42759 /* pomlaunch.jpg */; };
 		4C12BA76187E342100927765 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C12BA75187E342100927765 /* Foundation.framework */; };
 		4C12BA78187E342100927765 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C12BA77187E342100927765 /* CoreGraphics.framework */; };
 		4C12BA7A187E342100927765 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C12BA79187E342100927765 /* UIKit.framework */; };
@@ -42,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C0DA0FD188DE9D700E42759 /* pomicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pomicon.png; sourceTree = "<group>"; };
+		4C0DA0FF188DEAFB00E42759 /* pomlaunch.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pomlaunch.jpg; sourceTree = "<group>"; };
 		4C12BA72187E342100927765 /* Peace Of Mind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Peace Of Mind.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C12BA75187E342100927765 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C12BA77187E342100927765 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -103,6 +107,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C0DA0FC188DE9D700E42759 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				4C0DA0FD188DE9D700E42759 /* pomicon.png */,
+				4C0DA0FF188DEAFB00E42759 /* pomlaunch.jpg */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		4C12BA69187E342100927765 = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +165,7 @@
 				4C12BAB3187E382400927765 /* DataAccess */,
 				4C12BAB7187E3CB200927765 /* DataConstants.h */,
 				4C12BA90187E342100927765 /* Images.xcassets */,
+				4C0DA0FC188DE9D700E42759 /* Images */,
 				4C12BA7C187E342100927765 /* Supporting Files */,
 			);
 			path = "Peace Of Mind";
@@ -287,8 +301,10 @@
 			files = (
 				4C12BA91187E342100927765 /* Images.xcassets in Resources */,
 				4C12BA80187E342100927765 /* InfoPlist.strings in Resources */,
+				4C0DA0FE188DE9D700E42759 /* pomicon.png in Resources */,
 				4CC657E718823699005E2E3F /* LifePhaseView.xib in Resources */,
 				4C12BA89187E342100927765 /* Main.storyboard in Resources */,
+				4C0DA100188DEAFB00E42759 /* pomlaunch.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,8 +457,6 @@
 		4C12BAA8187E342100927765 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Peace Of Mind/Peace Of Mind-Prefix.pch";
 				INFOPLIST_FILE = "Peace Of Mind/Peace Of Mind-Info.plist";
@@ -454,8 +468,6 @@
 		4C12BAA9187E342100927765 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Peace Of Mind/Peace Of Mind-Prefix.pch";
 				INFOPLIST_FILE = "Peace Of Mind/Peace Of Mind-Info.plist";

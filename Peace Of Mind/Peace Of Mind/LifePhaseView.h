@@ -33,8 +33,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *stocksPercentageTextField;
 @property (weak, nonatomic) IBOutlet UITextField *tBillsPercentageTextField;
 
-//-(id)initWithFrame:(CGRect)frame;
--(void)awakeFromNib;
+-(id)initWithCoder:(NSCoder *)aDecoder;
+-(id)initWithFrame:(CGRect)frame;
+
 -(IBAction)deleteButtonTouched:(id)sender;
 
 @end

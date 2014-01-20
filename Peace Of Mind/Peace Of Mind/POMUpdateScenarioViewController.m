@@ -9,7 +9,7 @@
 #import "POMUpdateScenarioViewController.h"
 
 #define SPACE_BETWEEN_PHASE_VIEWS   15
-#define DEFAULT_CONTENT_HEIGHT      580
+#define DEFAULT_CONTENT_HEIGHT      590
 
 @interface POMUpdateScenarioViewController ()
 
@@ -32,6 +32,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.automaticallyAdjustsScrollViewInsets = YES;
+    
     
     // set up scrolley
     scrolley.delegate = self;
@@ -95,24 +98,35 @@
 - (IBAction)addPhaseButtonTouched:(id)sender {
     
     // define frame for new phase view
-    int x = self.firstLifePhaseView.frame.origin.x;
-    int y = nextPhaseListViewCoordinate;
-    CGRect newRectFrame = CGRectMake(x, y, 0, 0);
+    int newX = self.firstLifePhaseView.frame.origin.x;
+    int newY = nextPhaseListViewCoordinate;
+    CGRect newRectFrame = firstLifePhaseView.frame;
+    newRectFrame.origin.x = newX;
+    newRectFrame.origin.y = newY;
+    
     // update helper variable!
     float updateSizeForViews    = firstLifePhaseView.frame.size.height + SPACE_BETWEEN_PHASE_VIEWS;
     nextPhaseListViewCoordinate += updateSizeForViews;
     
+    // animation: MOVE USER DOWN TO NEW PHASE
+    [UIView animateWithDuration:1.0 animations:^{
+        float newContentOffsetCoordinate = newRectFrame.origin.y;
+        
+        [self.view endEditing:YES];
+        [self.scrolley setContentOffset:CGPointMake(0, newContentOffsetCoordinate)];
+    }];
+
     // make new phase view
     LifePhaseView *newPhaseView = [[LifePhaseView alloc] initWithFrame:newRectFrame];
-    [newPhaseView awakeFromNib];
-    
-    newPhaseView.delegate = self;
-    [newPhaseView setUserInteractionEnabled:YES];
-    [newPhaseView setAlpha:0.0f];
-    [newPhaseView.deleteButton setHidden:NO];
-    
+    // set it's stuff
+    [newPhaseView               setAutoresizingMask:
+     (UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin)];
+    [newPhaseView               setDelegate:self];
+    [newPhaseView               setUserInteractionEnabled:YES];
+    [newPhaseView               setAlpha:0.0f];
+    [newPhaseView.deleteButton  setHidden:NO];
     // add correct phase number
-    newPhaseView.phaseNumber    = nextPhaseNumber++;
+    [newPhaseView               setPhaseNumber:nextPhaseNumber++];
     
     // move compute button, computation progress bar
     CGRect oldComputeButtonFrame            = self.computeButton.frame;
@@ -121,16 +135,16 @@
     CGRect newComputationProgressViewFrame  = CGRectMake(oldComputationProgessViewFrame.origin.x, oldComputationProgessViewFrame.origin.y + updateSizeForViews, oldComputationProgessViewFrame.size.width, oldComputationProgessViewFrame.size.height);
     
     // add to scrollview!
-    [self.scrolley addSubview:newPhaseView];
+    [scrolley addSubview:newPhaseView];
     
     // add to phases array
     [phaseViewArray addObject:newPhaseView];
     
-    // add animation
+    // animation: ADD PHASE
     [UIView animateWithDuration:0.5f animations:^{
         [newPhaseView setAlpha:1.0f];
-        self.computeButton.frame            = newComputeButtonFrame;
-        self.computationProgressView.frame  = newComputationProgressViewFrame;
+        computeButton.frame            = newComputeButtonFrame;
+        computationProgressView.frame  = newComputationProgressViewFrame;
 
     }];
     
