@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4C0DA0FE188DE9D700E42759 /* pomicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0DA0FD188DE9D700E42759 /* pomicon.png */; };
-		4C0DA100188DEAFB00E42759 /* pomlaunch.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C0DA0FF188DEAFB00E42759 /* pomlaunch.jpg */; };
 		4C12BA76187E342100927765 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C12BA75187E342100927765 /* Foundation.framework */; };
 		4C12BA78187E342100927765 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C12BA77187E342100927765 /* CoreGraphics.framework */; };
 		4C12BA7A187E342100927765 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C12BA79187E342100927765 /* UIKit.framework */; };
@@ -25,6 +24,12 @@
 		4C12BAA2187E342100927765 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C12BAA0187E342100927765 /* InfoPlist.strings */; };
 		4C12BAA4187E342100927765 /* Peace_Of_MindTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C12BAA3187E342100927765 /* Peace_Of_MindTests.m */; };
 		4C12BAB6187E383100927765 /* GetScenariosCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C12BAB5187E383100927765 /* GetScenariosCommand.m */; };
+		4C83C9FB188ED2580053D662 /* pomicon_58.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C83C9F8188ED2580053D662 /* pomicon_58.png */; };
+		4C83C9FC188ED2580053D662 /* pomicon_80.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C83C9F9188ED2580053D662 /* pomicon_80.png */; };
+		4C83C9FD188ED2580053D662 /* pomicon_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C83C9FA188ED2580053D662 /* pomicon_120.png */; };
+		4C83C9FF188ED27B0053D662 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C83C9FE188ED27B0053D662 /* Default-568h@2x.png */; };
+		4C83CA06188ED3ED0053D662 /* pomlaunch_960.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C83CA04188ED3ED0053D662 /* pomlaunch_960.png */; };
+		4C83CA07188ED3ED0053D662 /* pomlaunch_1136.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C83CA05188ED3ED0053D662 /* pomlaunch_1136.png */; };
 		4C9BA5C4187FB77B00258CDD /* POMSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BA5C3187FB77B00258CDD /* POMSingleton.m */; };
 		4C9BA5C7187FC0EF00258CDD /* POMUpdateScenarioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9BA5C6187FC0EF00258CDD /* POMUpdateScenarioViewController.m */; };
 		4CC657E718823699005E2E3F /* LifePhaseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC657E618823699005E2E3F /* LifePhaseView.xib */; };
@@ -45,7 +50,6 @@
 
 /* Begin PBXFileReference section */
 		4C0DA0FD188DE9D700E42759 /* pomicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pomicon.png; sourceTree = "<group>"; };
-		4C0DA0FF188DEAFB00E42759 /* pomlaunch.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pomlaunch.jpg; sourceTree = "<group>"; };
 		4C12BA72187E342100927765 /* Peace Of Mind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Peace Of Mind.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C12BA75187E342100927765 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C12BA77187E342100927765 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -70,6 +74,12 @@
 		4C12BAB4187E383100927765 /* GetScenariosCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetScenariosCommand.h; sourceTree = "<group>"; };
 		4C12BAB5187E383100927765 /* GetScenariosCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetScenariosCommand.m; sourceTree = "<group>"; };
 		4C12BAB7187E3CB200927765 /* DataConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConstants.h; sourceTree = "<group>"; };
+		4C83C9F8188ED2580053D662 /* pomicon_58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pomicon_58.png; sourceTree = "<group>"; };
+		4C83C9F9188ED2580053D662 /* pomicon_80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pomicon_80.png; sourceTree = "<group>"; };
+		4C83C9FA188ED2580053D662 /* pomicon_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pomicon_120.png; sourceTree = "<group>"; };
+		4C83C9FE188ED27B0053D662 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		4C83CA04188ED3ED0053D662 /* pomlaunch_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pomlaunch_960.png; sourceTree = "<group>"; };
+		4C83CA05188ED3ED0053D662 /* pomlaunch_1136.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pomlaunch_1136.png; sourceTree = "<group>"; };
 		4C9BA5C2187FB77B00258CDD /* POMSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POMSingleton.h; sourceTree = "<group>"; };
 		4C9BA5C3187FB77B00258CDD /* POMSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POMSingleton.m; sourceTree = "<group>"; };
 		4C9BA5C5187FC0EF00258CDD /* POMUpdateScenarioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POMUpdateScenarioViewController.h; sourceTree = "<group>"; };
@@ -110,8 +120,12 @@
 		4C0DA0FC188DE9D700E42759 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				4C83CA04188ED3ED0053D662 /* pomlaunch_960.png */,
+				4C83CA05188ED3ED0053D662 /* pomlaunch_1136.png */,
+				4C83C9F8188ED2580053D662 /* pomicon_58.png */,
+				4C83C9F9188ED2580053D662 /* pomicon_80.png */,
+				4C83C9FA188ED2580053D662 /* pomicon_120.png */,
 				4C0DA0FD188DE9D700E42759 /* pomicon.png */,
-				4C0DA0FF188DEAFB00E42759 /* pomlaunch.jpg */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -119,6 +133,7 @@
 		4C12BA69187E342100927765 = {
 			isa = PBXGroup;
 			children = (
+				4C83C9FE188ED27B0053D662 /* Default-568h@2x.png */,
 				4C12BA7B187E342100927765 /* Peace Of Mind */,
 				4C12BA9D187E342100927765 /* Peace Of MindTests */,
 				4C12BA74187E342100927765 /* Frameworks */,
@@ -300,11 +315,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C12BA91187E342100927765 /* Images.xcassets in Resources */,
+				4C83C9FB188ED2580053D662 /* pomicon_58.png in Resources */,
 				4C12BA80187E342100927765 /* InfoPlist.strings in Resources */,
+				4C83C9FF188ED27B0053D662 /* Default-568h@2x.png in Resources */,
+				4C83CA07188ED3ED0053D662 /* pomlaunch_1136.png in Resources */,
 				4C0DA0FE188DE9D700E42759 /* pomicon.png in Resources */,
+				4C83CA06188ED3ED0053D662 /* pomlaunch_960.png in Resources */,
 				4CC657E718823699005E2E3F /* LifePhaseView.xib in Resources */,
+				4C83C9FD188ED2580053D662 /* pomicon_120.png in Resources */,
+				4C83C9FC188ED2580053D662 /* pomicon_80.png in Resources */,
 				4C12BA89187E342100927765 /* Main.storyboard in Resources */,
-				4C0DA100188DEAFB00E42759 /* pomlaunch.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +477,8 @@
 		4C12BAA8187E342100927765 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Peace Of Mind/Peace Of Mind-Prefix.pch";
 				INFOPLIST_FILE = "Peace Of Mind/Peace Of Mind-Info.plist";
@@ -468,6 +490,8 @@
 		4C12BAA9187E342100927765 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Peace Of Mind/Peace Of Mind-Prefix.pch";
 				INFOPLIST_FILE = "Peace Of Mind/Peace Of Mind-Info.plist";

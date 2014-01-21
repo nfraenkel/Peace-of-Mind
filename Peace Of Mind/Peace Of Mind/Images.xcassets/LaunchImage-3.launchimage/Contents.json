@@ -3,18 +3,15 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
-      "extent" : "full-screen",
+      "filename" : "Default-568h@2x.png",
       "minimum-system-version" : "7.0",
-      "filename" : "pomlaunch_960.png",
+      "subtype" : "retina4",
       "scale" : "2x"
     },
     {
-      "extent" : "full-screen",
-      "idiom" : "iphone",
-      "subtype" : "retina4",
-      "filename" : "pomlaunch_1136.png",
-      "minimum-system-version" : "7.0",
       "orientation" : "portrait",
+      "idiom" : "iphone",
+      "minimum-system-version" : "7.0",
       "scale" : "2x"
     }
   ],
