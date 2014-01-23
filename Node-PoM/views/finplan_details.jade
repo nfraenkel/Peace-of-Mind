@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h1= title
+    #finplan
+      div.fp
+        div.username= fp.UserName
+        div.title= fp.Title 
+        div.description= fp.Description
+        a(href="/:id" method="post")!= "Edit This Financial Plan" 
+        p     
+        a(href="/")!= "Back to General List"
+          
