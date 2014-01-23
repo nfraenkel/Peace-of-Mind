@@ -21,13 +21,20 @@
   $.getJSON( finplanAPI, {
     format: "json"
   })
-    .done(function( data ) {
-      $.each( data.items, print(item ) {
-               }
-      });
+  .done(function( data ) {
+    $.each( data.items, function(i,item) {
+      print('hello');
+      print(i);
+      print($(item) );
+    }
     });
+  });
 })();
 </script>
- 
+
+<h4>Demo:</h4>
+<div class="demo code-demo"></div>
+</div>
+
 </body>
 </html>

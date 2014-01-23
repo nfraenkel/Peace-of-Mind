@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    h1= title
+    #finplan
+        - each fp in finplan
+          div.fp
+            div.username= fp.UserName
+            div.title= fp.Title 
+            div.description= fp.Description
+                form( method="post", action="/fp/:id/delete") 
+                    input(name="_id", type="hidden", value=fp.FinPlan_ID) 
+                    //- input(name="_id", type="hidden", value=fp.FinPlan_ID.toHexString()) 
+                    input(id="delete", value="X", type="submit")
+                form( method="get", action="/fp/:id/edit") 
+                    input(name="_id", type="hidden", value=fp.FinPlan_ID) 
+                    input(id="edit", value="Edit", type="submit")
+        a(href="/fp/new")!= "Add New Financial Plan"
