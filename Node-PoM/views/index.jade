@@ -5,14 +5,15 @@ block content
     #finplan
         - each fp in finplan
           div.fp
-            div.username= fp.UserName
+            div.yellow= fp.UserName
             div.title= fp.Title 
             div.description= fp.Description
-                form( method="post", action="/fp/:id/delete") 
+                form( method="post", action="/delete") 
                     input(name="_id", type="hidden", value=fp.FinPlan_ID) 
-                    //- input(name="_id", type="hidden", value=fp.FinPlan_ID.toHexString()) 
                     input(id="delete", value="X", type="submit")
-                form( method="get", action="/fp/:id/edit") 
+                //- form( method="get", action=fp.FinPlan_ID)) 
+                //-     input(id="details", value="Details", type="submit")
+                form( method="get", action=fp.FinPlan_ID) 
                     input(name="_id", type="hidden", value=fp.FinPlan_ID) 
-                    input(id="edit", value="Edit", type="submit")
-        a(href="/fp/new")!= "Add New Financial Plan"
+                    input(id="details", value="See Plan Details", type="submit")
+        a(href="/new")!= "Add New Financial Plan"

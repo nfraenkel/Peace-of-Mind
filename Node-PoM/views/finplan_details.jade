@@ -1,13 +1,34 @@
 extends layout
 
 block content
-    h1= title
-    #finplan
-      div.fp
-        div.username= fp.UserName
-        div.title= fp.Title 
-        div.description= fp.Description
-        a(href="/:id" method="post")!= "Edit This Financial Plan" 
-        p     
-        a(href="/")!= "Back to General List"
-          
+	h1= title
+	#finplan
+		div.fp
+			table
+				- each val, index in finplan
+					unless index == "PhaseList"
+						tr
+							td= index + ": "
+							td= val
+					else
+						tr
+							td= index + ": "
+								- each list in val
+									td
+										table
+											- each vv, ii in list
+												tr
+													td= ii + ": "
+													unless ii == "Portfolio"
+														td= vv
+													else
+														td
+															- each pct, asset in vv
+																ul= asset + ": " +  pct + "%"
+			<br>
+			form( method="get", action="/edit") 
+				input(name="_id", type="hidden", value=finplan.FinPlan_ID) 
+				input(id="details", value="Edit This Plan", type="submit")  
+
+		p
+		a(href="/")!= "Back to General List"

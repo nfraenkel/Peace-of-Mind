@@ -9,6 +9,7 @@ var request = require('superagent');
  */
 
 module.exports = function retrieve (query, fn) {
+	console.log('retrieve')
 	request.get('http://localhost:5000/finplan/api/v2.0/finplan')
 	// .set('Content-Type', 'application/json')
 	.send({q:query})

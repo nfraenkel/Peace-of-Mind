@@ -7,7 +7,8 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , retrieve = require('./retrieve'); 
+  , retrieveByID = require('./retrieveByID') 
+, retrieve = require('./retrieve'); 
 
 var app = express();
 
@@ -37,13 +38,29 @@ console.log(app.set('views'));
 
 //index
 app.get('/', function(req, res, next){
-  console.log(req.query);
+  // console.log(req);
   retrieve(req.query.q, function (err, fp) {
     if (err) return next(err);
     res.render('index', {
           title: 'FinPlan',
           finplan:fp
       });
+  });
+});
+
+//Show the details for FinPlan
+app.get('/:id', function(req, res) {
+  console.log(req.params);
+  // console.log(req.params.id);
+  // retrieveByID(req, function(error, fp) {
+  retrieveByID(req.params.id, function(error, fp) {
+    console.log('-- fp --')
+    console.log(fp.Description)
+    res.render('finplan_details',
+    { 
+      title: "Financial Plan",
+      finplan: fp
+    });
   });
 });
 

@@ -23,30 +23,34 @@ h1 {
   text-align: left;
   margin-left: auto;
   margin-right: auto;
-  width: 320px;
+  width: 400px;
 }
 #finplan .fp {
   margin: 20px;
 }
-#finplan .fp .created_at {
-  display: none;
+#finplan .fp .yellow {
+  background-color: #ffa;
 }
 #finplan .fp .title {
   font-weight: bold;
   background-color: #eee;
 }
-#finplan .fp .name {
-  background-color: #ffa;
+#finplan .fp .description {
+  background-color: #eee;
 }
 #finplan .fp input#delete {
-  margin-top: -17px;
-  margin-left: 255px;
-}
-#finplan .fp input#edit {
+  font-size: 15px;
   margin-top: -20px;
-  margin-left: 215px;
+  margin-left: 255px;
+  background-color: #aaf;
 }
-.newfp {
+#finplan .fp input#details {
+  font-size: 15px;
+  margin-top: -20px;
+  margin-left: 175px;
+  background-color: #faa;
+}
+.newfinplan {
   border: 3px;
   border-color: #000;
   border-style: dotted;

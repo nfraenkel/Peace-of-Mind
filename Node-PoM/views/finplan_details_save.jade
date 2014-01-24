@@ -1,0 +1,18 @@
+extends layout
+
+block content
+	h1= title
+	#finplan
+		div.fp
+			div.username= finplan.UserName
+			div.title= finplan.Title 
+			div.description= finplan.Description
+			div.description= finplan.FinPlan_ID
+			p.
+			<br>
+			form( method="get", action="/edit") 
+				input(name="_id", type="hidden", value=finplan.FinPlan_ID) 
+				input(id="details", value="Edit This Plan", type="submit")  
+
+		p
+		a(href="/")!= "Back to General List"
