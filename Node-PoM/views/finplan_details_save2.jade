@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	h1= title
+	#finplan
+		div.fp
+			form(action="/edit", method="post", name="edit", id=24)
+				fieldset
+					table
+						tr
+							td
+								label(for="index",align="left", class="label") Indexx
+							td
+								input(name="index",type="text", id=66, value="", placeholder='temp')
+					p.
+					table
+						tr
+							td
+								input(id="edited",value="Save",type="submit")
+							td
+								input(id="cancel",value="Cancel",type="submit")
+
+

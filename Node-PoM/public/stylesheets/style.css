@@ -19,14 +19,55 @@ h1 {
   text-shadow: 1px 2px 2px #ddd;
   font-size: 60px;
 }
+input[type =text] {
+  size: 80;
+  margin-left: 16px;
+  float: left;
+}
+input[type =button],
+input[type =submit] {
+  clear: both;
+  text-align: left;
+  margin-left: 70px;
+  display: block;
+}
+table {
+  border: 2px solid #00f;
+  width: 100%;
+}
+table .assets {
+  width: 200px;
+  background-color: #eee;
+}
 #finplan {
   text-align: left;
   margin-left: auto;
   margin-right: auto;
-  width: 400px;
+  width: 500px;
+}
+#finplan input#save {
+  font-size: 15px;
+  background-color: #faa;
+}
+#finplan input#cancel {
+  font-size: 15px;
+  background-color: #aaa;
+}
+#finplan input#home {
+  font-size: 15px;
+  background-color: #eef;
+}
+#finplan input#asset {
+  width: 60px;
 }
 #finplan .fp {
   margin: 20px;
+}
+#finplan .fp input#tbl_edit {
+  background-color: #fff;
+}
+#finplan .fp .tbl_div {
+  width: 500px;
 }
 #finplan .fp .yellow {
   background-color: #ffa;
@@ -40,40 +81,31 @@ h1 {
 }
 #finplan .fp input#delete {
   font-size: 15px;
-  margin-top: -20px;
-  margin-left: 255px;
+  margin-top: -1px;
+  margin-left: 330px;
   background-color: #aaf;
 }
 #finplan .fp input#details {
   font-size: 15px;
-  margin-top: -20px;
-  margin-left: 175px;
+  margin-top: -27px;
+  margin-left: 1px;
   background-color: #faa;
 }
-.newfinplan {
-  border: 3px;
-  border-color: #000;
-  border-style: dotted;
-  width: 450px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 14px;
+#finplan .fp input#entry_field {
+  font-size: 15px;
+  margin-left: 10px;
+  background-color: #faa;
+  width: 40px;
 }
-input[type =text] {
-  width: 200px;
-  margin-left: 16px;
+#finplan .fp .label {
+  width: 70px;
+  text-align: left;
+  display: block;
   float: left;
 }
-input[type =button],
-input[type =submit] {
-  clear: both;
+#finplan .fp .label_short {
+  width: 20px;
   text-align: left;
-  margin-left: 165px;
-  display: block;
-}
-.label {
-  width: 150px;
-  text-align: right !important;
   display: block;
   float: left;
 }

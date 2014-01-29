@@ -5,30 +5,144 @@ block content
 	#finplan
 		div.fp
 			table
-				- each val, index in finplan
-					unless index == "PhaseList"
-						tr
-							td= index + ": "
-							td= val
-					else
-						tr
-							td= index + ": "
-								- each list in val
-									td
-										table
-											- each vv, ii in list
-												tr
-													td= ii + ": "
-													unless ii == "Portfolio"
-														td= vv
-													else
-														td
-															- each pct, asset in vv
-																ul= asset + ": " +  pct + "%"
-			<br>
-			form( method="get", action="/edit") 
-				input(name="_id", type="hidden", value=finplan.FinPlan_ID) 
-				input(id="details", value="Edit This Plan", type="submit")  
+				tr
+					td  ID
+					td= finplan.FinPlan_ID
+				tr
+					td  UserName
+					td= finplan.UserName
+				tr
+					td  Email
+					td= finplan.Email
+			p
+			div.tbl_div
+			table
+				form(action="/edit", method="post", name="edit", id=finplan.FinPlan_ID)
+					input(name="id", type="hidden", value=finplan.FinPlan_ID) 
+					input(name="UserName", type="hidden", value=finplan.UserName) 
+					input(name="Email", type="hidden", value=finplan.Email) 
+					tr				
+						td 
+							label(for="Title",align="left", class="label") Title
+						td
+							input(name="Title",type="text", id="tbl_edit", value=finplan.Title, placeholder='Enter a name for this Scenario')
+					tr				
+						td 
+							label(for="Description",align="left", class="label") Description
+						td
+					tr				
+						td 
+							label(for="AgeToday",align="left", class="label") Age Today
+						td
+							- var aT = parseFloat(finplan.AgeToday)
+							input(name="AgeToday",type="text", id="tbl_edit", form=finplan.FinPlan_ID, value=aT, placeholder='Enter your current age')
+					tr				
+						td 
+							label(for="LifeExpect",align="left", class="label") Life Expectancy
+						td
+							- var lE = parseFloat(finplan.LifeExpect)
+							input(name="LifeExpect",type="text", id="asset", value=lE, placeholder='Enter your current age')
+					tr				
+						td 
+							label(for="StartingAmount",align="left", class="label") Starting Amount
+						td
+							- var s_amount = parseFloat(finplan.StartingAmount)
+							&nbsp; $ &nbsp;
+							input(name="StartingAmount",type="text", class="asset", value=s_amount, placeholder='Enter the amount currently invested')
+					tr				
+						td 
+							label(for="TargetEndFunds",align="left", class="label") Target End Amount
+						td
+							- var e_amount = parseFloat(finplan.TargetEndFunds)
+							&nbsp; $ &nbsp;
+							input(name="TargetEndFunds",type="text", id="asset", value=e_amount, placeholder='Enter the target amount remaining')
+					tr				
+						td 
+							label(for="InflationRate",align="left", class="label") Inflation Rate
+						td
+							input(name="InflationRate",type="text", id="asset", value=finplan.InflationRate, placeholder='Enter the projected inflation rate')
+							&nbsp;%
+					p.
+					tr
+						td
+							input(id="save",value="Save",form=finplan.FinPlan_ID, type="submit")
+						td
+							form( method="get", action="/" + finplan.FinPlan_ID) 
+								input(name="_id", type="hidden", value=finplan.FinPlan_ID) 
+								input(id="cancel", value="Cancel", type="submit")						
+						td
+							form( method="get", action='/') 
+								input(id="home", value="HOME", type="submit")	
 
-		p
-		a(href="/")!= "Back to General List"
+
+
+			- each phase in finplan.PhaseList
+				- var ph = phase.Name
+				p
+				div.tbl_div
+					table
+						form(action="/edit", method="post", name="edit", id=ph)
+							input(name="id", type="hidden", value=finplan.FinPlan_ID) 
+							input(name="Phase", type="hidden", value=ph) 
+							tr				
+								td 
+									label(for="Name",align="left", class="label") <strong>PHASE</strong>
+								td
+									input(name="Name",type="text", id="tbl_edit", value=phase.Name, placeholder='Enter a name for this Phase')							
+							tr				
+								td 
+									label(for="startAge",align="left", class="label") Age at Start of Phase
+								td
+									- var SA = parseFloat(phase.startAge)									
+									input(name="startAge",type="text", id="asset", value=SA, placeholder='Enter the age at the start of  this Phase')							
+							tr				
+								td 
+									label(for="endAge",align="left", class="label") Age at End of Phase
+								td
+									- var EA = parseFloat(phase.endAge)									
+									input(name="endAge",type="text", id="asset", value=EA, placeholder='Enter the age at the end of  this Phase')
+							tr
+								td 	Compute value of contribution / withdrawal?
+								td
+									if phase.ToCompute
+										input(type="checkbox", name="ToCompute", checked) 
+									else
+										input(type="checkbox", name="ToCompute")															
+							tr				
+								td 
+									label(for="NetContribution",align="left", class="label") Net Contribution
+								td
+									- var NC = parseFloat(phase.NetContribution)
+									&nbsp; $ &nbsp;
+									input(name="NetContribution",type="text", id="asset", value=NC, placeholder='Enter the Net Contribution during this Phase')
+							tr
+								td 	<strong>ASSET ALLOCATION</strong>
+								td
+									table.assets
+
+										- each amount, asset in phase.Portfolio
+											tr
+												td 
+													label(for="asset",align="left", class="label") #{asset}
+												td
+													input(name="asset/"+asset, type="text", id="asset", value=amount, placeholder='Enter the percentage of funds to allocate to this asset class') +" %"
+													&nbsp;%
+										- var tots = 0
+										- each amount in phase.Portfolio
+											- tots += parseFloat(amount)
+										tr
+											td <strong>Total</strong>
+											td= tots + "%"
+
+
+							p.
+							tr
+								td
+									input(id="save",value="Save",form=ph, type="submit")
+								td
+									form( method="get", action="/" + finplan.FinPlan_ID) 
+										input(name="_id", type="hidden", value=finplan.FinPlan_ID) 
+										input(id="cancel", value="Cancel", type="submit")						
+								td
+									form( method="get", action='/') 
+										input(id="home", value="HOME", type="submit")	

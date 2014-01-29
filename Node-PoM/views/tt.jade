@@ -1,0 +1,46 @@
+extends layout
+
+block content
+	h1= title
+	#finplan
+		// - <form action="/edit" method="post" name="edit" id=finplan.FinPlan_ID>
+	- <form action="/edit" method="post" name="edit" id=24>
+	// - <label for="index" class="label"> Index </label>
+	// - <input name="index" type="text" id=66 value=val>	
+		
+
+			
+		//- table
+		//- 	- each val, index in finplan
+		//- 		unless index == "PhaseList"
+		//- 			tr
+		//- 				div.fp
+		//- 					// - <label for=index class="label"> index </label>
+		//- 					// - <input name=index type="text" id=index value=val>
+		//- 					- <label for="index" class="label"> Index </label>
+		//- 					- <input name="index" type="text" id=66 value=val>
+		//- 				td= index + ": "
+		//- 				td= val
+		//- 		else
+		//- 			tr
+		//- 				td= index + ": "
+		//- 					- each list in val
+		//- 						td
+		//- 							table
+		//- 								- each vv, ii in list
+		//- 									tr
+		//- 										td= ii + ": "
+		//- 										unless ii == "Portfolio"
+		//- 											td= vv
+		//- 										else
+		//- 											td
+		//- 												- each pct, asset in vv
+		//- 													ul= asset + ": " +  pct + "%"
+		//- <br>
+		//- <br>
+		//- form( method="get", action="/edit") 
+		//- 	input(name="_id", type="hidden", value=finplan.FinPlan_ID) 
+		//- 	input(id="details", value="Edit This Plan", type="submit")  
+
+		//- p
+		//- a(href="/")!= "Back to General List"

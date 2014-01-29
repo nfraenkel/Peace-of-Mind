@@ -1,0 +1,165 @@
+extends layout
+
+block content
+	h1= title
+	#finplan
+		div.fp
+				fieldset
+					table
+						tr
+							td  ID
+							td= finplan.FinPlan_ID
+						tr
+							td  UserName
+							td= finplan.UserName
+						tr
+							td  Email
+							td= finplan.Email
+				p
+				fieldset
+					div.tbl_edit
+						table
+							form(action="/edit", method="post", name="edit", id=finplan.FinPlan_ID)
+								tr				
+									td 
+										label(for="Title",align="left", class="label") Title
+									td
+										input(name="Title",type="text", id="Title", value=finplan.Title, placeholder='Enter a name for this Scenario')
+								tr				
+									td 
+										label(for="Description",align="left", class="label") Description
+									td
+										input(name="Description",type="text", id="Description", value=finplan.Description, placeholder='Enter a description for this Scenario')
+								tr				
+									td 
+										label(for="AgeToday",align="left", class="label") Age Today
+									td
+										- var aT = parseFloat(finplan.AgeToday)
+										input(name="AgeToday",type="text", id="asset", value=aT, placeholder='Enter your current age')
+								tr				
+									td 
+										label(for="LifeExpect",align="left", class="label") Life Expectancy
+									td
+										- var lE = parseFloat(finplan.LifeExpect)
+										input(name="LifeExpect",type="text", id="asset", value=lE, placeholder='Enter your current age')
+								tr				
+									td 
+										label(for="StartingAmount",align="left", class="label") Starting Amount
+									td
+										- var s_amount = parseFloat(finplan.StartingAmount)
+										&nbsp; $ &nbsp;
+										input(name="StartingAmount",type="text", id="asset", value=s_amount, placeholder='Enter the amount currently invested')
+								tr				
+									td 
+										label(for="TargetEndFunds",align="left", class="label") Target End Amount
+									td
+										- var e_amount = parseFloat(finplan.TargetEndFunds)
+										&nbsp; $ &nbsp;
+										input(name="TargetEndFunds",type="text", id="asset", value=e_amount, placeholder='Enter the target amount remaining')
+								tr				
+									td 
+										label(for="InflationRate",align="left", class="label") Inflation Rate
+									td
+										input(name="InflationRate",type="text", id="asset", value=finplan.InflationRate, placeholder='Enter the projected inflation rate')
+										&nbsp;%
+
+				- each phase in finplan.PhaseList
+					p
+					fieldset
+						div.tbl_edit
+							table
+								tr				
+									td 
+										label(for="Name",align="left", class="label") <strong>PHASE</strong>
+									td
+										input(name="Name",type="text", id="Name", value=phase.Name, placeholder='Enter a name for this Phase')							
+								tr				
+									td 
+										label(for="startAge",align="left", class="label") Age at Start of Phase
+									td
+										- var SA = parseFloat(phase.startAge)									
+										input(StartAge="startAge",type="text", id="asset", value=SA, placeholder='Enter the age at the start of  this Phase')							
+								tr				
+									td 
+										label(for="endAge",align="left", class="label") Age at End of Phase
+									td
+										- var EA = parseFloat(phase.endAge)									
+										input(endAge="endAge",type="text", id="asset", value=EA, placeholder='Enter the age at the end of  this Phase')
+								tr
+									td 	Compute value of contribution / withdrawal?
+									td
+										if phase.ToCompute
+											input(type="checkbox", name="ToCompute", checked) 
+										else
+											input(type="checkbox", name="ToCompute")															
+								tr				
+									td 
+										label(for="NetContribution",align="left", class="label") Net Contribution
+									td
+										- var NC = parseFloat(phase.NetContribution)
+										&nbsp; $ &nbsp;
+										input(NetContribution="NetContribution",type="text", id="asset", value=NC, placeholder='Enter the Net Contribution during this Phase')
+								tr
+									td 	<strong>ASSET ALLOCATION</strong>
+									td
+										table
+
+											- each amount, asset in phase.Portfolio
+												tr
+													td 
+														label(for="asset",align="left", class="label") #{asset}
+													td
+														input(name="entry_field",type="text", id="asset", value=amount, placeholder='Enter the percentage of funds to allocate to this asset class') +" %"
+														&nbsp;%
+											- var tots = 0
+											- each amount in phase.Portfolio
+												- tots += parseFloat(amount)
+											tr
+												td <strong>Total</strong>
+												td= tots + "%"
+
+
+
+					//-   'FinPlan_ID': '445585fb-5c9d-4254-9b91-0197a584e6ba',
+					//-   'UserName': 'Lucky',
+					//-   'Title': 'Conservative',
+					//-   'Description': 'Conservative Scenario', 
+					//-   'Email': 'SantaClaus@xmas.com',
+					//-   'HasResult': False,
+					//-   'AgeToday': 30, 
+					//-   'LifeExpect': 90,
+					//-   'StartingAmount': 200000,
+					//-   'TargetEndFunds': 1.0,
+					//-   'PhaseList' : [
+					//-       {'Name': 'Working',
+					//-       'startAge': 30,
+					//-       'endAge': 65,
+					//-       'NetContribution': 17500,
+					//-       'ToCompute': False,
+					//-       'Portfolio': {"Stocks": 80.0, "Bonds": 20.0, "T-Bills": 0.0, "Cash": 0.0}},
+					//-       {'Name': 'Retired',
+					//-       'startAge': 65,
+					//-       'endAge': 90,
+					//-       'NetContribution': 0,
+					//-       'ToCompute': True,
+					//-       'Portfolio': {"Stocks": 50.0, "Bonds": 30.0, "T-Bills": 10.0, "Cash": 10.0}}],
+					//- 'InflationRate': 3.0    },
+
+						- each val, index in finplan
+							unless index == "PhaseList"
+								ul= index + ": " + val
+								tr
+									td
+										label(for=index,align="left", class="label") #{index}
+									td
+										input(name="index",type="text", id=66, value="val" placeholder='temp')
+
+				p.
+				table
+					tr
+						td
+							input(id="save",value="Save",type="submit")
+						td
+							input(id="cancel",value="Cancel",type="submit")
+
+
