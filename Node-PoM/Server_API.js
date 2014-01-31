@@ -27,14 +27,27 @@ var request = require('superagent');
 
 exports.retrieveByID = function (query, fn) {
 	console.log('retrieveByID')
-	console.log(query)
-	// var finplanID = query.params.id;
-	var url = 'http://localhost:5000/finplan/api/v2.0/finplan/' + query
+	var finplanID =''
+	// GET and POST method store the id in a different place
+	if (query.params.id) 	{finplanID = query.params.id}
+	else if (query.body.id) 	{ finplanID = query.body.id}
+	else {
+		console.log("Error cannot get the Finplan_ID  -- query ->")
+		console.log(query)
+	}
+
+
+	// console.log(query)
+	// console.log(query.query._id)
+	// var finplanID = query.query._id;
+
+	console.log('finplanID: '+ finplanID)
+	var url = 'http://localhost:5000/finplan/api/v2.0/finplan/' + finplanID
 	console.log ('url: ' + url)
 	request.get(url)
 	// request.get('http://localhost:5000/finplan/api/v2.0/finplan')
 	// .set('Content-Type', 'application/json')
-	.send({q:query})
+	.send({id:finplanID})
 	.end(function (res) {
 
 		// if (res.body && Array.isArray(fplan)) {
@@ -51,8 +64,9 @@ exports.retrieveByID = function (query, fn) {
 exports.updateByID = function (query, fn) {
 	console.log('updateByID')
 	console.log(query)
-	// var finplanID = query.params.id;
-	var url = 'http://localhost:5000/finplan/api/v2.0/finplan/' + query
+	var finplanID = query.query._id;
+	console.log('finplanID: '+ finplanID)
+	var url = 'http://localhost:5000/finplan/api/v2.0/finplan/' + finplanID
 	console.log ('url: ' + url)
 	request.put(url)
 	// request.get('http://localhost:5000/finplan/api/v2.0/finplan')

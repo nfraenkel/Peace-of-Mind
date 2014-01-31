@@ -3,44 +3,44 @@ extends layout
 block content
 	h1= title
 	#finplan
-		// - <form action="/edit" method="post" name="edit" id=finplan.FinPlan_ID>
-	- <form action="/edit" method="post" name="edit" id=24>
-	// - <label for="index" class="label"> Index </label>
-	// - <input name="index" type="text" id=66 value=val>	
-		
+		- var finplan = {"FinPlan_ID": 123}
+		- var fpID = finplan.FinPlan_ID
+		div.fp
+			table
+				tr
+					td  ID
+					td= fpID
+				tr
+					td  UserName
+					td= finplan.UserName
+				tr
+					td  Email
+					td= finplan.Email
+			p
+			div.tbl_div
+			table
+				form(action="/edit", method="post", name="edit", id="save_general")
+					input(name="id", type="hidden", value=fpID, form="save_general") 
+					input(name="UserName", type="hidden", value=finplan.UserName, form="save_general") 
+					input(name="Email", type="hidden", value=finplan.Email, form="save_general")
+					tr 	
+						td 
+							label(for="Title",align="left", class="label") Title
+						td
+							input(name="Title",type="text", id="tbl_edit", value=finplan.Title, placeholder='Enter a name for this Scenario', form="save_general")
 
-			
-		//- table
-		//- 	- each val, index in finplan
-		//- 		unless index == "PhaseList"
-		//- 			tr
-		//- 				div.fp
-		//- 					// - <label for=index class="label"> index </label>
-		//- 					// - <input name=index type="text" id=index value=val>
-		//- 					- <label for="index" class="label"> Index </label>
-		//- 					- <input name="index" type="text" id=66 value=val>
-		//- 				td= index + ": "
-		//- 				td= val
-		//- 		else
-		//- 			tr
-		//- 				td= index + ": "
-		//- 					- each list in val
-		//- 						td
-		//- 							table
-		//- 								- each vv, ii in list
-		//- 									tr
-		//- 										td= ii + ": "
-		//- 										unless ii == "Portfolio"
-		//- 											td= vv
-		//- 										else
-		//- 											td
-		//- 												- each pct, asset in vv
-		//- 													ul= asset + ": " +  pct + "%"
-		//- <br>
-		//- <br>
-		//- form( method="get", action="/edit") 
-		//- 	input(name="_id", type="hidden", value=finplan.FinPlan_ID) 
-		//- 	input(id="details", value="Edit This Plan", type="submit")  
+					p.
+					tr 
+						td
+							input(id="save",value="Save",form="save_general", type="submit")
+						td
+							form( method="get", action="/"+fpID, id="cancel") 
+								input(name="id", type="hidden", value=fpID, form="cancel") 
+								input(id="cancel", value="Cancel", type="submit", form="cancel") 			
+						td
+							form( method="get", action="/", id="home") 
+								input(id="home", value="HOME", type="submit", form="home")
 
-		//- p
-		//- a(href="/")!= "Back to General List"
+
+
+

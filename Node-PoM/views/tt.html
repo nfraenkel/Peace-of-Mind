@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+	</title>
+	<link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+	<h1>
+	</h1>
+	<div id="finplan">
+		<div class="fp">
+			<table>
+				<tr>
+					<td> ID</td>
+					<td>123</td>
+				</tr>
+				<tr>
+					<td> UserName</td>
+					<td>
+					</td>
+				</tr>
+				<tr>
+					<td> Email</td>
+					<td></td>
+				</tr>
+			</table>
+			<p></p>
+			<div class="tbl_div">
+			</div>
+			<table>
+				<form action="/edit" method="post" name="edit" id="save_general">
+					<input name="id" type="hidden" value="123" form="save_general">
+					<input name="UserName" type="hidden" form="save_general">
+					<input name="Email" type="hidden" form="save_general">
+					<tr>	
+						<td>
+						<label for="Title" align="left" class="label">Title</label>
+					</td>
+					<td>
+						<input name="Title" type="text" id="tbl_edit" placeholder="Enter a name for this Scenario" form="save_general">
+					</td>
+				</tr>
+				<p></p>
+				<tr><td>
+					<input id="save" value="Save" form="save_general" type="submit">
+				</td><td>
+				<form method="get" action="/123" id="cancel">
+					<input name="id" type="hidden" value="123" form="cancel"><input id="cancel" value="Cancel" type="submit" form="cancel">
+				</form>
+			</td>
+			<td>
+				<form method="get" action="/" id="home">
+					<input id="home" value="HOME" type="submit" form="home">
+				</form>
+			</td>
+		</tr>
+	</form>
+</table>
+</div>
+</div>
+</body>
+</html>

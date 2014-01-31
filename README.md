@@ -13,6 +13,16 @@ Python Packages Required
 * flask 
 * numpy 
 
+Release Notes
+-------------
+* Rel 1.2 - 1/31/2014
+	- Fixed up the jade format for "finplan_details.jade" (and associated code in "PoM.js") so that all the buttons work. Problem was discovered when trying to add  "Delete Phase" button. Net-net: each phase div needs to have its own form (using the phase's name as id)
+	- Code is still not functional but at least the right parameters are getting to the server-side node code
+	- Also fixed the parameter passing in RetrieveByID: GET and POST store parameters in params and body sections, so the code accommodates that
+
+* Rel 1.1
+	- First kinda-working release of the node code. Does not do anything, except showing the data in pages
+
 Useful Links
 ------------
 * [Nice Tutorial on Flask](http://blog.miguelgrinberg.com/post/designing-a-restful-api-using-flask-restful)

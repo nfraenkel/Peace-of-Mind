@@ -49,10 +49,15 @@ app.get('/', function(req, res, next){
 
 //Show the details for FinPlan
 app.get('/:id', function(req, res) {
-  console.log(req.params);
+  console.log('GET -> req.body')
+  console.log(req.body)
+  console.log('GET  -> req.params')
+  console.log(req.params)
+  console.log('GET  -> req.query')
+  console.log(req.query)  // console.log(req);
   // console.log(req.params.id);
-  // retrieveByID(req, function(error, fp) {
-  server_API.retrieveByID(req.params.id, function(error, fp) {
+  server_API.retrieveByID(req, function(error, fp) {
+  // server_API.retrieveByID(req.params.id, function(error, fp) {
     console.log('-- fp --')
     console.log(fp.Description)
     res.render('finplan_details',
@@ -65,8 +70,14 @@ app.get('/:id', function(req, res) {
 
 //Edit a FinPlan
 app.post('/edit', function(req, res) {
-  console.log('/edit post')
+  console.log('/edit post  -> req.body')
+  console.log(req.body)
+  console.log('/edit post  -> req.params')
+  console.log(req.params)
+  console.log('/edit post  -> req.query')
+  console.log(req.query)
   var section = ""
+  var phase_to_del = ""
   for (x in req.body) { // determine which section of the page was updated
     if (x == "Phase") {
       section = "phase";
@@ -80,8 +91,10 @@ app.post('/edit', function(req, res) {
     }
   }
   console.log("Section: " + section);
-  // console.log(req.body);
-  server_API.retrieveByID(req.body.id, function(error, fp) {
+
+
+
+  server_API.retrieveByID(req, function(error, fp) {
     if (section == "general") {
       for (x in req.body) {
         if ((x != "id") && (x != "_id")) {
@@ -89,6 +102,8 @@ app.post('/edit', function(req, res) {
           fp[x] = req.body[x]
         }
       } 
+    } else if (section == "delete_phase") {
+      console.log('Deleting Phase: ' + phase_to_del)
     } else if (section == "phase") {
       // Need to be careful because the name of the phase may have been edited
       for (var i=0; i < fp["PhaseList"].length; i++) {
@@ -110,7 +125,6 @@ app.post('/edit', function(req, res) {
       }
     }
 
-
 // We don't store the value yet - just display it back
 
   res.render('finplan_details',
@@ -120,6 +134,23 @@ app.post('/edit', function(req, res) {
     });
   });
 });
+
+
+
+app.post('/delete_phase', function(req, res) {
+  console.log('/delete_phase post  -> req.body')
+  console.log(req.body)
+  console.log("finplan ID = " + req.body.planID + " Phase: " + req.body.phase_to_del)
+
+
+// We don't store the value yet - just display it back
+
+  // res.render('finplan_details',
+  //   { 
+  //     title: "Financial Plan",
+  //     finplan: fp
+  //   });
+  });
 
 
 
