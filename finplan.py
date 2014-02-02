@@ -421,14 +421,18 @@ class SinglePlanAPI(Resource):
             abort(404)
         finplan = FinPlanList[0]
         args = self.reqparse.parse_args()
+        print('Put - Updated Plan')
         for key, val in args.iteritems():
             if val != None:
                 finplan[key] = val
+                print(key, val)
         # Validate the plan - exit if not OK
+        '''  Don't do the error checking on update, so that incomplete saves can be done
         planOK, errString = FinPlanIsOK(finplan)
         if (not planOK):
             print(errString)
             exit(-1)
+		'''	
         persist(jsonFileName, FinPlanScenario)        
         return { 'Financial Plan': marshal(finplan, finplan_fields) }, 201
     
