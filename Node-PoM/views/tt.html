@@ -35,29 +35,31 @@
 					<input name="Email" type="hidden" form="save_general">
 					<tr>	
 						<td>
-						<label for="Title" align="left" class="label">Title</label>
-					</td>
-					<td>
-						<input name="Title" type="text" id="tbl_edit" placeholder="Enter a name for this Scenario" form="save_general">
-					</td>
-				</tr>
-				<p></p>
-				<tr><td>
-					<input id="save" value="Save" form="save_general" type="submit">
-				</td><td>
-				<form method="get" action="/123" id="cancel">
-					<input name="id" type="hidden" value="123" form="cancel"><input id="cancel" value="Cancel" type="submit" form="cancel">
+							<label for="Title" align="left" class="label">Title</label>
+						</td>
+						<td>
+							<input name="Title" type="text" id="tbl_edit" placeholder="Enter a name for this Scenario" form="save_general">
+						</td>
+					</tr>
+					<p></p>
+					<tr>
+						<td>
+							<input id="save" value="Save" form="save_general" type="submit">
+						</td>
+						<td>
+							<form method="get" action="/123" id="cancel">
+								<input name="id" type="hidden" value="123" form="cancel"><input id="cancel" value="Cancel" type="submit" form="cancel">
+							</form>
+						</td>
+						<td>
+							<form method="get" action="/" id="home">
+								<input id="home" value="HOME" type="submit" form="home">
+							</form>
+						</td>
+					</tr>
 				</form>
-			</td>
-			<td>
-				<form method="get" action="/" id="home">
-					<input id="home" value="HOME" type="submit" form="home">
-				</form>
-			</td>
-		</tr>
-	</form>
-</table>
-</div>
-</div>
+			</table>
+		</div>
+	</div>
 </body>
 </html>

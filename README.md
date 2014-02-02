@@ -15,6 +15,11 @@ Python Packages Required
 
 Release Notes
 -------------
+* Rel 1.3 - 2/1/2014
+	- Added a read-only "Details" page - from which a Finplan can be edited
+	- finplan-details.jade is now the read only version
+	- finplan-edit.jade is the editable page (what used to be finplan-details.jade)
+
 * Rel 1.2 - 1/31/2014
 	- Fixed up the jade format for "finplan_details.jade" (and associated code in "PoM.js") so that all the buttons work. Problem was discovered when trying to add  "Delete Phase" button. Net-net: each phase div needs to have its own form (using the phase's name as id)
 	- Code is still not functional but at least the right parameters are getting to the server-side node code

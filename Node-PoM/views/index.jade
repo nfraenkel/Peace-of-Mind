@@ -9,10 +9,9 @@ block content
             div.title= fp.Title 
             div.description= fp.Description
                 form( method="post", action="/delete") 
-                    input(name="_id", type="hidden", value=fp.FinPlan_ID) 
-                    input(id="delete", value="X", type="submit")
-                form( method="get", action=fp.FinPlan_ID) 
                     input(name="id", type="hidden", value=fp.FinPlan_ID) 
+                    input(id="delete", value="X", type="submit")
+                form( method="get", action="/"+fp.FinPlan_ID)
                     input(id="details", value="See Plan Details", type="submit")
         p.
         a(href="/new")!= "Add New Financial Plan"
