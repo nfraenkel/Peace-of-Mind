@@ -4,6 +4,7 @@ block content
 	h1= title
 	#finplan
 		- var fpID = finplan.FinPlan_ID
+		- var save_url = "/" + fpID +"/edit"
 		div.fp
 			table
 				tr
@@ -19,7 +20,7 @@ block content
 			div.tbl_div
 				table
 					tr 	
-						form(action="/edit", method="post", name="edit", id="save_general")
+						form(action=save_url, method="post", name="edit", id="save_general")
 							input(name="id", type="hidden", value=fpID, form="save_general") 
 							input(name="UserName", type="hidden", value=finplan.UserName, form="save_general") 
 							input(name="Email", type="hidden", value=finplan.Email, form="save_general")
@@ -36,30 +37,30 @@ block content
 							label(for="AgeToday",align="left", class="label") Age Today
 						td
 							- var aT = parseFloat(finplan.AgeToday)
-							input(name="AgeToday",type="text", id="tbl_edit", value=aT, placeholder='Enter your current age', form="save_general")
+							input(name="AgeToday",type="number", id="tbl_edit", value=aT, placeholder='Enter your current age', form="save_general")
 					tr 
 						td 
 							label(for="LifeExpect",align="left", class="label") Life Expectancy
 						td
 							- var lE = parseFloat(finplan.LifeExpect)
-							input(name="LifeExpect",type="text", id="asset", value=lE, placeholder='Enter your current age', form="save_general")
+							input(name="LifeExpect",type="number", id="asset", value=lE, placeholder='Enter your current age', form="save_general")
 					tr 
 						td 
 							label(for="StartingAmount",align="left", class="label") Starting Amount ($)
 						td 
 							- var s_amount = parseFloat(finplan.StartingAmount)
-							input(name="StartingAmount",type="text", class="asset", value=s_amount, placeholder='Enter the amount currently invested', form="save_general")
+							input(name="StartingAmount",type="number", class="asset", value=s_amount, placeholder='Enter the amount currently invested', form="save_general")
 					tr 
 						td 
 							label(for="TargetEndFunds",align="left", class="label") Target End Amount ($)
 						td
 							- var e_amount = parseFloat(finplan.TargetEndFunds)
-							input(name="TargetEndFunds",type="text", id="asset", value=e_amount, placeholder='Enter the target amount remaining', form="save_general")
+							input(name="TargetEndFunds",type="number", id="asset", value=e_amount, placeholder='Enter the target amount remaining', form="save_general")
 					tr 			
 						td 
 							label(for="InflationRate",align="left", class="label") Inflation Rate
 						td
-							input(name="InflationRate",type="text", id="asset", value=finplan.InflationRate, placeholder='Enter the projected inflation rate', form="save_general")
+							input(name="InflationRate",type="number", id="asset", value=finplan.InflationRate, placeholder='Enter the projected inflation rate', form="save_general")
 							&nbsp;%
 					p.
 					tr 
@@ -81,7 +82,7 @@ block content
 				div.tbl_div
 					table
 						tr 
-							form(action="/edit", method="post", id=ph)
+							form(action=save_url, method="post", id=ph)
 							td 
 								label(for="Name",align="left", class="label") <strong>PHASE</strong>
 							td
@@ -91,13 +92,13 @@ block content
 								label(for="startAge",align="left", class="label") Age at Start of Phase
 							td
 								- var SA = parseFloat(phase.startAge)									
-								input(name="startAge",type="text", id="asset", value=SA, placeholder='Enter the age at the start of  this Phase', form=ph)
+								input(name="startAge",type="number", id="asset", value=SA, placeholder='Enter the age at the start of  this Phase', form=ph)
 						tr 
 							td 
 								label(for="endAge",align="left", class="label") Age at End of Phase
 							td
 								- var EA = parseFloat(phase.endAge)									
-								input(name="endAge",type="text", id="asset", value=EA, placeholder='Enter the age at the end of  this Phase', form=ph)
+								input(name="endAge",type="number", id="asset", value=EA, placeholder='Enter the age at the end of  this Phase', form=ph)
 						tr
 							td 	Compute value of contribution / withdrawal?
 							td
@@ -110,7 +111,7 @@ block content
 								label(for="NetContribution",align="left", class="label") Net Contribution ($)
 							td 
 								- var NC = parseFloat(phase.NetContribution)
-								input(name="NetContribution",type="text", id="asset", value=NC, placeholder='Enter the Net Contribution during this Phase', form=ph) 
+								input(name="NetContribution",type="number", id="asset", value=NC, placeholder='Enter the Net Contribution during this Phase', form=ph) 
 						tr
 							//- td 	<strong>ASSET ALLOCATION</strong>
 							td(p style="font-weight:bold") ASSET ALLOCATION
@@ -121,7 +122,7 @@ block content
 											td(p style="font-weight:normal") 
 												label(for="asset",align="left", class="label") #{asset}
 											td
-												input(name="asset/"+asset, type="text", id="asset", value=amount, placeholder='Enter the percentage of funds to allocate to this asset class',form=ph)
+												input(name="asset/"+asset, type="number", min="0", max="100", id="asset", value=amount, placeholder='Enter the percentage of funds to allocate to this asset class',form=ph)
 												&nbsp;% 
 									- var tots = 0
 									- each amount in phase.Portfolio
@@ -143,25 +144,25 @@ block content
 								input(id="save",value="Save", type="submit", form=ph)
 
 							td
-								form(method="post", action="/delete_phase", id="delete_phase") 
-									input(name="planID", type="hidden", value=fpID)
-									input(name="phase_to_del", type="hidden", value=ph) 
-									input(id="delete_phase", value="Delete Phase", type="submit", form="delete_phase") 										
-							td
-								form(method="get", action="/" + fpID, id="cancel") 
-									input(name="id", type="hidden", value=fpID, form="cancel") 
-									input(id="cancel", value="Cancel", type="submit", form="cancel")
-							td
-								form( method="get", action="/", id="home") 
-									input(id="home", value="HOME", type="submit", form="home")
-			//- p
-			//- div.tbl_div(p style="background-color:gray")
-			//- 	table
-			//- 		tr
-			//- 			td
-			//- 				form(method="get", action="/" + fpID, id="cancel") 
-			//- 					input(name="id", type="hidden", value=fpID, form="cancel") 
-			//- 					input(id="cancel", value="Cancel", type="submit", form="cancel")
-			//- 			td
-			//- 				form( method="get", action="/", id="home") 
-			//- 					input(id="home", value="HOME", type="submit", form="home")
+								- var formName = ph + "_del"
+								form(method="post", action="/" + fpID + "/delete_phase", id=formName) 
+									input(name="planID", type="hidden", value=fpID, form=formName)
+									input(name="phase_to_del", type="hidden", value=ph, form=formName) 
+									input(id="delete_phase", value="Delete Phase", type="submit", form=formName) 	
+
+			p
+			div.tbl_div
+				table
+					tr
+						td
+							form(method="get", action="/" + fpID + "/add_phase", id="add_phase") 
+								input(name="planID", type="hidden", value=fpID)
+								input(id="save", value="Add Phase", type="submit", form="add_phase")
+						td
+							form(method="get", action="/" + fpID, id="cancel") 
+								input(name="id", type="hidden", value=fpID, form="cancel") 
+								input(id="cancel", value="Cancel", type="submit", form="cancel")
+						td
+							form( method="get", action="/", id="home") 
+								input(id="home", value="HOME", type="submit", form="home")																		
+

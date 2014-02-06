@@ -1,0 +1,94 @@
+extends layout
+
+block content
+	h1= title
+	#finplan
+		- var fpID = finplan.FinPlan_ID
+		- var add_phase_url = "/" + fpID +"/add_phase"
+		div.fp
+			table
+				tr
+					td  ID
+					td= fpID
+				tr
+					td  UserName
+					td= finplan.UserName
+				tr
+					td  Email
+					td= finplan.Email
+			p
+			div.tbl_div
+				table
+					tr
+						th PHASE NAME
+						th STARTING AGE
+						th END AGE
+					- each phase in finplan.PhaseList
+						tr 
+							td(p style="font-weight:bold")= phase.Name
+							td= parseFloat(phase.startAge)									
+							td= parseFloat(phase.endAge)
+
+
+			P
+			div.tbl_div
+				table
+					caption(p style="font-weight:bold;color:#0055aa;font-size:120%") NEW PHASE
+					//- caption(p style:"font-weight:bold;font-color:blue;font-size:15") NEW PHASE
+					tr 
+						form(action=add_phase_url, method="post", id="new_phase")
+						td 
+							label(for="Name",align="left", class="label") <strong>Name</strong>
+						td
+							input(name="Name",type="text", placeholder='Name', form="new_phase")
+						td Enter a name for this Phase
+					tr 	
+						td 
+							label(for="startAge",align="left", class="label") Age at Start of Phase
+						td
+							input(name="startAge",type="number", id="asset", placeholder='Start Age', form="new_phase")
+						td Enter the age at the start of  this Phase
+					tr 
+						td 
+							label(for="endAge",align="left", class="label") Age at End of Phase
+						td
+							input(name="endAge",type="number", id="asset", placeholder='End Age', form="new_phase")
+						td Enter the age at the end of  this Phase
+					tr
+						td Compute value of contribution / withdrawal?
+						td
+							input(type="checkbox", name="ToCompute", form="new_phase")
+					tr 
+						td 
+							label(for="NetContribution",align="left", class="label") Net Contribution ($)
+						td 
+							input(name="NetContribution",type="number", id="asset", placeholder='Net Contribution', form="new_phase")
+						td Enter the Net Contribution during this Phase
+					tr
+						//- td 	<strong>ASSET ALLOCATION</strong>
+						td(p style="font-weight:bold") ASSET ALLOCATION
+						td
+							table.assets
+								- each asset in ["Stocks", "Bonds", "T-Bills", "Cash"]
+									tr
+										td(p style="font-weight:normal") 
+											label(for="asset",align="left", class="label") #{asset}
+										td
+											input(name="asset/"+asset, type="number", min="0", max="100", id="asset", value=amount, placeholder='% Allocation',form="new_phase")
+											&nbsp;% 
+						td Enter the percentage of funds to allocate to each asset class
+
+					p.
+					tr(p style="background-color:gray")
+						td
+							//- input(id="save",value="Save", type="submit", form="tbl_edit")
+							input(name="id", type="hidden", value=fpID, form="new_phase") 
+							input(id="save",value="Add Phase", type="submit", form="new_phase")								
+						td
+							form(method="get", action="/" + fpID, id="cancel") 
+								input(name="id", type="hidden", value=fpID, form="cancel") 
+								input(id="cancel", value="Cancel", type="submit", form="cancel")
+					
+			p(p style="font-style:italic;color:#0055aa") Make sure to adjust the Start & End Ages of adjacent phases after saving
+
+
