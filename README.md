@@ -15,6 +15,10 @@ Python Packages Required
 
 Release Notes
 -------------
+* Rel 1.4 - 2/6/2014
+	- Added  page to add a phase finpland-add-phase.jade
+	- Made "delete phase" work
+	
 * Rel 1.3 - 2/1/2014
 	- Added a read-only "Details" page - from which a Finplan can be edited
 	- finplan-details.jade is now the read only version
@@ -44,5 +48,15 @@ Useful Links
 - [How long will I live (short form)?](http://gosset.wharton.upenn.edu/mortality/form.html) -- See source code snippet [HERE](http://www.flexibleretirementplanner.com/wp/documentation/source-code/)
 * Commercial Products
 - [The Flexible Retirement Planner](http://www.flexibleretirementplanner.com/wp/)
+
+ToDo Validation
+---------------
+* Phase Name has to be non-null and unique  (big doodoo if Name is null)
+* All ages have to be consistent
+- Between 0 and 125
+- endAge of one phase has to be equal to startAge of the next one
+- startAge of the first phase has to be the startAge of the FinPlan - similarly for endAge
+- Asset allocations have to add up to 100%
+* Net Allocations can be positive as well as negative
 
 
