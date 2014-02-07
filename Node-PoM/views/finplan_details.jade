@@ -69,20 +69,34 @@ block content
 								else
 									input(type="checkbox", name="ToCompute", disabled)
 						tr 
-							td Net Contribution
+							- var posFlag = (phase.NetContribution >= 0) ? true : false
+							- var NC = parseFloat(0.01 * parseInt(100*parseFloat(phase.NetContribution)))
+							td= (posFlag) ? "Net Contribution" : "Net WITHDRAWAL"
 							if phase.ToCompute
 								if finplan.HasResult
+									if posFlag
+										td(p style="font-weight:bold;color:blue")
+											//- Only show 2 decimals
+											$ 
+											= parseFloat(0.01 * parseInt(100*parseFloat(phase.NetContribution)))
+									else
+										td(p style="font-weight:bold;color:red")
+											//- Only show 2 decimals
+											$ 
+											= - parseFloat(0.01 * parseInt(100*parseFloat(phase.NetContribution)))
+								else
+									td(p style="font-style:italic") To Be Computed
+							else
+								if posFlag
 									td(p style="font-weight:bold;color:blue")
 										//- Only show 2 decimals
 										$ 
 										= parseFloat(0.01 * parseInt(100*parseFloat(phase.NetContribution)))
 								else
-									td(p style="font-style:italic") To Be Computed
-							else
-								td 
-									//- Only show 2 decimals
-									$ 
-									= parseFloat(0.01 * parseInt(100*parseFloat(phase.NetContribution)))
+									td(p style="font-weight:bold;color:red")
+										//- Only show 2 decimals
+										$ 
+										= - parseFloat(0.01 * parseInt(100*parseFloat(phase.NetContribution)))
 
 						tr
 							td(p style="font-weight:bold") ASSET ALLOCATION
@@ -118,5 +132,5 @@ block content
 							input(name="id", type="hidden", value=fpID, form="compute") 
 							input(id="home", value="Compute", type="submit", form="compute")
 					td
-						form(method="get", action="/", id="home")
-							input(id="home", value="HOME", type="submit", form="home")
+						form(method="get", action="/", id="root")
+							input(id="home", value="HOME", type="submit", form="root")
