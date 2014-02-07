@@ -17,12 +17,19 @@ h2 {
 }
 h1 {
   text-shadow: 1px 2px 2px #ddd;
-  font-size: 60px;
+  font-size: 40px;
 }
 input[type =text] {
-  size: 80;
+  width: 300px;
   margin-left: 16px;
   float: left;
+  background-color: #ffa;
+}
+input[type =number] {
+  width: 100px;
+  margin-left: 16px;
+  float: left;
+  background-color: #ffa;
 }
 input[type =button],
 input[type =submit] {
@@ -30,6 +37,8 @@ input[type =submit] {
   text-align: left;
   margin-left: 70px;
   display: block;
+  font-size: 15px;
+  background-color: #aac;
 }
 table {
   border: 2px solid #808080;
@@ -46,25 +55,16 @@ table .assets {
   width: 500px;
 }
 #finplan input#save {
-  font-size: 15px;
-  background-color: #faa;
+  background-color: #aaf;
 }
 #finplan input#cancel {
-  font-size: 15px;
-  background-color: #aaa;
+  background-color: #faa;
 }
 #finplan input#home {
-  font-size: 15px;
   background-color: #eef;
-}
-#finplan input#asset {
-  width: 60px;
 }
 #finplan .fp {
   margin: 20px;
-}
-#finplan .fp input#tbl_edit {
-  background-color: #fff;
 }
 #finplan .fp .tbl_div {
   width: 500px;
@@ -83,13 +83,13 @@ table .assets {
   font-size: 15px;
   margin-top: -1px;
   margin-left: 330px;
-  background-color: #aaf;
+  background-color: #aaa;
 }
 #finplan .fp input#details {
   font-size: 15px;
   margin-top: -27px;
   margin-left: 1px;
-  background-color: #faa;
+  background-color: #aad;
 }
 #finplan .fp input#entry_field {
   font-size: 15px;

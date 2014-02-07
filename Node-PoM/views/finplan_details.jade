@@ -71,11 +71,18 @@ block content
 						tr 
 							td Net Contribution
 							if phase.ToCompute
-								td(p style="font-style:italic") To Be Computed
+								if finplan.HasResult
+									td(p style="font-weight:bold;color:blue")
+										//- Only show 2 decimals
+										$ 
+										= parseFloat(0.01 * parseInt(100*parseFloat(phase.NetContribution)))
+								else
+									td(p style="font-style:italic") To Be Computed
 							else
 								td 
+									//- Only show 2 decimals
 									$ 
-									= parseFloat(phase.NetContribution)
+									= parseFloat(0.01 * parseInt(100*parseFloat(phase.NetContribution)))
 
 						tr
 							td(p style="font-weight:bold") ASSET ALLOCATION
@@ -107,6 +114,9 @@ block content
 							//- input(name="id", type="hidden", value=fpID, form="cancel") 
 							input(id="home", value="Edit", type="submit", form="edit")
 					td
-						form( method="get", action="/", id="home") 
+						form(method="get", action="/" + fpID + "/Compute/", id="compute") 
+							input(name="id", type="hidden", value=fpID, form="compute") 
+							input(id="home", value="Compute", type="submit", form="compute")
+					td
+						form(method="get", action="/", id="home")
 							input(id="home", value="HOME", type="submit", form="home")
-

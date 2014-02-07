@@ -46,9 +46,36 @@ app.get('/', function(req, res, next){
   server_API.retrieve(req.query.q, function (err, fp) {
     if (err) return next(err);
     res.render('index', {
-          title: 'FinPlan',
+          title: 'List of Financial Plans',
           finplan:fp
       });
+  });
+});
+
+// New Plan
+app.get('/new', function(req, res, next){
+  // console.log(req);
+  res.render('finplan_new', {
+    title: 'Create a New Financial Plan',
+  });
+});
+
+app.post('/new', function(req, res, next){
+  // create a FinPlan
+  console.log("/new - post: req.body")
+  var fp = {}
+  for (x in req.body) {
+    if (floatList.indexOf(x) <0) {fp[x] = req.body[x]}
+    else {fp[x] = parseFloat(req.body[x])}
+  }
+  console.log("/new - post -> fp")
+  console.log(fp)
+  server_API.createNew(fp, function(error, fpnew) {
+  // server_API.retrieveByID(req.params.id, function(error, fp) {
+    console.log("createNew done")
+    var url = "/" + fpnew.FinPlan_ID
+    console.log("createNew: Description: " + fpnew.Description + "  url: " + url)
+    res.redirect(url)
   });
 });
 
@@ -108,6 +135,7 @@ app.get('/:id/add_phase', function(req, res) {
 });
 
 //Edit a FinPlan
+// ToDo: only set HasResult when necessary (e.g. not when editing Description)
 app.post('/:id/edit', function(req, res) {
   console.log('/edit post  -> req.body')
   console.log(req.body)
@@ -136,6 +164,8 @@ app.post('/:id/edit', function(req, res) {
   server_API.retrieveByID(req, function(error, fp) {
     console.log("modifying Finplan - section: " + section)
     if (section == "general") {
+      // Also set HasResult to false
+      fp.HasResult = false
       for (x in req.body) {
         if (x != "id")  {
           console.log (x + ": body: " + req.body[x] + " fp: " + fp[x])
@@ -143,6 +173,8 @@ app.post('/:id/edit', function(req, res) {
         }
       } 
     } else if (section == "phase") {
+      // Also set HasResult to false
+      fp.HasResult = false
       if (! req.body.Name) { // make sure the new name of the phase is not null
         console.log("Edit Phase - ERROR - new Phase name is null")
         //ToDo: handle the error gracefully
@@ -157,13 +189,13 @@ app.post('/:id/edit', function(req, res) {
         }
       }
       console.log("updating Phase with (old) name: " + fp.PhaseList[phID]["Name"] + " New Name: " + req.body["Name"])
-      console.log(fp.PhaseList[phID])
+      // console.log(fp.PhaseList[phID])
       for (index in req.body) {
         x = index.replace('asset/', '') // strip the 'asset/' prefix
         if (x != index) { // index had the 'asset/' prefix - so x is the label for the portfolio
           fp.PhaseList[phID]["Portfolio"][x]=parseFloat(req.body[index])
         } else if ((x != "id") && x != 'Phase') {
-          console.log (x + ": body: " + req.body[x] + " fp: " + fp.PhaseList[phID][x])
+          // console.log (x + ": body: " + req.body[x] + " fp: " + fp.PhaseList[phID][x])
           if (x == "ToCompute" || x == "Name") {
             fp.PhaseList[phID][x] = req.body[x]
           } else {
@@ -234,12 +266,7 @@ app.post('/:id/add_phase', function(req, res) {
           }        
       }
     }
-    // for (var i; i<phase_labels.length; i++) {
-    //   if (req.body.indexOf(phase_labels[i]) < 0) {
-    //     // User did not enter value - ToDo Properly handle the error
-    //     console.log("add_phase: ERROR - Value for " + phase_labels[i] + " is missing! Can't accept the new phase")
-    //   }
-    // }
+
     console.log("Adding NEW Phase with name: "  + req.body["Name"])
     for (index in req.body) {
       x = index.replace('asset/', '') // strip the 'asset/' prefix
@@ -263,6 +290,8 @@ app.post('/:id/add_phase', function(req, res) {
 
     // Add the new phase to the Finplan
     fp.PhaseList.push(phase)
+    // Also set HasResult to false
+    fp.HasResult = false
 
     // Pass the updated Finplan to server - retrieve it and display it in Edit view
     server_API.updateByID(fp, function(error, fpnew) {
@@ -275,7 +304,6 @@ app.post('/:id/add_phase', function(req, res) {
   });
 });
 
-// ToDo: delete a phase
 app.post('/:id/delete_phase', function(req, res) {
   console.log('/delete_phase post  -> req.body')
   console.log(req.body)
@@ -305,22 +333,6 @@ app.post('/:id/delete_phase', function(req, res) {
     for (var i=0, outString=""; i<fp.PhaseList.length; i++) outString = outString + "; " + fp.PhaseList[i]["Name"]
     console.log(outString)
 
-
-    // for (var i=0; i<fp.PhaseList.length; i++) {
-    //   if (fp.PhaseList[i]["Name"] == phase_to_del) { // found the phase to delete
-    //     console.log("Deleting Phase with name: "  + phase_to_del)
-    //     found_it = true
-    //   } else { // keep it
-    //     new_size = newList.push(fp.PhaseList[i])
-    //   }
-    // }
-    // if (!found_it) { // ToDo: Error handling
-    //   console.log("delete_phase - ERROR - Could not delete phase with name: " + phase_to_del)
-    // } else {
-    //   fp.PhaseList = newList
-    // }
-    // console.log ("delete_phase - PhaseList length AFTER: " + fp.PhaseList.length + " newList size: " + newList.length)
-
     // Pass the updated Finplan to server - retrieve it and display it in Edit view
     server_API.updateByID(fp, function(error, fpnew) {
       var url = "/" + fpnew.FinPlan_ID + "/edit"
@@ -331,9 +343,34 @@ app.post('/:id/delete_phase', function(req, res) {
 });
 
 app.post('/:id/delete', function(req, res) {
+  //ToDo: Implete the delete function
   console.log('DELETE FinPlan: ' + req.body.id)
-  res.redirect('/')
+  console.log('/delete post  -> req.body')
+  console.log(req.body)
+  var planID = req.body.planID
 
+  server_API.deleteByID(req, function(error) {
+    if (error) {
+      console.log("there was an ERROR deleting Finplan: " + planID)
+      console.log(error)
+    }
+    res.redirect("/")
+  });
 });
+
+// Compute a FinPlan
+app.get('/:id/compute', function(req, res) {
+  console.log('/compute  -> req.params')
+  console.log(req.params)
+
+  server_API.computePlan(req, function(error, fp) {
+    res.render('finplan_details',
+    { 
+      title: "Plan with Computed Contributions",
+      finplan: fp
+    });
+  });
+});
+
 
 app.listen(process.env.PORT || 3000);

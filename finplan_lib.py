@@ -169,8 +169,8 @@ def MonteCarlo(finPlan, NbRun,ConfidenceFactor, HistoricalReturn):
     withdrawalResult = findSuccess(withdrawalList, ConfidenceFactor, True)  # Set NegativeFlag since all values are negative
     # Store the results
     for phase in phaseList:
-        if phase['ToCompute']: # update the result and lower the flag
-            phase['NetContribution'] = withdrawalResult # enter the result
+        if phase['ToCompute']: # update the result 
+            phase['NetContribution'] = float(0.01 * int(100 * withdrawalResult)) # enter the result - round to 2 decimals
     finPlan['HasResult'] = True
     
     minWithdrawal = min(withdrawalList)

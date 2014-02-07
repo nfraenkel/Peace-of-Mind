@@ -1,0 +1,68 @@
+extends layout
+
+block content
+	h1= title
+	#finplan
+		- var save_url = "/new" 
+		div.tbl_div
+			table
+				tr 	
+					form(action=save_url, method="post", name="edit", id="save_general")
+					td 
+						label(for="Username",align="left", class="label") Username
+					td
+						input(name="UserName",type="text", id="tbl_edit", value="", placeholder='Enter your Username', form="save_general")
+				tr
+					td
+						label(for="Email",align="left", class="label") Email
+					td
+						input(name="Email",type="text", id="tbl_edit", value="@", placeholder='Enter you Email', form="save_general")
+				tr
+					td
+						label(for="Title",align="left", class="label") Title
+					td
+						input(name="Title",type="text", id="tbl_edit", value="", placeholder='Enter a name for this Scenario', form="save_general")
+				tr 			
+					td 
+						label(for="Description",align="left", class="label") Description
+					td
+						input(name="Description",type="text", id="tbl_edit", class="description", value="", placeholder='Enter a description for this plan', form="save_general")
+				tr 			
+					td 
+						label(for="AgeToday",align="left", class="label") Age Today
+					td
+						input(name="AgeToday",type="number", id="asset", value="", placeholder='Enter your current age', form="save_general")
+				tr 
+					td 
+						label(for="LifeExpect",align="left", class="label") Life Expectancy
+					td
+						input(name="LifeExpect",type="number", id="asset", value=95, placeholder='Enter your current age', form="save_general")
+				tr 
+					td 
+						label(for="StartingAmount",align="left", class="label") Starting Amount ($)
+					td 
+						input(name="StartingAmount",type="number", class="asset", value=10000, placeholder='Enter the amount currently invested', form="save_general")
+				tr 
+					td 
+						label(for="TargetEndFunds",align="left", class="label") Target End Amount ($)
+					td
+						input(name="TargetEndFunds",type="number", id="asset", value=10000, placeholder='Enter the target amount remaining', form="save_general")
+				tr 			
+					td 
+						label(for="InflationRate",align="left", class="label") Inflation Rate
+					td
+						input(name="InflationRate",type="number", id="asset", value=3, placeholder='Enter the projected inflation rate', form="save_general")
+						&nbsp;%
+				p.
+				tr 
+					td
+						input(id="save",value="Save",form="save_general", type="submit")
+					td
+						form( method="get", action="/", id="cancel") 
+							input(id="cancel", value="Cancel", type="submit", form="cancel") 			
+					td
+						form( method="get", action="/", id="home") 
+							input(id="home", value="HOME", type="submit", form="home")
+
+																	
+

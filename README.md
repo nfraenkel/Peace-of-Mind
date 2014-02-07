@@ -15,6 +15,14 @@ Python Packages Required
 
 Release Notes
 -------------
+* Rel 1.5 - 2/7/2014
+	- Feature complete - but with Zero error checking
+	- Added "new": ability to create a new plan - It's a 3-step process
+		- First enter the high-level info: user, start age etc
+		- The program automatically adds 2 phases: "working" & "retired" and pre-populates them
+		- Edit these phases - add more if needed -- Make sure that phases are continuous, etc because there is no validation
+	- Compute now works --- note that that computation takes time (10-20 sec)_, so wait for the page to refresh - result is in blue
+	
 * Rel 1.4 - 2/6/2014
 	- Added  page to add a phase finpland-add-phase.jade
 	- Made "delete phase" work

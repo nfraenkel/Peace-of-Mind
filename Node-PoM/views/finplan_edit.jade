@@ -22,9 +22,7 @@ block content
 					tr 	
 						form(action=save_url, method="post", name="edit", id="save_general")
 							input(name="id", type="hidden", value=fpID, form="save_general") 
-							input(name="UserName", type="hidden", value=finplan.UserName, form="save_general") 
-							input(name="Email", type="hidden", value=finplan.Email, form="save_general")
-					td 
+						td 
 							label(for="Title",align="left", class="label") Title
 						td
 							input(name="Title",type="text", id="tbl_edit", value=finplan.Title, placeholder='Enter a name for this Scenario', form="save_general")
@@ -32,6 +30,7 @@ block content
 						td 
 							label(for="Description",align="left", class="label") Description
 						td
+							input(name="Description",type="text", id="tbl_edit", value=finplan.Description, placeholder='Enter a Description for this Scenario', form="save_general")
 					tr 			
 						td 
 							label(for="AgeToday",align="left", class="label") Age Today
@@ -110,8 +109,7 @@ block content
 							td 
 								label(for="NetContribution",align="left", class="label") Net Contribution ($)
 							td 
-								- var NC = parseFloat(phase.NetContribution)
-								input(name="NetContribution",type="number", id="asset", value=NC, placeholder='Enter the Net Contribution during this Phase', form=ph) 
+								input(name="NetContribution",type="text", id="asset", value=phase.NetContribution, placeholder='Enter the Net Contribution during this Phase', form=ph) 
 						tr
 							//- td 	<strong>ASSET ALLOCATION</strong>
 							td(p style="font-weight:bold") ASSET ALLOCATION

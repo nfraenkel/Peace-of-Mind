@@ -8,10 +8,11 @@ block content
             div.yellow= fp.UserName
             div.title= fp.Title 
             div.description= fp.Description
-                form( method="post", action="/delete") 
+                form( method="post", action="/" + fp.FinPlan_ID + "/delete") 
                     input(name="id", type="hidden", value=fp.FinPlan_ID) 
-                    input(id="delete", value="X", type="submit")
+                    input(id="delete", value="Delete Plan", type="submit")
                 form( method="get", action="/"+fp.FinPlan_ID)
                     input(id="details", value="See Plan Details", type="submit")
         p.
-        a(href="/new")!= "Add New Financial Plan"
+        form(method="get", action="/new", id="new") 
+            input(id="save", value="Create a New Plan", type="submit", form="new") 
