@@ -170,7 +170,7 @@ def MonteCarlo(finPlan, NbRun,ConfidenceFactor, HistoricalReturn):
     # Store the results
     for phase in phaseList:
         if phase['ToCompute']: # update the result and lower the flag
-            phase['netContribution'] = withdrawalResult # enter the result
+            phase['NetContribution'] = withdrawalResult # enter the result
     finPlan['HasResult'] = True
     
     minWithdrawal = min(withdrawalList)
