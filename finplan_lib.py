@@ -50,7 +50,6 @@ def run_all_years(ContributionAmount, finPlan, rateArray):
     yr = 0 # goes from 0 to (finPlan['AgeEnd'] - finPlan['AgeToday'] -1)    
     phaseList.sort(key=lambda phase: phase['startAge'])  # make sure the phases are in order
     for phase in phaseList:
-        inflationContribution *= (1+inflationRate)  # adjust for inflation every year
         computeFlag = phase['ToCompute']
         phaseYear= phase['endAge'] - phase['startAge']  # number of years in this phase
         for x in range(phaseYear):
@@ -63,6 +62,7 @@ def run_all_years(ContributionAmount, finPlan, rateArray):
             if Debug:                        
                 print ('Year:  {:,}: start = $ {:,} - end = ${:,} - rate = {:f}%  contribution = ${:.2f}'.format(yr,int(StartFunds), int(EndFunds), 100.0 * returnRate, contribution))
             StartFunds = EndFunds
+            inflationContribution *= (1+inflationRate)  # adjust for inflation every year
             yr += 1
             
     return(EndFunds)
@@ -127,14 +127,19 @@ def computeRate(phaseList, HistoricalReturn):
     for asset, statList in HistoricalReturn.iteritems():
         if (asset == 'Cash'):
             continue   # Cash has 0 return
-        phaseIndx = 0
         rateArray = np.random.normal(statList[0],statList[1], size = NbYear)
+        phaseIndx = 0
+        alloc = phaseList[phaseIndx]['Portfolio'][asset]  # get the % of asset allocation for the very first phase
+        endAge = phaseList[phaseIndx]['endAge']  # age at the end of the very first phase
         for yr in range( NbYear):
-            returnArray[yr] += rateArray[yr] * (0.01 * phaseList[phaseIndx]['Portfolio'][asset]) # weight by % allocation for this asset type
+            returnArray[yr] += rateArray[yr] * (0.01 * alloc) # weight by % allocation for this asset type
             # print ('yr: %d - phaseIndx: %d - asset: %s - asset %%: %.2f  asset_rate: %.2f%%' % (yr, phaseIndx, asset,phaseList[phaseIndx]['Portfolio'][asset], rateArray[yr] ))
             yr += 1
-            if yr+startYear == phaseList[phaseIndx]['endAge']:  # go to the next phase
+            if yr+startYear == endAge:  # go to the next phase
                 phaseIndx += 1
+                if phaseIndx < len(phaseList):
+                    alloc = phaseList[phaseIndx]['Portfolio'][asset]  # Update the allocation to match the new phase
+                    endAge = phaseList[phaseIndx]['endAge']  # age at the end of the new phase
     
     return(rateArray)          
 

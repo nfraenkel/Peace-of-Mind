@@ -1,5 +1,6 @@
 extends layout
 
+
 block content
 	h1= title
 	#finplan
@@ -77,6 +78,7 @@ block content
 
 			- each phase in finplan.PhaseList
 				- var ph = phase.Name
+				// - var TCFlag[ph] = phase.ToCompute
 				p
 				div.tbl_div
 					table
@@ -101,15 +103,13 @@ block content
 						tr
 							td 	Compute value of contribution / withdrawal?
 							td
-								if phase.ToCompute
-									input(type="checkbox", name="ToCompute", checked, form=ph)
-								else
-									input(type="checkbox", name="ToCompute", form=ph)
+								input(type="checkbox", id="ToCompute", name="ToCompute", checked=phase.ToCompute, form=ph)
 						tr 
 							td 
 								label(for="NetContribution",align="left", class="label") Net Contribution ($)
 							td 
-								input(name="NetContribution",type="text", id="asset", value=phase.NetContribution, placeholder='Enter the Net Contribution during this Phase', form=ph) 
+								input(name="NetContribution",type="text", id="asset", value=phase.NetContribution, placeholder='Enter the Net Contribution during this Phase', form=ph)
+
 						tr
 							//- td 	<strong>ASSET ALLOCATION</strong>
 							td(p style="font-weight:bold") ASSET ALLOCATION

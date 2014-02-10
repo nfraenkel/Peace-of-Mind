@@ -81,17 +81,17 @@ app.post('/new', function(req, res, next){
 
 //Show the details for FinPlan
 app.get('/:id', function(req, res) {
-  console.log('GET -> req.body')
-  console.log(req.body)
-  console.log('GET  -> req.params')
-  console.log(req.params)
-  console.log('GET  -> req.query')
-  console.log(req.query)  // console.log(req);
+  // console.log('GET -> req.body')
+  // console.log(req.body)
+  // console.log('GET  -> req.params')
+  // console.log(req.params)
+  // console.log('GET  -> req.query')
+  // console.log(req.query)  // console.log(req);
   // console.log(req.params.id);
   server_API.retrieveByID(req, function(error, fp) {
   // server_API.retrieveByID(req.params.id, function(error, fp) {
-    console.log('-- fp --')
-    console.log(fp.Description)
+    // console.log('-- fp --')
+    // console.log(fp.Title)
     res.render('finplan_details',
     { 
       title: "Financial Plan",
@@ -125,7 +125,7 @@ app.get('/:id/edit', function(req, res) {
 app.get('/:id/add_phase', function(req, res) {
   server_API.retrieveByID(req, function(error, fp) {
   // server_API.retrieveByID(req.params.id, function(error, fp) {
-    console.log(fp.Description)
+    console.log(fp.Ttile)
     res.render('finplan_add_phase',
     { 
       title: "Add a Phase to this Plan",
@@ -137,12 +137,12 @@ app.get('/:id/add_phase', function(req, res) {
 //Edit a FinPlan
 // ToDo: only set HasResult when necessary (e.g. not when editing Description)
 app.post('/:id/edit', function(req, res) {
-  console.log('/edit post  -> req.body')
-  console.log(req.body)
-  console.log('/edit post  -> req.params')
-  console.log(req.params)
-  console.log('/edit post  -> req.query')
-  console.log(req.query)
+  // console.log('/edit post  -> req.body')
+  // console.log(req.body)
+  // console.log('/edit post  -> req.params')
+  // console.log(req.params)
+  // console.log('/edit post  -> req.query')
+  // console.log(req.query)
   var section = ""
   var phase_to_del = ""
   for (x in req.body) { // determine which section of the page was updated
@@ -157,7 +157,6 @@ app.post('/:id/edit', function(req, res) {
       break;
     }
   }
-  console.log("Section: " + section);
   var finplan = {}
   var phID
 
@@ -196,43 +195,46 @@ app.post('/:id/edit', function(req, res) {
           fp.PhaseList[phID]["Portfolio"][x]=parseFloat(req.body[index])
         } else if ((x != "id") && x != 'Phase') {
           // console.log (x + ": body: " + req.body[x] + " fp: " + fp.PhaseList[phID][x])
-          if (x == "ToCompute" || x == "Name") {
+          // if (x == "ToCompute"  || x == "Name") {
+          if (x == "Name") {
+            console.log("edit: x: " + x + " -- req.body[x]: " + req.body[x])
             fp.PhaseList[phID][x] = req.body[x]
+          // } else if (x == "ToComputeCheck") {
+          //   console.log("edit: x: " + x + " -- req.body[x]: " + req.body[x])
+          //   fp.PhaseList[phID].ToCompute = req.body.ToComputeCheck
           } else {
             fp.PhaseList[phID][x] = parseFloat(req.body[x])
           }
+          // For some reason, ToCompute is only capture when going false -> true, but not the other way
+          // So if it is set we know it is True, if it is not present in req.body then it is false
+          fp.PhaseList[phID].ToCompute = req.body.ToCompute || false;
         }
       }
     }
 
-    console.log ("PoM - pre-ParseFloat: fp")
-    console.log(fp)
     // Convert all the values that need to, to float
     var label = ""
     for (var i=0; i < floatList.length; i++) {
       label = floatList[i]
-      console.log(label)
       fp[label] = parseFloat(fp[label])
     }
     for (var ph =0 ; ph < fp.PhaseList.length; ph++) {
       for (var j=0; j < phaseFloatList.length; j++) {
         label = phaseFloatList[j]
-        console.log(label)
         fp.PhaseList[ph][label] = parseFloat(fp.PhaseList[ph][label])
       }
       for (var label in fp.PhaseList[ph].Portfolio) {
-        console.log(label)
         fp.PhaseList[ph].Portfolio[label] = parseFloat(fp.PhaseList[ph].Portfolio[label])
       }
     }
-    console.log ("PoM - post: fp")
-    console.log(fp)
+    // console.log ("PoM - post: fp")
+    // console.log(fp)
     // Pass the updated Finplan to server - retrieve it and display it
     server_API.updateByID(fp, function(error, fpnew) {
     // server_API.retrieveByID(req.params.id, function(error, fp) {
       console.log("updateByID done")
       var url = "/" + fpnew.FinPlan_ID
-      console.log("Description: " + fpnew.Description + "  url: " + url)
+      console.log("Title: " + fpnew.Title + "  url: " + url)
       res.redirect(url)
     });
   });

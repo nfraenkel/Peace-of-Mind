@@ -36,9 +36,8 @@ exports.retrieveByID = function (query, fn) {
 		console.log(query)
 	}
 
-	console.log('retrieveByID: finplanID: '+ finplanID)
 	var url = 'http://localhost:5000/finplan/api/v2.0/finplan/' + finplanID
-	console.log ('url: ' + url)
+	console.log('retrieveByID: finplanID: '+ finplanID + '   url: ' + url)
 	request.get(url)
 	.send({id:finplanID})
 	.end(function (res) {
@@ -47,7 +46,7 @@ exports.retrieveByID = function (query, fn) {
 		if (res.body) {
 			var fplan = res.body['Financial Plan']
 			// console.log(fplan)
-			console.log('Title: ' + fplan.Title)
+			// console.log('Title: ' + fplan.Title)
 
 			// Sort Phases in FinPlan by startAge
 			if (fplan.PhaseList) {	
