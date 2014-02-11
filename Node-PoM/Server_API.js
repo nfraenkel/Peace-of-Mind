@@ -183,13 +183,55 @@ exports.deleteByID = function (query, fn) {
 };
 
 addDefaultPhaseList = function (fp) {
+	var lateCareerAge = 50 // Time at which IRS authorizes higher contribution to IRA
 	var retiringAge = 65
-	var workingPortfolio = {"Stocks":80, "Bonds":20, "T-Bills":0, "Cash":0}
+	var earlyCareerPortfolio = {"Stocks":100, "Bonds":0, "T-Bills":0, "Cash":0}
+	var lateCareerPortfolio = {"Stocks":80, "Bonds":20, "T-Bills":0, "Cash":0}
 	var retiredPortfolio = {"Stocks":40, "Bonds":40, "T-Bills":20, "Cash":0}
-	var workingPhase = {"Name":"Working", "startAge":fp.AgeToday, "endAge":retiringAge, "NetContribution":17500, "ToCompute":false, 
-		"Portfolio":workingPortfolio}
+	// Set the default values of the phases - will adjust as necessary
+	var earlyCareerPhase = {"Name":"Working", "startAge":fp.AgeToday, "endAge":lateCareerAge, "NetContribution":17500, "ToCompute":false, 
+		"Portfolio":earlyCareerPortfolio}
+	var lateCareerPhase = {"Name":"Late Career", "startAge":lateCareerAge, "endAge":retiringAge, "NetContribution":23000, "ToCompute":false, 
+		"Portfolio":earlyCareerPortfolio}
 	var retiredPhase = {"Name":"Retired", "startAge":retiringAge, "endAge":fp.LifeExpect, "NetContribution":0, "ToCompute":true, 
 		"Portfolio":retiredPortfolio}
-	fp.PhaseList = [workingPhase, retiredPhase]
+	fp.PhaseList = []		
+
+	if (fp.AgeToday <= lateCareerAge) {
+		if (fp.LifeExpect < lateCareerAge) {
+			// AT - LE - lCA
+			earlyCareerPhase.endAge = fp.LifeExpect  // need to adjust the end age
+			fp.PhaseList.push(earlyCareerPhase)
+		} else {  // fp.LifeExpect >= lateCareerAge
+			fp.PhaseList.push(earlyCareerPhase) // keep the defaults for Phase 1
+			if (fp.LifeExpect < retiringAge) {
+				// AT - lCA - LE - rA
+				lateCareerPhase.endAge = fp.LifeExpect  // need to adjust the end age
+				fp.PhaseList.push(lateCareerPhase)
+			} else {   // fp.LifeExpect >= retiringAge  -> we have the 3 phases with default ages
+				// AT - lCA - rA - LE
+				fp.PhaseList.push(lateCareerPhase)  // keep the defaults
+				fp.PhaseList.push(retiredPhase)  // keep the defaults
+			}
+		}
+	} else {  // fp.AgeToday > lateCareerAge
+		if (fp.AgeToday <= retiringAge) {  // we can add the 2nd phase
+			lateCareerPhase.startAge = fp.AgeToday			
+			if (fp.LifeExpect < retiringAge) {
+				// lCA - aT - LE - rA
+				lateCareerPhase.endAge = fp.LifeExpect  // need to adjust the end age
+				fp.PhaseList.push(lateCareerPhase)
+			} else {   // fp.LifeExpect >= retiringAge  -> we have the 3 phases with default ages
+				// lCA - aT  - rA - LE
+				fp.PhaseList.push(lateCareerPhase)  // keep the defaults for the endAge
+				fp.PhaseList.push(retiredPhase)  // keep the defaults
+			}
+		} else {  // fp.AgeToday > retiringAge -> only 3rd phase
+			// lCA - rA - aT - LE
+			retiredPhase.startAge = fp.AgeToday
+			fp.PhaseList.push(retiredPhase)
+		}
+	}
+
 	return (fp)
 }

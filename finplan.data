@@ -59,39 +59,187 @@
                     "T-Bills": 0
                 }, 
                 "ToCompute": false, 
-                "endAge": 55, 
+                "endAge": 50, 
                 "startAge": 30
             }, 
             {
                 "Name": "Semi-Retired", 
-                "NetContribution": -35629.31, 
+                "NetContribution": 23000, 
                 "Portfolio": {
                     "Bonds": 0, 
                     "Cash": 0, 
                     "Stocks": 100, 
                     "T-Bills": 0
                 }, 
-                "ToCompute": "on", 
+                "ToCompute": false, 
                 "endAge": 65, 
-                "startAge": 55
+                "startAge": 50
             }, 
             {
                 "Name": "Retired", 
-                "NetContribution": -35629.31, 
+                "NetContribution": -51087.51, 
                 "Portfolio": {
-                    "Bonds": 0, 
+                    "Bonds": 50, 
                     "Cash": 0, 
-                    "Stocks": 100, 
+                    "Stocks": 50, 
                     "T-Bills": 0
                 }, 
-                "ToCompute": true, 
+                "ToCompute": "on", 
                 "endAge": 90, 
                 "startAge": 65
             }
         ], 
-        "StartingAmount": 200000.0, 
+        "StartingAmount": 75000.0, 
         "TargetEndFunds": 1000.0, 
         "Title": "Aggressive", 
         "UserName": "Chance"
+    }, 
+    {
+        "AgeToday": 30.0, 
+        "Description": "", 
+        "Email": "@", 
+        "FinPlan_ID": "eb3c2753-689e-420a-b199-3734b17ee711", 
+        "HasResult": true, 
+        "InflationRate": 0.0, 
+        "LifeExpect": 95.0, 
+        "PhaseList": [
+            {
+                "Name": "Working", 
+                "NetContribution": 17500, 
+                "Portfolio": {
+                    "Bonds": 0, 
+                    "Cash": 0, 
+                    "Stocks": 100, 
+                    "T-Bills": 0
+                }, 
+                "ToCompute": false, 
+                "endAge": 50, 
+                "startAge": 30
+            }, 
+            {
+                "Name": "Working", 
+                "NetContribution": 23000, 
+                "Portfolio": {
+                    "Bonds": 0, 
+                    "Cash": 0, 
+                    "Stocks": 100, 
+                    "T-Bills": 0
+                }, 
+                "ToCompute": false, 
+                "endAge": 65, 
+                "startAge": 50
+            }, 
+            {
+                "Name": "Retired", 
+                "NetContribution": -94855.24, 
+                "Portfolio": {
+                    "Bonds": 40, 
+                    "Cash": 0, 
+                    "Stocks": 40, 
+                    "T-Bills": 20
+                }, 
+                "ToCompute": true, 
+                "endAge": 95, 
+                "startAge": 65
+            }
+        ], 
+        "StartingAmount": 10000.0, 
+        "TargetEndFunds": 10000.0, 
+        "Title": "emp", 
+        "UserName": ""
+    }, 
+    {
+        "AgeToday": 56.0, 
+        "Email": "@", 
+        "FinPlan_ID": "b3ac20f4-87a6-42b2-a538-97b576cc6231", 
+        "HasResult": false, 
+        "InflationRate": 3.0, 
+        "LifeExpect": 95.0, 
+        "PhaseList": [
+            {
+                "Name": "Working", 
+                "NetContribution": 23000, 
+                "Portfolio": {
+                    "Bonds": 0, 
+                    "Cash": 0, 
+                    "Stocks": 100, 
+                    "T-Bills": 0
+                }, 
+                "ToCompute": false, 
+                "endAge": 65, 
+                "startAge": "56.0"
+            }, 
+            {
+                "Name": "Retired", 
+                "NetContribution": 0, 
+                "Portfolio": {
+                    "Bonds": 40, 
+                    "Cash": 0, 
+                    "Stocks": 40, 
+                    "T-Bills": 20
+                }, 
+                "ToCompute": true, 
+                "endAge": "95.0", 
+                "startAge": 65
+            }
+        ], 
+        "StartingAmount": 10000.0, 
+        "TargetEndFunds": 10000.0, 
+        "Title": "", 
+        "UserName": "mid"
+    }, 
+    {
+        "AgeToday": 68.0, 
+        "Email": "@", 
+        "FinPlan_ID": "66f6a7fb-4ad2-4030-af03-f07802c69f65", 
+        "HasResult": false, 
+        "InflationRate": 3.0, 
+        "LifeExpect": 95.0, 
+        "PhaseList": [
+            {
+                "Name": "Retired", 
+                "NetContribution": 0, 
+                "Portfolio": {
+                    "Bonds": 40, 
+                    "Cash": 0, 
+                    "Stocks": 40, 
+                    "T-Bills": 20
+                }, 
+                "ToCompute": true, 
+                "endAge": "95.0", 
+                "startAge": "68.0"
+            }
+        ], 
+        "StartingAmount": 10000.0, 
+        "TargetEndFunds": 10000.0, 
+        "Title": "", 
+        "UserName": "retired"
+    }, 
+    {
+        "AgeToday": 56.0, 
+        "Email": "@", 
+        "FinPlan_ID": "58939ee0-d2ad-4889-9f87-3af204a18c4f", 
+        "HasResult": false, 
+        "InflationRate": 3.0, 
+        "LifeExpect": 64.0, 
+        "PhaseList": [
+            {
+                "Name": "Late Career", 
+                "NetContribution": 23000, 
+                "Portfolio": {
+                    "Bonds": 0, 
+                    "Cash": 0, 
+                    "Stocks": 100, 
+                    "T-Bills": 0
+                }, 
+                "ToCompute": false, 
+                "endAge": "64.0", 
+                "startAge": "56.0"
+            }
+        ], 
+        "StartingAmount": 10000.0, 
+        "TargetEndFunds": 10000.0, 
+        "Title": "", 
+        "UserName": "not long"
     }
 ]

@@ -70,34 +70,30 @@ block content
 									input(type="checkbox", name="ToCompute", disabled)
 						tr 
 							- var posFlag = (phase.NetContribution >= 0) ? true : false
+							//- Only show 2 decimals
 							- var NC = parseFloat(0.01 * parseInt(100*parseFloat(phase.NetContribution)))
 							td= (posFlag) ? "Net Contribution" : "Net WITHDRAWAL"
 							if phase.ToCompute
 								if finplan.HasResult
 									if posFlag
 										td(p style="font-weight:bold;color:blue")
-											//- Only show 2 decimals
 											$ 
-											= parseFloat(0.01 * parseInt(100*parseFloat(phase.NetContribution)))
+											= NC
 									else
 										td(p style="font-weight:bold;color:red")
-											//- Only show 2 decimals
 											$ 
-											= - parseFloat(0.01 * parseInt(100*parseFloat(phase.NetContribution)))
+											= - NC
 								else
 									td(p style="font-style:italic") To Be Computed
 							else
 								if posFlag
 									td(p style="font-weight:bold;color:blue")
-										//- Only show 2 decimals
 										$ 
-										= parseFloat(0.01 * parseInt(100*parseFloat(phase.NetContribution)))
+										= NC
 								else
 									td(p style="font-weight:bold;color:red")
-										//- Only show 2 decimals
 										$ 
-										= - parseFloat(0.01 * parseInt(100*parseFloat(phase.NetContribution)))
-
+										= - NC
 						tr
 							td(p style="font-weight:bold") ASSET ALLOCATION
 							td
