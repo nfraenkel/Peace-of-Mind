@@ -1,47 +1,6 @@
 [
     {
         "AgeToday": 30.0, 
-        "Description": "Conservative Scenario", 
-        "Email": "SantaClaus@xmas.com", 
-        "FinPlan_ID": "445585fb-5c9d-4254-9b91-0197a584e6ba", 
-        "HasResult": false, 
-        "InflationRate": 3.0, 
-        "LifeExpect": 90.0, 
-        "PhaseList": [
-            {
-                "Name": "Working", 
-                "NetContribution": 17500, 
-                "Portfolio": {
-                    "Bonds": 20, 
-                    "Cash": 0, 
-                    "Stocks": 80, 
-                    "T-Bills": 0
-                }, 
-                "ToCompute": false, 
-                "endAge": 65, 
-                "startAge": 30
-            }, 
-            {
-                "Name": "Retired", 
-                "NetContribution": -146376.36000000002, 
-                "Portfolio": {
-                    "Bonds": 30, 
-                    "Cash": 10, 
-                    "Stocks": 50, 
-                    "T-Bills": 10
-                }, 
-                "ToCompute": true, 
-                "endAge": 90, 
-                "startAge": 65
-            }
-        ], 
-        "StartingAmount": 200000.0, 
-        "TargetEndFunds": 1.0, 
-        "Title": "Conservative", 
-        "UserName": "Lucky"
-    }, 
-    {
-        "AgeToday": 30.0, 
         "Description": "Aggressive Scenario", 
         "Email": "SantaClaus@xmas.com", 
         "FinPlan_ID": "388774d0-fd92-468c-b2cf-49039ce5c6ce", 
@@ -50,41 +9,28 @@
         "LifeExpect": 90.0, 
         "PhaseList": [
             {
-                "Name": "Working", 
-                "NetContribution": 17500, 
+                "Name": "Phase 1", 
+                "NetContribution": 15000, 
                 "Portfolio": {
-                    "Bonds": 0, 
-                    "Cash": 0, 
-                    "Stocks": 100, 
-                    "T-Bills": 0
-                }, 
-                "ToCompute": false, 
-                "endAge": 50, 
-                "startAge": 30
-            }, 
-            {
-                "Name": "Semi-Retired", 
-                "NetContribution": 23000, 
-                "Portfolio": {
-                    "Bonds": 0, 
-                    "Cash": 0, 
-                    "Stocks": 100, 
-                    "T-Bills": 0
+                    "Bonds": 1.0, 
+                    "Cash": 0.0, 
+                    "Stocks": 99.0, 
+                    "T-Bills": 0.0
                 }, 
                 "ToCompute": false, 
                 "endAge": 65, 
-                "startAge": 50
+                "startAge": 30
             }, 
             {
-                "Name": "Retired", 
-                "NetContribution": -51087.51, 
+                "Name": "Phase 2", 
+                "NetContribution": -42090.79, 
                 "Portfolio": {
-                    "Bonds": 50, 
-                    "Cash": 0, 
-                    "Stocks": 50, 
-                    "T-Bills": 0
+                    "Bonds": 20.0, 
+                    "Cash": 0.0, 
+                    "Stocks": 80.0, 
+                    "T-Bills": 0.0
                 }, 
-                "ToCompute": "on", 
+                "ToCompute": true, 
                 "endAge": 90, 
                 "startAge": 65
             }
@@ -131,7 +77,7 @@
             }, 
             {
                 "Name": "Retired", 
-                "NetContribution": -94855.24, 
+                "NetContribution": -94696.53, 
                 "Portfolio": {
                     "Bonds": 40, 
                     "Cash": 0, 
@@ -241,5 +187,70 @@
         "TargetEndFunds": 10000.0, 
         "Title": "", 
         "UserName": "not long"
+    }, 
+    {
+        "AgeToday": 30.0, 
+        "Email": "SantaClaus@xmas.com", 
+        "FinPlan_ID": "cf614b03-677f-4f31-a0a7-584b9eb40dd5", 
+        "HasResult": false, 
+        "InflationRate": 2.0, 
+        "LifeExpect": 90, 
+        "StartingAmount": 250000.0, 
+        "TargetEndFunds": 1.0, 
+        "Title": "Moderate", 
+        "UserName": "Suerte"
+    }, 
+    {
+        "AgeToday": 44.0, 
+        "Email": "yo@xyz", 
+        "FinPlan_ID": "5060a374-5fb0-4607-be82-b2d60efe86c4", 
+        "HasResult": false, 
+        "InflationRate": 3.0, 
+        "LifeExpect": 95.0, 
+        "PhaseList": [
+            {
+                "Name": "Working", 
+                "NetContribution": 17500, 
+                "Portfolio": {
+                    "Bonds": 0, 
+                    "Cash": 0, 
+                    "Stocks": 100, 
+                    "T-Bills": 0
+                }, 
+                "ToCompute": false, 
+                "endAge": 50, 
+                "startAge": "44.0"
+            }, 
+            {
+                "Name": "Late Career", 
+                "NetContribution": 23000, 
+                "Portfolio": {
+                    "Bonds": 0, 
+                    "Cash": 0, 
+                    "Stocks": 100, 
+                    "T-Bills": 0
+                }, 
+                "ToCompute": false, 
+                "endAge": 65, 
+                "startAge": 50
+            }, 
+            {
+                "Name": "Retired", 
+                "NetContribution": 0, 
+                "Portfolio": {
+                    "Bonds": 40, 
+                    "Cash": 0, 
+                    "Stocks": 40, 
+                    "T-Bills": 20
+                }, 
+                "ToCompute": true, 
+                "endAge": "95.0", 
+                "startAge": 65
+            }
+        ], 
+        "StartingAmount": 100000.0, 
+        "TargetEndFunds": 100000.0, 
+        "Title": "first time in a long time", 
+        "UserName": "bfraenkel@lyris.com"
     }
 ]
